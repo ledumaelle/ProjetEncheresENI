@@ -5,7 +5,5 @@
     <title></title>
   </head>
   <body>
-  Page d'accueil !!
-
   </body>
 </html>
