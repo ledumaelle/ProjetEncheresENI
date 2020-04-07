@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 /**
- * Class Utilisateur
+ *
+ * Class représantant un utilisateur
+ *
  */
 public class Utilisateur {
-
    private int noUtilisateur;
    private String pseudo;
    private String nom;
@@ -26,7 +28,7 @@ public class Utilisateur {
     private List<ArticleVendu> lesArticlesVendus;
 
     public Utilisateur() {
-        this.noUtilisateur=0;
+        this.noUtilisateur =0;
         this.credit=0;
         this.administrateur=false;
         lesEncheres = new ArrayList<>();
