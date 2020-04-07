@@ -2,9 +2,15 @@ package com.eni.encheres.bo;
 
 import java.util.Objects;
 
-public class Utilisateurs {
 
-   private int no_utilisateur;
+/**
+ *
+ * Class représantant un utilisateur
+ *
+ */
+public class Utilisateur {
+
+   private int noUtilisateur;
    private String pseudo;
    private String nom;
    private String prenom;
@@ -18,16 +24,16 @@ public class Utilisateurs {
    private boolean administrateur;
 
 
-    public Utilisateurs() {
-        this.no_utilisateur=0;
+    public Utilisateur() {
+        this.noUtilisateur =0;
         this.credit=0;
         this.administrateur=false;
 
     }
 
-    public Utilisateurs(int no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe, int credit, boolean administrateur) {
+    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe, int credit, boolean administrateur) {
         this();
-        this.no_utilisateur = no_utilisateur;
+        this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
@@ -41,12 +47,12 @@ public class Utilisateurs {
         this.administrateur = administrateur;
     }
 
-    public int getNo_utilisateur() {
-        return no_utilisateur;
+    public int getNoUtilisateur() {
+        return noUtilisateur;
     }
 
-    public void setNo_utilisateur(int no_utilisateur) {
-        this.no_utilisateur = no_utilisateur;
+    public void setNoUtilisateur(int noUtilisateur) {
+        this.noUtilisateur = noUtilisateur;
     }
 
     public String getPseudo() {
@@ -142,8 +148,8 @@ public class Utilisateurs {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Utilisateurs that = (Utilisateurs) o;
-        return no_utilisateur == that.no_utilisateur &&
+        Utilisateur that = (Utilisateur) o;
+        return noUtilisateur == that.noUtilisateur &&
                 credit == that.credit &&
                 administrateur == that.administrateur &&
                 Objects.equals(pseudo, that.pseudo) &&
@@ -159,14 +165,14 @@ public class Utilisateurs {
 
     @Override
     public int hashCode() {
-        return Objects.hash(no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
+        return Objects.hash(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
     }
 
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Utilisateurs{");
-        sb.append("no_utilisateur=").append(no_utilisateur);
+        sb.append("noUtilisateur=").append(noUtilisateur);
         sb.append(", pseudo='").append(pseudo).append('\'');
         sb.append(", nom='").append(nom).append('\'');
         sb.append(", prenom='").append(prenom).append('\'');
