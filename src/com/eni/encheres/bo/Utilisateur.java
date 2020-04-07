@@ -1,52 +1,60 @@
 package com.eni.encheres.bo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Utilisateurs {
+/**
+ * Class Utilisateur
+ */
+public class Utilisateur {
 
-   private int no_utilisateur;
+   private int noUtilisateur;
    private String pseudo;
    private String nom;
    private String prenom;
    private String email;
    private String telephone;
    private String rue;
-   private String code_postal;
+   private String codePostal;
    private String ville;
-   private String mot_de_passe;
+   private String motDePasse;
    private int credit;
    private boolean administrateur;
 
+   private List<Enchere> lesEncheres;
+    private List<ArticleVendu> lesArticlesVendus;
 
-    public Utilisateurs() {
-        this.no_utilisateur=0;
+    public Utilisateur() {
+        this.noUtilisateur=0;
         this.credit=0;
         this.administrateur=false;
-
+        lesEncheres = new ArrayList<>();
+        lesArticlesVendus = new ArrayList<>();
     }
 
-    public Utilisateurs(int no_utilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe, int credit, boolean administrateur) {
+    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
         this();
-        this.no_utilisateur = no_utilisateur;
+        this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.telephone = telephone;
         this.rue = rue;
-        this.code_postal = code_postal;
+        this.codePostal = codePostal;
         this.ville = ville;
-        this.mot_de_passe = mot_de_passe;
+        this.motDePasse = motDePasse;
         this.credit = credit;
         this.administrateur = administrateur;
     }
 
-    public int getNo_utilisateur() {
-        return no_utilisateur;
+    public int getNoUtilisateur() {
+        return noUtilisateur;
     }
 
-    public void setNo_utilisateur(int no_utilisateur) {
-        this.no_utilisateur = no_utilisateur;
+    public void setNoUtilisateur(int noUtilisateur) {
+        this.noUtilisateur = noUtilisateur;
     }
 
     public String getPseudo() {
@@ -81,6 +89,14 @@ public class Utilisateurs {
         this.email = email;
     }
 
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
+    }
+
     public String getTelephone() {
         return telephone;
     }
@@ -97,12 +113,12 @@ public class Utilisateurs {
         this.rue = rue;
     }
 
-    public String getCode_postal() {
-        return code_postal;
+    public String getCodePostal() {
+        return codePostal;
     }
 
-    public void setCode_postal(String code_postal) {
-        this.code_postal = code_postal;
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
     }
 
     public String getVille() {
@@ -111,14 +127,6 @@ public class Utilisateurs {
 
     public void setVille(String ville) {
         this.ville = ville;
-    }
-
-    public String getMot_de_passe() {
-        return mot_de_passe;
-    }
-
-    public void setMot_de_passe(String mot_de_passe) {
-        this.mot_de_passe = mot_de_passe;
     }
 
     public int getCredit() {
@@ -137,13 +145,42 @@ public class Utilisateurs {
         this.administrateur = administrateur;
     }
 
+    public List<Enchere> getLesEncheres() {
+        return lesEncheres;
+    }
+
+    /**
+     * Fonction Set pour ajouter une enchère
+     * @param uneEnchere de type Enchere
+     */
+    public void ajouterUneEnchere(Enchere uneEnchere) {
+        if(!this.lesEncheres.contains(uneEnchere))
+        {
+            this.lesEncheres.add(uneEnchere);
+        }
+    }
+
+    public List<ArticleVendu> getLesArticlesVendus() {
+        return lesArticlesVendus;
+    }
+
+    /**
+     * Fonction Set pour ajouter un article vendu
+     * @param unArticleVendu de type ArticleVendu
+     */
+    public void ajouterUnArticleVendu(ArticleVendu unArticleVendu) {
+        if(!this.lesArticlesVendus.contains(unArticleVendu))
+        {
+            this.lesArticlesVendus.add(unArticleVendu);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Utilisateurs that = (Utilisateurs) o;
-        return no_utilisateur == that.no_utilisateur &&
+        Utilisateur that = (Utilisateur) o;
+        return noUtilisateur == that.noUtilisateur &&
                 credit == that.credit &&
                 administrateur == that.administrateur &&
                 Objects.equals(pseudo, that.pseudo) &&
@@ -152,30 +189,30 @@ public class Utilisateurs {
                 Objects.equals(email, that.email) &&
                 Objects.equals(telephone, that.telephone) &&
                 Objects.equals(rue, that.rue) &&
-                Objects.equals(code_postal, that.code_postal) &&
+                Objects.equals(codePostal, that.codePostal) &&
                 Objects.equals(ville, that.ville) &&
-                Objects.equals(mot_de_passe, that.mot_de_passe);
+                Objects.equals(motDePasse, that.motDePasse);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
+        return Objects.hash(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
     }
 
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Utilisateurs{");
-        sb.append("no_utilisateur=").append(no_utilisateur);
+        sb.append("noUtilisateur=").append(noUtilisateur);
         sb.append(", pseudo='").append(pseudo).append('\'');
         sb.append(", nom='").append(nom).append('\'');
         sb.append(", prenom='").append(prenom).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", telephone='").append(telephone).append('\'');
         sb.append(", rue='").append(rue).append('\'');
-        sb.append(", code_postal='").append(code_postal).append('\'');
+        sb.append(", codePostal='").append(codePostal).append('\'');
         sb.append(", ville='").append(ville).append('\'');
-        sb.append(", mot_de_passe='").append(mot_de_passe).append('\'');
+        sb.append(", motDePasse='").append(motDePasse).append('\'');
         sb.append(", credit=").append(credit);
         sb.append(", administrateur=").append(administrateur);
         sb.append('}');
