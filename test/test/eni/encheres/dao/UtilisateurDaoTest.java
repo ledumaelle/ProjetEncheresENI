@@ -1,13 +1,15 @@
 package test.eni.encheres.dao;
 
 import com.eni.encheres.bo.Utilisateur;
-import com.eni.encheres.dao.UtilisateurDao;
+import com.eni.encheres.dal.UtilisateurDao;
+import com.eni.encheres.dal.jdbc.UtilisateurDaoImpl;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UtilisateurDaoTest {
 
-    UtilisateurDao utilisateurDao= new UtilisateurDao();
+    UtilisateurDao utilisateurDao= new UtilisateurDaoImpl();
 
     @org.junit.jupiter.api.Test
     void creerUtilisateur() {
