@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-  tEST
+  Page d'accueil !!
 
   </body>
 </html>
