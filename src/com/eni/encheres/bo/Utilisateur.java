@@ -4,15 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
-
 /**
- *
- * Class représantant un utilisateur
- *
+ * Class Utilisateur
  */
 public class Utilisateur {
-
 
    private int noUtilisateur;
    private String pseudo;
@@ -31,18 +26,14 @@ public class Utilisateur {
     private List<ArticleVendu> lesArticlesVendus;
 
     public Utilisateur() {
-
         this.noUtilisateur=0;
-
         this.credit=0;
         this.administrateur=false;
         lesEncheres = new ArrayList<>();
         lesArticlesVendus = new ArrayList<>();
     }
 
-
-    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe, int credit, boolean administrateur) {
-
+    public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
         this();
         this.noUtilisateur = noUtilisateur;
         this.pseudo = pseudo;
@@ -205,9 +196,7 @@ public class Utilisateur {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
-
     }
 
 
