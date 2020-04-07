@@ -2,6 +2,7 @@ package com.eni.encheres.dao;
 
 import com.eni.encheres.bo.Utilisateurs;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,34 @@ public class UtilisateursDao {
 
     public void deleteUtilisateur(int id){
 
+    }
+
+    public Utilisateurs checkLogin(String email, String password) throws SQLException,
+            ClassNotFoundException {
+        String jdbcURL = "jdbc:mysql://localhost:3306/";
+        String dbUser = "userEncheres";
+        String dbPassword = "Pa$$w0rd";
+
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+        String sql = "SELECT * FROM UTILISATEURS WHERE email = ? and mot_de_passe = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, email);
+        statement.setString(2, password);
+
+        ResultSet result = statement.executeQuery();
+
+        Utilisateurs utilisateurs = null;
+
+        if (result.next()) {
+            utilisateurs = new Utilisateurs();
+            utilisateurs.setPseudo(result.getString("pseudo"));
+            utilisateurs.setEmail(email);
+        }
+
+        connection.close();
+
+        return utilisateurs;
     }
 
 
