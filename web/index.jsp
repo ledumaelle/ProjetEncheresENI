@@ -15,7 +15,5 @@
     </c:forEach>
   </select>
   <a href="ServletPageAccueil">Lien pour tester la servlet</a>
-  Page d'accueil !!
-
   </body>
 </html>

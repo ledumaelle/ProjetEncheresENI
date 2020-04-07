@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
- *
- * Class représantant un utilisateur
- *
+ * Class Utilisateur
  */
 public class Utilisateur {
    private int noUtilisateur;
