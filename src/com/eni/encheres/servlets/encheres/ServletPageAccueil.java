@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Class ServletPageAccueil
  */
-@WebServlet(name= "ServletPageAccueil", urlPatterns = "/")
+@WebServlet("")
 public class ServletPageAccueil extends HttpServlet {
 
     private List<Enchere> lesEncheres;
@@ -37,7 +37,6 @@ public class ServletPageAccueil extends HttpServlet {
         try {
             CategorieManager managerCategorie = CategorieManager.getInstance();
             lesCategories = managerCategorie.getLesCategories();
-            System.out.println("JULIEN SAUVE MOI !!!! ");
 
             request.setAttribute("lesCategories", lesCategories);
         } catch (Exception e) {
@@ -46,14 +45,12 @@ public class ServletPageAccueil extends HttpServlet {
 
         try {
             EnchereManager managerEnchere = EnchereManager.getInstance();
-            lesEncheres = managerEnchere.getLesListes();
+            lesEncheres = managerEnchere.getLesEncheres();
 
             request.setAttribute("lesEncheres", lesEncheres);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("TOTO");
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
         rd.forward(request, response);

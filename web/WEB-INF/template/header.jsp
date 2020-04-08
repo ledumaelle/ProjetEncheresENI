@@ -9,7 +9,6 @@
             unUtilisateur = (Utilisateur) session.getAttribute("unUtilisateur");
         }
     %>
-    <span> ${unUtilisateur} </span>
     <!--Navbar -->
     <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
         <a class="navbar-brand" href="index.jsp">ENI - Enchères</a>

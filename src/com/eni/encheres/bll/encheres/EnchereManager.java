@@ -32,7 +32,7 @@ public class EnchereManager {
         return INSTANCE;
     }
 
-    public List<Enchere> getLesListes()
+    public List<Enchere> getLesEncheres()
     {
         return this.enchereDAO.getLesEncheres();
     }
