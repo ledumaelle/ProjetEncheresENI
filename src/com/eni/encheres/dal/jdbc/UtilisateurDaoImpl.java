@@ -3,6 +3,7 @@ package com.eni.encheres.dal.jdbc;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.UtilisateurDao;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     private static final String DRIVER="com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
 
+
+
     /**
      *
      * @param utilisateur
@@ -38,14 +41,9 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      */
     public int creerUtilisateur(Utilisateur utilisateur){
 
-        try {
-            Class.forName(DRIVER);
-        } catch (ClassNotFoundException e1) {
 
-            e1.printStackTrace();
-        }
 
-        try(Connection con = DriverManager.getConnection(URL, DBUSER,PASSWORD)){
+        try(Connection con = ConnectionProvider.getConnection()){
             PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1,utilisateur.getPseudo());

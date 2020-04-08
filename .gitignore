@@ -50,6 +50,7 @@ cmake-build-*/
 # IntelliJ
 out/
 .idea/
+*.iml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -75,7 +76,7 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
+
 # modules.xml
 # .idea/misc.xml
 # *.ipr
@@ -191,3 +192,4 @@ hs_err_pid*
 target/
 
 # End of https://www.gitignore.io/api/java,eclipse,java-web
+/build/
