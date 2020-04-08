@@ -1,24 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.eni.encheres.bo.Utilisateur"%>
+<%! private Utilisateur unUtilisateur; %>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <%
+        if(session.getAttribute("unUtilisateur") != null)
+        {
+            unUtilisateur = (Utilisateur) session.getAttribute("unUtilisateur");
+        }
+    %>
+    <span> ${unUtilisateur} </span>
+    <!--Navbar -->
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+        <a class="navbar-brand" href="index.jsp">ENI - Enchères</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+                aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Accueil<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Mon Application</a>
-                </li>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+            <ul class="navbar-nav ml-auto">
+                <c:if test="${unUtilisateur == null }">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-sign-in-alt"></i> S'inscrire - Se connecter
+                        </a>
+                    </li>
+                </c:if>
+                <c:if test="${unUtilisateur != null }">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-balance-scale"></i> Enchères</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-shopping-cart"></i> Vendre un article</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="far fa-user"></i> Mon profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    </li>
+                </c:if>
             </ul>
         </div>
-        <div class="my-2 my-lg-0">
-            <a class="btn btn-outline-secondary my-2 my-sm-0" href="#"></a>
-        </div>
     </nav>
+    <!--/.Navbar -->
 </header>

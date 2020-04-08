@@ -1,4 +1,4 @@
-package com.eni.encheres.bll;
+package com.eni.encheres.bll.encheres;
 
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.dal.DAOFactory;
