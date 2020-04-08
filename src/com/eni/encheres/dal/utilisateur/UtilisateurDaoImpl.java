@@ -1,9 +1,8 @@
-package com.eni.encheres.dal.jdbc;
+package com.eni.encheres.dal.utilisateur;
 
 import com.eni.encheres.bo.Utilisateur;
-import com.eni.encheres.dal.UtilisateurDao;
+import com.eni.encheres.dal.ConnectionProvider;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

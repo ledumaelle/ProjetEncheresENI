@@ -1,24 +1,19 @@
 package test.eni.encheres.dao;
 
 import com.eni.encheres.bo.Utilisateur;
-import com.eni.encheres.dal.UtilisateurDao;
+import com.eni.encheres.dal.utilisateur.UtilisateurDao;
 
-import com.eni.encheres.dal.jdbc.UtilisateurDaoImpl;
-import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
+import com.eni.encheres.dal.utilisateur.UtilisateurDaoImpl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
-import javax.sql.DataSource;
-
 
 
 import static org.junit.jupiter.api.Assertions.*;

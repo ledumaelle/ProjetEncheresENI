@@ -3,8 +3,8 @@ package com.eni.encheres.servlets;
 
 
 import com.eni.encheres.bo.Utilisateur;
-import com.eni.encheres.dal.UtilisateurDao;
-import com.eni.encheres.dal.jdbc.UtilisateurDaoImpl;
+import com.eni.encheres.dal.utilisateur.UtilisateurDao;
+import com.eni.encheres.dal.utilisateur.UtilisateurDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
