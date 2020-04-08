@@ -1,4 +1,4 @@
-package com.eni.encheres.bll;
+package com.eni.encheres.bll.categories;
 
 import com.eni.encheres.bo.Categorie;
 import com.eni.encheres.dal.categories.CategorieDAO;
