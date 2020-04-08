@@ -1,14 +1,14 @@
 package com.eni.encheres.dal.exceptions;
 
-public class ArticleDAOException extends DAOException {
-    public ArticleDAOException() {
+public class EnchereDAOException extends DAOException {
+    public EnchereDAOException() {
     }
 
-    public ArticleDAOException(String message) {
+    public EnchereDAOException(String message) {
         super("ARTICLE ----- " + message);
     }
 
-    public ArticleDAOException(String message, Throwable exception) {
+    public EnchereDAOException(String message, Throwable exception) {
         super("ARTICLE ----- " + message, exception);
     }
 

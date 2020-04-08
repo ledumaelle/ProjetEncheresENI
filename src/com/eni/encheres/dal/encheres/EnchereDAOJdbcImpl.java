@@ -1,23 +1,23 @@
-package com.eni.encheres.dal.articles;
+package com.eni.encheres.dal.encheres;
 
 import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.dal.ConnectionProvider;
-import com.eni.encheres.dal.exceptions.ArticleDAOException;
+import com.eni.encheres.dal.exceptions.EnchereDAOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class ArticleDAOJdbcImpl implements ArticleDAO {
+public class EnchereDAOJdbcImpl implements EnchereDAO {
 
     private static final String INSERT_NULL_EXCEPTION = "Un article ne peut pas être null";
     private static final String INSERT = "INSERT INTO ARTICLES_VENDUS (nom_article) values (?)";
 
     @Override
-    public void insert(ArticleVendu article) throws ArticleDAOException {
+    public void insert(ArticleVendu article) throws EnchereDAOException {
         if(null == article){
             System.err.println(INSERT_NULL_EXCEPTION);
-            throw new ArticleDAOException(INSERT_NULL_EXCEPTION);
+            throw new EnchereDAOException(INSERT_NULL_EXCEPTION);
         }
         try(Connection cnx = ConnectionProvider.getConnection())
         {
@@ -33,7 +33,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
         catch(Exception e)
         {
             System.err.println(e.getMessage());
-            throw new ArticleDAOException(e.getMessage());
+            throw new EnchereDAOException(e.getMessage());
         }
     }
 }
