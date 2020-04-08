@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<context>
+<Context path="/"
+		 reloadable="true">
 	<Resource
 		name="jdbc/pool_cnx"
+		auth="Container"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		type="javax.sql.DataSource"
 		url="jdbc:sqlserver://localhost;databasename=encheres"
@@ -10,4 +12,4 @@
 		maxTotal="100"
 		maxIdle="30"
 		maxWaitMillis="10000"/>
-</context>
+</Context>
