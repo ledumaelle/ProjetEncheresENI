@@ -1,8 +1,10 @@
 package com.eni.encheres.dal.encheres;
 
-import com.eni.encheres.bo.ArticleVendu;
-import com.eni.encheres.dal.exceptions.EnchereDAOException;
+import com.eni.encheres.bo.Enchere;
+
+import java.util.List;
 
 public interface EnchereDAO {
-    void insert(ArticleVendu article) throws EnchereDAOException;
+
+    public List<Enchere> getLesEncheres();
 }

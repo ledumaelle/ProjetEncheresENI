@@ -90,7 +90,8 @@ fabric.properties
 .idea/**/markdown-navigator.xml
 .idea/**/markdown-navigator/
 
-.editorconfig
+#Context différent pour les dev (port fixe pour Maëlle)
+web/META-INF/context.xml
 
 # End of https://www.gitignore.io/api/intellij
 
