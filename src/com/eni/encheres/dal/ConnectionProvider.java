@@ -2,6 +2,7 @@ package com.eni.encheres.dal;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -19,6 +20,7 @@ public abstract class ConnectionProvider {
      */
     static
     {
+
         Context context;
         try {
             context = new InitialContext();
@@ -37,7 +39,7 @@ public abstract class ConnectionProvider {
      */
     public static Connection getConnection() throws SQLException
     {
-        return ConnectionProvider.dataSource.getConnection();
+        return dataSource.getConnection();
     }
 }
 
