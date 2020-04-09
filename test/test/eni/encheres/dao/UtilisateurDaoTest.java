@@ -6,6 +6,7 @@ import com.eni.encheres.dal.utilisateur.UtilisateurDao;
 import com.eni.encheres.dal.utilisateur.UtilisateurDaoImpl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
@@ -72,10 +73,16 @@ class UtilisateurDaoTest {
 
     }
 
+
+    @AfterAll
+    static void afterAll() {
+        utilisateurDao.deleteUtilisateur(user.getNoUtilisateur());
+    }
+
     @Test
     void creerUtilisateur() throws NamingException {
 
-        Utilisateur user2 = new Utilisateur(0,"testuser","test","user","user2@gmail.com", "06","rue test","35000","test","testmdp",0, false);
+        Utilisateur user2 = new Utilisateur(0,"testuser2","test","user","user2@gmail.com", "06","rue test","35000","test","testmdp",0, false);
 
         int id=utilisateurDao.creerUtilisateur(user2);
 
@@ -137,4 +144,6 @@ class UtilisateurDaoTest {
         assertNull(utilisateurDao.getUtilisateurById(id),"erreur suppression user ");
 
     }
+
+
 }
