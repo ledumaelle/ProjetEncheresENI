@@ -53,9 +53,9 @@ public class UtilisateurDao {
             stmt.setString(4,utilisateur.getEmail());
             stmt.setString(5,utilisateur.getTelephone());
             stmt.setString(6,utilisateur.getRue());
-            stmt.setString(7,utilisateur.getCode_postal());
+            stmt.setString(7,utilisateur.getCodePostal());
             stmt.setString(8,utilisateur.getVille());
-            stmt.setString(9,utilisateur.getMot_de_passe());
+            stmt.setString(9,utilisateur.getMotDePasse());
 
             stmt.setInt(10,utilisateur.getCredit());
             stmt.setBoolean(11,utilisateur.isAdministrateur());
