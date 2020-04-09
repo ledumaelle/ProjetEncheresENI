@@ -31,7 +31,7 @@
                             <i class="fas fa-balance-scale"></i> Enchères</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<%= request.getContextPath() %>/encheres/add">
+                        <a class="nav-link" href="<%= request.getContextPath() %>/articles/add">
                             <i class="fas fa-shopping-cart"></i> Vendre un article</a>
                     </li>
                     <li class="nav-item">

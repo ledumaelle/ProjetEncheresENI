@@ -20,10 +20,11 @@ $(function(){
 
 function readURL(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        let reader = new FileReader();
 
         reader.onload = function(e) {
             $('#img-preview').attr('src', e.target.result);
+            $('#photoB64').attr('value', e.target.result);
         }
 
         reader.readAsDataURL(input.files[0]); // convert to base64 string
@@ -31,8 +32,8 @@ function readURL(input) {
 }
 
 function submitForm(){
-    var invalidClassName = 'invalid'
-    var inputs = document.querySelectorAll('input, select, textarea')
+    let invalidClassName = 'invalid'
+    let inputs = document.querySelectorAll('input, select, textarea')
     inputs.forEach(function (input) {
         if(input.id !== '' && $('#' + input.id).val() === ''){
             input.classList.add(invalidClassName)
