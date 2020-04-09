@@ -1,7 +1,5 @@
 package com.eni.encheres.dal.jdbc;
 
-import com.eni.encheres.dal.EnchereDAO;
-
-public class EnchereDAOJdbcImpl implements EnchereDAO {
+public class EnchereDAOJdbcImpl {
     //TODO à compléter !
 }
