@@ -6,6 +6,7 @@ import com.eni.encheres.dal.utilisateurs.UtilisateurDao;
 import com.eni.encheres.dal.utilisateurs.UtilisateurDaoImpl;
 
 
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
