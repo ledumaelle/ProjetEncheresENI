@@ -25,6 +25,7 @@ public class AddArticleServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         CategorieManager categorieManager = CategorieManager.getInstance();
         request.setAttribute("categories", categorieManager.getLesCategories());
         RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/article/add_article.jsp");
@@ -32,12 +33,24 @@ public class AddArticleServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+        String photoPath =  getServletConfig().getServletContext().getRealPath("");
+        photoPath+="/img/articles/";
+        if(request.getParameter("photo")!=null){
+            photoPath+=request.getParameter("photo");
+        }
+        photoPath=photoPath.replace("\\","/");
+
+
         try {
             ArticleManager articleManager = ArticleManager.getInstance();
+
+
             articleManager.insert(
                     request.getParameter("article"),
                     request.getParameter("description"),
-                    request.getParameter("photo"),
+                    photoPath,
                     request.getParameter("photoB64"),
                     Integer.parseInt(request.getParameter("categorie")),
                     Integer.parseInt(request.getParameter("prix")),

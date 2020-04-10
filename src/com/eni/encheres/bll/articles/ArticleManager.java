@@ -64,7 +64,7 @@ public class ArticleManager {
         try {
             String[] image = imageEncode.split(",");
 
-            File file = new File("../webapps/encheres/img/articles/" + imageName);
+            File file = new File(imageName);
             if(file.createNewFile()){
                 //convert base64 string to binary data
                 byte[] imageBite = Base64.getDecoder().decode(image[1]);
