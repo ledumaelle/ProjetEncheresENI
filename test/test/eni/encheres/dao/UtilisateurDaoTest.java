@@ -5,6 +5,7 @@ import com.eni.encheres.dal.utilisateur.UtilisateurDao;
 
 import com.eni.encheres.dal.utilisateur.UtilisateurDaoImpl;
 
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,6 +48,7 @@ class UtilisateurDaoTest {
             ic.createSubcontext("java:comp/env/jdbc");
 
             // Construct DataSource
+
             SQLServerDataSource ds = new SQLServerDataSource();
             ds.setURL("jdbc:sqlserver://localhost;databasename=encheres;User=userEncheres;Password=Pa$$w0rd");
             //utilise le properties user et password de l'url
