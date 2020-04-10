@@ -4,18 +4,18 @@ import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.dal.ConnectionProvider;
 import com.eni.encheres.dal.exceptions.ArticleDAOException;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.ZoneId;
+import java.util.List;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
     private final String INSERT_NULL_EXCEPTION = "Un article ne peut pas être null";
     private final String INSERT = "INSERT INTO ARTICLES_VENDUS VALUES (?,?,?,?,?,?,?,?)";
 
+    private final String COUNT_ALL = "SELECT COUNT(*) as nbArticles FROM ARTICLES_VENDUS";
+
     @Override
-    public ArticleVendu insert(ArticleVendu article) throws ArticleDAOException {
+    public void insert(ArticleVendu article) throws ArticleDAOException {
         if(null == article) {
             throw new ArticleDAOException(INSERT_NULL_EXCEPTION);
         }
@@ -43,6 +43,21 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
         {
             throw new ArticleDAOException(e.getMessage());
         }
-        return article;
+    }
+
+    @Override
+    public int countArticles() throws ArticleDAOException {
+        try(Connection cnx = ConnectionProvider.getConnection()) {
+            PreparedStatement requete = cnx.prepareStatement(COUNT_ALL);
+            ResultSet rs = requete.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt("nbArticles");
+            }
+
+        }catch (Exception e){
+            throw new ArticleDAOException(e.getMessage());
+        }
+        return 0;
     }
 }

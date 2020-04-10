@@ -24,6 +24,10 @@ public class Utilisateur {
    private List<Enchere> lesEncheres;
     private List<ArticleVendu> lesArticlesVendus;
 
+    public Utilisateur(int noUtilisateur) {
+        this.noUtilisateur = noUtilisateur;
+    }
+
     public Utilisateur() {
         this.noUtilisateur =0;
         this.credit=0;
