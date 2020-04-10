@@ -31,20 +31,16 @@ public class AddArticleServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-        String photoPath =  getServletConfig().getServletContext().getRealPath("");
-        photoPath+="/img/articles/";
-        if(request.getParameter("photo")!=null){
-            photoPath+=request.getParameter("photo");
-        }
-        photoPath=photoPath.replace("\\","/");
-
-
+        String path = request.getContextPath() + "/";
         try {
+            String photoPath =  getServletConfig().getServletContext().getRealPath("");
+            photoPath+="/img/articles/";
+            if(request.getParameter("photo")!=null){
+                photoPath+=request.getParameter("photo");
+            }
+            photoPath=photoPath.replace("\\","/");
+
             ArticleManager articleManager = ArticleManager.getInstance();
-
-
             articleManager.insert(
                     request.getParameter("article"),
                     request.getParameter("description"),
@@ -59,11 +55,13 @@ public class AddArticleServlet extends HttpServlet {
                     request.getParameter("ville"),
                     (Utilisateur)request.getSession().getAttribute("unUtilisateur")
             );
-            RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/index.jsp");
-            rq.forward(request, response);
+
+
         }catch (ArticleBLLException | ArticleDAOException e){
+            path += "articles/add";
             System.err.println(e.getMessage());
         }
-        this.doGet(request, response);
+        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+        response.setHeader("Location", path);
     }
 }
