@@ -117,11 +117,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
     }
 
     @Override
-    public Enchere insert(Enchere enchere) throws EnchereDAOException {
-        return null;
-    }
-
-    @Override
     public List<Enchere> getLesEncheresByCategorieID(int idCategorie) {
 
         List<Enchere> lesEncheres = new ArrayList<>();
