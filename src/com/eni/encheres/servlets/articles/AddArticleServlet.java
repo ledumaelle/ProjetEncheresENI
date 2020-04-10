@@ -2,9 +2,7 @@ package com.eni.encheres.servlets.articles;
 
 import com.eni.encheres.bll.articles.ArticleManager;
 import com.eni.encheres.bll.categories.CategorieManager;
-import com.eni.encheres.bll.encheres.EnchereManager;
 import com.eni.encheres.bll.exceptions.ArticleBLLException;
-import com.eni.encheres.bll.exceptions.EncheresBLLException;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.exceptions.ArticleDAOException;
 
