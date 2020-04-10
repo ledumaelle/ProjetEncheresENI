@@ -45,6 +45,7 @@ public class AddArticleServlet extends HttpServlet {
                     request.getParameter("article"),
                     request.getParameter("description"),
                     photoPath,
+                    request.getParameter("photo"),
                     request.getParameter("photoB64"),
                     Integer.parseInt(request.getParameter("categorie")),
                     Integer.parseInt(request.getParameter("prix")),

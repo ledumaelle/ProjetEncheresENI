@@ -36,16 +36,14 @@ public class ArticleManager {
         return INSTANCE;
     }
 
-    public void insert (String libelle, String description, String imageName, String imageEncode, int categorieId, int prix, String debut, String fin, String rue, String codePostal, String ville, Utilisateur user) throws ArticleBLLException, ArticleDAOException {
+    public void insert (String libelle, String description, String imagePath, String imageName, String imageEncode, int categorieId, int prix, String debut, String fin, String rue, String codePostal, String ville, Utilisateur user) throws ArticleBLLException, ArticleDAOException {
         LocalDate dateDebut = transformStringToLocalDate(debut);
             LocalDate dateFin = transformStringToLocalDate(fin);
-            setImageOnServer(imageName, imageEncode);
-            if(!checkDate(dateDebut, dateFin) && !checkAdresse(rue, codePostal, ville) && !checkArticle(libelle, description, prix)){
+            setImageOnServer(imagePath, imageEncode);
+            if(!checkDate(dateDebut, dateFin) && !checkAdresse(rue, codePostal, ville) && !checkArticle(libelle, description, prix, imageName)){
                 throw new ArticleBLLException("Les données saisies sont incorrectes");
             }
-            //penser à passer le nom de l'image
-            articleDAO.insert(new ArticleVendu(libelle, description, dateDebut, dateFin, prix, new Categorie(categorieId), user));
-
+            articleDAO.insert(new ArticleVendu(libelle, description, dateDebut, dateFin, prix, new Categorie(categorieId), user, imageName));
     }
 
     private boolean checkAdresse(String rue, String codePostal, String ville){
@@ -53,8 +51,8 @@ public class ArticleManager {
         return rue.length() < 31 && codePostal.length() == 5 && Pattern.matches(patternCodePostal, codePostal) && ville.length() < 30;
     }
 
-    private boolean checkArticle(String libelle, String description, int prix) {
-        return libelle.length() < 31 && description.length() < 301 && prix > 0;
+    private boolean checkArticle(String libelle, String description, int prix, String imageName) {
+        return libelle.length() < 31 && description.length() < 301 && prix > 0 && imageName.length() < 51;
     }
 
     private boolean checkDate(LocalDate debut, LocalDate fin){

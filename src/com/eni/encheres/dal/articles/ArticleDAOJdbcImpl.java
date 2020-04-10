@@ -15,7 +15,7 @@ import java.util.List;
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
     private final String INSERT_NULL_EXCEPTION = "Un article ne peut pas être null";
-    private final String INSERT = "INSERT INTO ARTICLES_VENDUS VALUES (?,?,?,?,?,?,?,?)";
+    private final String INSERT = "INSERT INTO ARTICLES_VENDUS VALUES (?,?,?,?,?,?,?,?,?)";
 
     private final String COUNT_ALL = "SELECT COUNT(*) as nbArticles FROM ARTICLES_VENDUS";
 
@@ -81,6 +81,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             st.setInt(6, article.getPrixVente());
             st.setInt(7, article.getUnUtilisateur().getNoUtilisateur());
             st.setInt(8, article.getUneCategorie().getNoCategorie());
+            st.setString(9, article.getNomImage());
             st.executeUpdate();
 
             ResultSet rs = st.getGeneratedKeys();
