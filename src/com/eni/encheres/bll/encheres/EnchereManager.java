@@ -37,4 +37,24 @@ public class EnchereManager {
         return this.enchereDAO.getLesEncheres();
     }
 
+    public List<Enchere> getLesEncheresByCategorieID(int idCategorie)
+    {
+        return this.enchereDAO.getLesEncheresByCategorieID(idCategorie);
+    }
+
+    public List<Enchere> getLesEncheresByNomArticle(String nomArticle)
+    {
+        return this.enchereDAO.getLesEncheresByNomArticle(nomArticle);
+    }
+
+    public List<Enchere> getLesEncheresByParams(int idCategorie, String nomArticle)
+    {
+        return this.enchereDAO.getLesEncheresByParams(idCategorie,nomArticle);
+    }
+
+    public Enchere getUneEnchereByArticleID(int noArticle)
+    {
+        return this.enchereDAO.getUneEnchereByArticleID(noArticle);
+    }
+
 }
