@@ -5,6 +5,7 @@ import com.eni.encheres.bo.Categorie;
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.ConnectionProvider;
+import com.eni.encheres.dal.exceptions.EnchereDAOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,7 +113,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
         {
             e.printStackTrace();
         }
-            return lesEncheres;
+        return lesEncheres;
+    }
+
+    @Override
+    public Enchere insert(Enchere enchere) throws EnchereDAOException {
+        return null;
     }
 
     @Override

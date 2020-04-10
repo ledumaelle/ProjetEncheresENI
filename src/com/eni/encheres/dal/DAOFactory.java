@@ -1,5 +1,7 @@
 package com.eni.encheres.dal;
 
+import com.eni.encheres.dal.articles.ArticleDAO;
+import com.eni.encheres.dal.articles.ArticleDAOJdbcImpl;
 import com.eni.encheres.dal.categories.CategorieDAO;
 import com.eni.encheres.dal.categories.CategorieDAOJdbcImpl;
 import com.eni.encheres.dal.encheres.EnchereDAO;
@@ -11,8 +13,14 @@ public abstract class DAOFactory {
     {
         return new EnchereDAOJdbcImpl();
     }
+
     public static CategorieDAO getCategorieDAO()
     {
         return new CategorieDAOJdbcImpl();
+    }
+
+    public static ArticleDAO getArticleDAO()
+    {
+        return new ArticleDAOJdbcImpl();
     }
 }

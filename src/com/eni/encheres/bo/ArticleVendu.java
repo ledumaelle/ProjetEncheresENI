@@ -24,7 +24,18 @@ public class ArticleVendu {
 
     }
 
-    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente,String nomImage) {
+    public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, Categorie uneCategorie, Utilisateur unUtilisateur) {
+        this.nomArticle = nomArticle;
+        this.description = description;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.miseAPrix = miseAPrix;
+        this.uneCategorie = uneCategorie;
+        this.unUtilisateur = unUtilisateur;
+        this.prixVente = 0;
+    }
+
+    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;

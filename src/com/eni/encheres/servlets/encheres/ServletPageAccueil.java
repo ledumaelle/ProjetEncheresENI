@@ -12,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.lang.*;
 
@@ -28,7 +27,7 @@ public class ServletPageAccueil extends HttpServlet {
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
 
-        Utilisateur unUtilisateur = new Utilisateur(1,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
+        Utilisateur unUtilisateur = new Utilisateur(22,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
         HttpSession session = request.getSession();
         session.setAttribute("unUtilisateur", unUtilisateur);
 
