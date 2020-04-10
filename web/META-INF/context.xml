@@ -6,7 +6,7 @@
 		auth="Container"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		type="javax.sql.DataSource"
-		url="jdbc:sqlserver://localhost;databasename=encheres"
+		url="jdbc:sqlserver://localhost:1434;databasename=encheres"
 		username="userEncheres"
 		password="Pa$$w0rd"
 		maxTotal="100"
