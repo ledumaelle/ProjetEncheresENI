@@ -1,9 +1,11 @@
 package com.eni.encheres.bll.encheres;
 
+import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.dal.DAOFactory;
 import com.eni.encheres.dal.encheres.EnchereDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,29 +34,28 @@ public class EnchereManager {
         return INSTANCE;
     }
 
-    public List<Enchere> getLesEncheres()
+    public List<Enchere> getLesEncheresByArticleID(int noArticle)
     {
-        return this.enchereDAO.getLesEncheres();
+        return this.enchereDAO.getLesEncheresByArticleID(noArticle);
     }
 
-    public List<Enchere> getLesEncheresByCategorieID(int idCategorie)
+    public Enchere getBestEnchereByArticleID(int noArticle)
     {
-        return this.enchereDAO.getLesEncheresByCategorieID(idCategorie);
-    }
+        List<Enchere> lesEncheres = getLesEncheresByArticleID(noArticle);
+        Enchere bestEnchere = null;
 
-    public List<Enchere> getLesEncheresByNomArticle(String nomArticle)
-    {
-        return this.enchereDAO.getLesEncheresByNomArticle(nomArticle);
-    }
+        for(int i=0;i<lesEncheres.size();i++)
+        {
+            if(i==0)
+            {
+                bestEnchere = lesEncheres.get(i);
+            }
+           if(lesEncheres.get(i).getMontantEnchere() > bestEnchere.getMontantEnchere())
+           {
+               bestEnchere = lesEncheres.get(i);
+           }
+        }
 
-    public List<Enchere> getLesEncheresByParams(int idCategorie, String nomArticle)
-    {
-        return this.enchereDAO.getLesEncheresByParams(idCategorie,nomArticle);
+        return bestEnchere;
     }
-
-    public Enchere getUneEnchereByArticleID(int noArticle)
-    {
-        return this.enchereDAO.getUneEnchereByArticleID(noArticle);
-    }
-
 }

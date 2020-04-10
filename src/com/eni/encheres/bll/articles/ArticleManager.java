@@ -11,6 +11,7 @@ import com.eni.encheres.dal.exceptions.ArticleDAOException;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.Base64;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ArticleManager {
@@ -85,5 +86,30 @@ public class ArticleManager {
         }catch (Exception e){
             throw new ArticleBLLException(e.getMessage());
         }
+    }
+
+    public List<ArticleVendu> getLesArticles()
+    {
+        return this.articleDAO.getLesArticles();
+    }
+
+    public List<ArticleVendu> getLesArticlesByCategorieID(int idCategorie)
+    {
+        return this.articleDAO.getLesArticlesByCategorieID(idCategorie);
+    }
+
+    public List<ArticleVendu> getLesArticlesByNom(String nomArticle)
+    {
+        return this.articleDAO.getLesArticlesByNom(nomArticle);
+    }
+
+    public List<ArticleVendu> getLesArticlesByParams(int idCategorie, String nomArticle)
+    {
+        return this.articleDAO.getLesArticlesByParams(idCategorie,nomArticle);
+    }
+
+    public ArticleVendu getUnArticleByID(int noArticle)
+    {
+        return this.articleDAO.getUnArticleByID(noArticle);
     }
 }

@@ -1,6 +1,10 @@
 package com.eni.encheres.servlets.encheres;
 
+import com.eni.encheres.bll.articles.ArticleManager;
+import com.eni.encheres.bll.categories.CategorieManager;
 import com.eni.encheres.bll.encheres.EnchereManager;
+import com.eni.encheres.bo.ArticleVendu;
+import com.eni.encheres.bo.Categorie;
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.bo.Utilisateur;
 
@@ -30,25 +34,40 @@ public class ServletDetailsEnchere extends HttpServlet {
         session.setAttribute("unUtilisateur", unUtilisateur);
 
         int noArticle = Integer.parseInt(request.getParameter("no_article"));
-       request.setAttribute("uneEnchere",getUneEnchereByArticleID(noArticle));
+       request.setAttribute("unArticle",getUnArticleByID(noArticle));
+
+       request.setAttribute("lastEnchere",bestEnchereByArticleID(noArticle));
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/enchere/details_enchere.jsp");
         rd.forward(request, response);
     }
 
-    private Enchere getUneEnchereByArticleID(int noArticle)
+    private Enchere bestEnchereByArticleID(int noArticle)
     {
-        Enchere UneEnchere = new Enchere();
+       Enchere bestEnchere = null;
         try {
-            EnchereManager managerEnchere = EnchereManager.getInstance();
+           EnchereManager managerEnchere = EnchereManager.getInstance();
+            bestEnchere = managerEnchere.getBestEnchereByArticleID(noArticle);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bestEnchere;
 
-            UneEnchere = managerEnchere.getUneEnchereByArticleID(noArticle);
+    }
+
+    private ArticleVendu getUnArticleByID(int noArticle)
+    {
+        ArticleVendu unArticle = new ArticleVendu();
+        try {
+            ArticleManager articleManager = ArticleManager.getInstance();
+
+            unArticle = articleManager.getUnArticleByID(noArticle);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return UneEnchere;
+        return unArticle;
     }
 
 }

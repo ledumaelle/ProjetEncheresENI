@@ -2,13 +2,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.eni.encheres.bo.Categorie" %>
 <%@ page isELIgnored="false"%>
-<%@ page import="com.eni.encheres.bo.Enchere" %>
+<%@ page import="com.eni.encheres.bo.ArticleVendu" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%! private List<Categorie> lesCategories; %>
 <%! private String idCategorie; %>
 <%! private String nomArticle; %>
-<%! private List<Enchere> lesEncheres; %>
+<%! private List<ArticleVendu> lesArticles; %>
 <%! private int nbSides; %>
 <html>
   <head>
@@ -17,7 +18,7 @@
   </head>
   <body>
     <% lesCategories = (List<Categorie>) request.getAttribute("lesCategories"); %>
-    <% lesEncheres = (List<Enchere>) request.getAttribute("lesEncheres"); %>
+    <% lesArticles = (List<ArticleVendu>) request.getAttribute("lesArticles"); %>
     <% nbSides = (int) request.getAttribute("nbSides"); %>
     <% if(request.getAttribute("idCategorie") == null) { idCategorie="" ;} else {idCategorie = (String) request.getAttribute("idCategorie");} %>
     <% if(request.getAttribute("txtFiltreNom") == null) { nomArticle="" ;} else {nomArticle = (String) request.getAttribute("txtFiltreNom");} %>
@@ -25,7 +26,7 @@
     <%@ include file="template/header.jsp" %>
 
     <h1 class="text-center"> Liste des enchères </h1>
-    <form method="get" action="index.html">
+    <form method="get" action=<%=request.getContextPath()%>"/index.html">
       <div class="container z-depth-1 p-5 my-5">
         <section>
           <!-- Filter Area -->
@@ -62,7 +63,7 @@
             </div>
             <div class="col-8 col-md-8 text-right">
               <!-- View Switcher -->
-              <button class="btn blue darken-3 btn-sm" type="submit">
+              <button class="btn btn-primary btn-rounded" type="submit">
                 <i class="fas fa-search mr-2" aria-hidden="true"></i>
                 <strong>Rechercher</strong>
               </button>
@@ -74,7 +75,7 @@
     </form>
 
     <div class="container mt-5">
-      <c:if test="${lesEncheres.size() > 0 }">
+      <c:if test="${lesArticles.size() > 0 }">
         <!--Section: Content-->
         <section class="dark-grey-text text-center">
           <!-- Carousel Wrapper -->
@@ -114,7 +115,7 @@
                   <!-- Other slide -->
                   <div class="carousel-item">
                 </c:if>
-                    <c:forEach items="${lesEncheres}" begin="${startIndex}" end="${startIndex +2}" var="enchere" varStatus="vs3">
+                    <c:forEach items="${lesArticles}" begin="${startIndex}" end="${startIndex +2}" var="article" varStatus="vs3">
                       <c:set var="currentIndex" value="${currentIndex+1}"/>
                       <!-- Card -->
                       <c:if test="${vs3.first}">
@@ -127,8 +128,8 @@
                       <div class="card card-cascade narrower card-ecommerce">
                         <!-- Card image -->
                         <div class="view view-cascade overlay">
-                          <img src="../img/articles/${enchere.getUnArticleVendu().getNomImage()}" class="card-img-top"
-                               alt="${enchere.getUnArticleVendu().getNomImage()}">
+                          <img src=<%=request.getContextPath()%>"/img/articles/${article.getNomImage()}" class="card-img-top"
+                               alt="${article.getNomImage()}">
                           <a>
                             <div class="mask rgba-white-slight"></div>
                           </a>
@@ -138,19 +139,20 @@
                         <div class="card-body card-body-cascade text-center">
                           <!-- Category & Title -->
                           <p class="text-muted">
-                            <h5>${enchere.getUnArticleVendu().getUneCategorie().getLibelle()}</h5>
+                            <h5>${article.getUneCategorie().getLibelle()}</h5>
                           </p>
                           <h4 class="card-title my-4">
                             <strong>
-                              <a href="details_enchere.html?no_article=${enchere.getUnArticleVendu().getNoArticle()}">${enchere.getUnArticleVendu().getNomArticle()}</a>
+                              <a href="details_enchere.html?no_article=${article.getNoArticle()}">${article.getNomArticle()}</a>
                             </strong>
                           </h4>
                           <!-- Description -->
-                          <p class="card-text"><b>${enchere.getUnArticleVendu().getUnUtilisateur().getPseudo()}</b></p>
+                          <p class="card-text"><b>${article.getUnUtilisateur().getPseudo()}</b></p>
                           <!-- Card footer -->
                           <div class="card-footer px-1">
-                            <span class="float-left">${enchere.getUnArticleVendu().getMiseAPrix()}pts</span>
-                            <span class="float-right">${enchere.getUnArticleVendu().getDateFinEncheres()}</span>
+                            <span class="float-left">${article.getMiseAPrix()}pts</span>
+                            <fmt:parseDate  value="${article.getDateFinEncheres()}"  type="date" pattern="yyyy-MM-dd" var="parsedDate"/>
+                            <span class="float-right"><fmt:formatDate pattern="dd/MM/YYYY" value="${parsedDate}"/></span>
                           </div>
                         </div>
                         <!-- Card content -->
@@ -172,8 +174,8 @@
         <!--Section: Content-->
       </c:if>
 
-      <c:if test="${lesEncheres.size() == 0 }">
-        <span> C VIDE !! </span>
+      <c:if test="${lesArticles.size() == 0 }">
+        <h5> Oups, il n'y a aucune enchère qui correspond à votre recherche ! </h5>
       </c:if>
 
     </div>

@@ -27,7 +27,7 @@
                 </c:if>
                 <c:if test="${unUtilisateur != null }">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="<%= request.getContextPath() %>/index.html">
                             <i class="fas fa-balance-scale"></i> Enchères</a>
                     </li>
                     <li class="nav-item">
