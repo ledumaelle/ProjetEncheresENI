@@ -35,6 +35,61 @@
                 <label class="mdb-main-label grey-text">Filtres</label>
                 <input class="form-control" id="txtFiltreNom" name="txtFiltreNom" placeholder="Nom de l'article" value="<%=nomArticle%>"/>
             </div>
+            <c:if test="${unUtilisateur != null }">
+
+            <div class="col-md-4">
+              <!-- Material unchecked -->
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="radioAchats" name="groupeRadio" value="achats" checked>
+                <label class="form-check-label" for="radioAchats">Achats</label>
+
+                <!-- Material inline 1 -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresOuvertes">
+                  <label class="form-check-label checkAchats" for="checkEncheresOuvertes">Enchères ouvertes</label>
+                </div>
+
+                <!-- Material inline 2 -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresEnCours">
+                  <label class="form-check-label checkAchats" for="checkEncheresEnCours">Mes enchères en cours</label>
+                </div>
+
+                <!-- Material inline 3 -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresRemportees">
+                  <label class="form-check-label checkAchats" for="checkEncheresRemportees">Mes enchères remportées</label>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-4">
+              <!-- Material checked -->
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="radioVentes" name="groupeRadio"  value="ventes">
+                <label class="form-check-label" for="radioVentes">Mes ventes</label>
+
+                <!-- Material inline 1 -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesEnCours" disabled>
+                  <label class="form-check-label checkVentes" for="checkVentesEnCours">Mes ventes en cours</label>
+                </div>
+
+                <!-- Material inline 2 -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesNonDebutees" disabled>
+                  <label class="form-check-label checkVentes" for="checkVentesNonDebutees">Mes ventes non débutées</label>
+                </div>
+
+                <!-- Material inline 3 -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesTerminees" disabled>
+                  <label class="form-check-label checkVentes" for="checkVentesTerminees">Ventes terminées</label>
+                </div>
+
+              </div>
+            </div>
+            </c:if>
           </div>
           <br>
           <!-- Filter Area -->
@@ -62,6 +117,12 @@
               <!-- Sort by -->
             </div>
             <div class="col-8 col-md-8 text-right">
+
+              <a class="btn btn-default-color btn-rounded" href=<%=request.getContextPath()%>"/index.html">
+                <i class="fas fa-times-circle mr-2" aria-hidden="true"></i>
+                <strong>Effacer</strong>
+              </a>
+
               <!-- View Switcher -->
               <button class="btn btn-primary btn-rounded" type="submit">
                 <i class="fas fa-search mr-2" aria-hidden="true"></i>
@@ -130,9 +191,9 @@
                         <div class="view view-cascade overlay">
                           <img src=<%=request.getContextPath()%>"/img/articles/${article.getNomImage()}" class="card-img-top"
                                alt="${article.getNomImage()}">
-                          <a>
+
                             <div class="mask rgba-white-slight"></div>
-                          </a>
+
                         </div>
                         <!-- Card image -->
                         <!-- Card content -->
@@ -143,11 +204,24 @@
                           </p>
                           <h4 class="card-title my-4">
                             <strong>
-                              <a href="details_enchere.html?no_article=${article.getNoArticle()}">${article.getNomArticle()}</a>
+                              <c:if test="${unUtilisateur == null }">
+                                <a href=<%=request.getContextPath()%>"/seConnecter">${article.getNomArticle()}</a>
+                              </c:if>
+                              <c:if test="${unUtilisateur != null }">
+                                <a href=<%=request.getContextPath()%>"/details_enchere.html?no_article=${article.getNoArticle()}">${article.getNomArticle()}</a>
+                              </c:if>
                             </strong>
                           </h4>
                           <!-- Description -->
-                          <p class="card-text"><b>${article.getUnUtilisateur().getPseudo()}</b></p>
+                          <p class="card-text">
+                            <c:if test="${unUtilisateur == null }">
+                              <b>${article.getUnUtilisateur().getPseudo()}</b>
+                            </c:if>
+                            <c:if test="${unUtilisateur != null }">
+                              <a class="text-danger" href="<%=request.getContextPath()%>/profil/${article.getUnUtilisateur().getNoUtilisateur()}"><b>${article.getUnUtilisateur().getPseudo()}</b></a>
+                            </c:if>
+
+                          </p>
                           <!-- Card footer -->
                           <div class="card-footer px-1">
                             <span class="float-left">${article.getMiseAPrix()}pts</span>
@@ -184,6 +258,19 @@
       // Material Select Initialization
       $(document).ready(function() {
         $('.mdb-select').materialSelect();
+      });
+
+      $('input[type=radio][name=groupeRadio]').change(function () {
+        switch ($(this).val()) {
+          case 'ventes':
+            $('.checkAchats').attr("disabled", true);
+            $('.checkVentes').attr("disabled", false);
+            break;
+          case 'achats':
+            $('.checkVentes').attr("disabled", true);
+            $('.checkAchats').attr("disabled", false);
+            break;
+        }
       });
     </script>
   </body>

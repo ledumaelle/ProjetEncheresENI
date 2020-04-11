@@ -20,7 +20,7 @@
             <ul class="navbar-nav ml-auto">
                 <c:if test="${unUtilisateur == null }">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="<%= request.getContextPath() %>/seConnecter">
                             <i class="fas fa-sign-in-alt"></i> S'inscrire - Se connecter
                         </a>
                     </li>

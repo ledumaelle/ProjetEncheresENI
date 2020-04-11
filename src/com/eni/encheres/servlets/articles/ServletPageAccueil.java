@@ -1,4 +1,4 @@
-package com.eni.encheres.servlets.encheres;
+package com.eni.encheres.servlets.articles;
 
 import com.eni.encheres.bll.articles.ArticleManager;
 import com.eni.encheres.bll.categories.CategorieManager;
