@@ -65,9 +65,10 @@ class UtilisateurDaoTest {
         }
 
 
-        user= new Utilisateur(0,"testuser","test","user","user@gmail.com", "06","rue test","35000","test","testmdp",0, false);
+        user= new Utilisateur(0,"testuseré","test","user","user@gmail.com", "06","rue test","35000","test","testmdp",0, false);
 
         int id=utilisateurDao.creerUtilisateur(user);
+
 
         if(id!=0){
             user.setNoUtilisateur(id);
@@ -139,7 +140,11 @@ class UtilisateurDaoTest {
     @Test
     void deleteUtilisateur() {
 
-        int id=utilisateurDao.creerUtilisateur(user);
+        Utilisateur userdel = new Utilisateur(0,"user del","test","user","userdel@gmail.com", "06","rue test","35000","test","testmdp",0, false);
+        userdel.setEmail("testdel@gmail.com");
+
+        int id=utilisateurDao.creerUtilisateur(userdel);
+
 
         utilisateurDao.deleteUtilisateur(id);
 
