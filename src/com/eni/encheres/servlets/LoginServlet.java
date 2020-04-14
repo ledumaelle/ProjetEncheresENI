@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/login")
-public class UserLoginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
-	public UserLoginServlet() {
+	public LoginServlet() {
 		super();
 	}
 
@@ -33,7 +33,7 @@ public class UserLoginServlet extends HttpServlet {
 			
 			if (user != null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
+				session.setAttribute("utilisateur", user);
 				destPage = "index.jsp";
 			} else {
 				String message = "Mauvais email / Mot de passe";
