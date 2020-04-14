@@ -1,24 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.eni.encheres.bo.Utilisateur"%>
+
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <c:if test="${!empty sessionScope.unUtilisateur}">
+        <c:set var="unUtilisateur" value="${sessionScope.unUtilisateur}" scope="page" />
+    </c:if>
+
+    <!--Navbar -->
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+        <a class="navbar-brand" href="${pageContext.servletContext.contextPath}">ENI - Enchères</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+                aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+            <ul class="navbar-nav ml-auto">
+                <c:if test="${empty unUtilisateur}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/login">
+                            <i class="fas fa-sign-in-alt"></i> S'inscrire - Se connecter
+                        </a>
+                    </li>
+                </c:if>
+                <c:if test="${!empty unUtilisateur}">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Accueil<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Mon Application</a>
-                </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.servletContext.contextPath}">
+                            <i class="fas fa-balance-scale"></i> Enchères</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/articles/add">
+                            <i class="fas fa-shopping-cart"></i> Vendre un article</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/utilisateur/${unUtilisateur.noUtilisateur}">
+                            <i class="far fa-user"></i> Mon profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/logout">
+                            <i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    </li>
+                </c:if>
             </ul>
         </div>
-        <div class="my-2 my-lg-0">
-            <a class="btn btn-outline-secondary my-2 my-sm-0" href="#"></a>
-        </div>
     </nav>
+    <!--/.Navbar -->
 </header>

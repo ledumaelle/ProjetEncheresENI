@@ -14,6 +14,7 @@ public class ArticleVendu {
     private LocalDate dateFinEncheres;
     private int miseAPrix;
     private int prixVente;
+    private String nomImage;
     private String etatVente;
     private Categorie uneCategorie;
     private Utilisateur unUtilisateur;
@@ -23,7 +24,18 @@ public class ArticleVendu {
 
     }
 
-    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente) {
+    public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, Categorie uneCategorie, Utilisateur unUtilisateur) {
+        this.nomArticle = nomArticle;
+        this.description = description;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.miseAPrix = miseAPrix;
+        this.uneCategorie = uneCategorie;
+        this.unUtilisateur = unUtilisateur;
+        this.prixVente = 0;
+    }
+
+    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String nomImage) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -31,11 +43,16 @@ public class ArticleVendu {
         this.dateFinEncheres = dateFinEncheres;
         this.miseAPrix = miseAPrix;
         this.prixVente = prixVente;
+        this.nomImage = nomImage;
+    }
+
+    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente, String nomImage) {
+        this(noArticle,nomArticle,description,dateDebutEncheres,dateFinEncheres,miseAPrix,prixVente,nomImage);
         this.etatVente = etatVente;
     }
 
-    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie uneCategorie) {
-        this(noArticle,nomArticle,description,dateDebutEncheres,dateFinEncheres,miseAPrix,prixVente,etatVente);
+    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String nomImage, String etatVente, Categorie uneCategorie) {
+        this(noArticle,nomArticle,description,dateDebutEncheres,dateFinEncheres,miseAPrix,prixVente,nomImage,etatVente);
         this.uneCategorie = uneCategorie;
     }
 
@@ -119,6 +136,14 @@ public class ArticleVendu {
         this.unUtilisateur = unUtilisateur;
     }
 
+    public String getNomImage() {
+        return nomImage;
+    }
+
+    public void setNomImage(String nomImage) {
+        this.nomImage = nomImage;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -136,6 +161,7 @@ public class ArticleVendu {
                 ", dateFinEncheres=" + dateFinEncheres +
                 ", miseAPrix=" + miseAPrix +
                 ", prixVente=" + prixVente +
+                ", nomImage='" + nomImage + '\'' +
                 ", etatVente='" + etatVente + '\'' +
                 ", uneCategorie=" + uneCategorie +
                 ", unUtilisateur=" + unUtilisateur +

@@ -9,8 +9,8 @@ public class Enchere {
 
     private Utilisateur unUtilisateur;
     private ArticleVendu unArticleVendu;
-   private LocalDate dateEnchere;
-   private int montantEnchere;
+    private LocalDate dateEnchere;
+    private int montantEnchere;
 
    public Enchere()
    {

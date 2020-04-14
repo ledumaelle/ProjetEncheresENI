@@ -1,9 +1,11 @@
-package com.eni.encheres.bll;
+package com.eni.encheres.bll.encheres;
 
+import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.dal.DAOFactory;
 import com.eni.encheres.dal.encheres.EnchereDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,9 +34,28 @@ public class EnchereManager {
         return INSTANCE;
     }
 
-    public List<Enchere> getLesListes()
+    public List<Enchere> getLesEncheresByArticleID(int noArticle)
     {
-        return this.enchereDAO.getLesEncheres();
+        return this.enchereDAO.getLesEncheresByArticleID(noArticle);
     }
 
+    public Enchere getBestEnchereByArticleID(int noArticle)
+    {
+        List<Enchere> lesEncheres = getLesEncheresByArticleID(noArticle);
+        Enchere bestEnchere = null;
+
+        for(int i=0;i<lesEncheres.size();i++)
+        {
+            if(i==0)
+            {
+                bestEnchere = lesEncheres.get(i);
+            }
+           if(lesEncheres.get(i).getMontantEnchere() > bestEnchere.getMontantEnchere())
+           {
+               bestEnchere = lesEncheres.get(i);
+           }
+        }
+
+        return bestEnchere;
+    }
 }

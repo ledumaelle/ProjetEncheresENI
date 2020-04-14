@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface EnchereDAO {
 
-    public List<Enchere> getLesEncheres();
+    List<Enchere> getLesEncheresByArticleID(int noAtricle);
 }

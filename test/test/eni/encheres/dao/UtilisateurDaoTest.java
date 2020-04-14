@@ -1,9 +1,10 @@
 package test.eni.encheres.dao;
 
 import com.eni.encheres.bo.Utilisateur;
-import com.eni.encheres.dal.utilisateur.UtilisateurDao;
+import com.eni.encheres.dal.utilisateurs.UtilisateurDao;
 
-import com.eni.encheres.dal.utilisateur.UtilisateurDaoImpl;
+import com.eni.encheres.dal.utilisateurs.UtilisateurDaoImpl;
+
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import org.junit.jupiter.api.AfterAll;
@@ -47,6 +48,7 @@ class UtilisateurDaoTest {
             ic.createSubcontext("java:comp/env/jdbc");
 
             // Construct DataSource
+
             SQLServerDataSource ds = new SQLServerDataSource();
             ds.setURL("jdbc:sqlserver://localhost;databasename=encheres;User=userEncheres;Password=Pa$$w0rd");
             //utilise le properties user et password de l'url
@@ -63,9 +65,10 @@ class UtilisateurDaoTest {
         }
 
 
-        user= new Utilisateur(0,"testuser","test","user","user@gmail.com", "06","rue test","35000","test","testmdp",0, false);
+        user= new Utilisateur(0,"testuseré","test","user","user@gmail.com", "06","rue test","35000","test","testmdp",0, false);
 
         int id=utilisateurDao.creerUtilisateur(user);
+
 
         if(id!=0){
             user.setNoUtilisateur(id);
@@ -137,7 +140,11 @@ class UtilisateurDaoTest {
     @Test
     void deleteUtilisateur() {
 
-        int id=utilisateurDao.creerUtilisateur(user);
+        Utilisateur userdel = new Utilisateur(0,"user del","test","user","userdel@gmail.com", "06","rue test","35000","test","testmdp",0, false);
+        userdel.setEmail("testdel@gmail.com");
+
+        int id=utilisateurDao.creerUtilisateur(userdel);
+
 
         utilisateurDao.deleteUtilisateur(id);
 

@@ -1,4 +1,4 @@
-package com.eni.encheres.dal.utilisateur;
+package com.eni.encheres.dal.utilisateurs;
 
 import com.eni.encheres.bo.Utilisateur;
 

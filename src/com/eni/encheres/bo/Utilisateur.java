@@ -8,7 +8,6 @@ import java.util.Objects;
  * Class Utilisateur
  */
 public class Utilisateur {
-
    private int noUtilisateur;
    private String pseudo;
    private String nom;
@@ -25,8 +24,12 @@ public class Utilisateur {
    private List<Enchere> lesEncheres;
     private List<ArticleVendu> lesArticlesVendus;
 
+    public Utilisateur(int noUtilisateur) {
+        this.noUtilisateur = noUtilisateur;
+    }
+
     public Utilisateur() {
-        this.noUtilisateur=0;
+        this.noUtilisateur =0;
         this.credit=0;
         this.administrateur=false;
         lesEncheres = new ArrayList<>();
