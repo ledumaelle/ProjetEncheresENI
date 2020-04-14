@@ -1,7 +1,6 @@
 package com.eni.encheres.servlets;
 
 import com.eni.encheres.bo.Utilisateur;
-import com.eni.encheres.dao.UtilisateurDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		UtilisateurDao userDao = new UtilisateurDao();
+		/*UtilisateurDao userDao = new UtilisateurDao();
 		
 		try {
 			Utilisateur user = userDao.checkLogin(email, password);
@@ -45,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 			
 		} catch (SQLException | ClassNotFoundException ex) {
 			throw new ServletException(ex);
-		}
+		}*/
 	}
 
 }

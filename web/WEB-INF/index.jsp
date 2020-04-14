@@ -1,27 +1,71 @@
 <%-- Created by IntelliJ IDEA. --%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.eni.encheres.bo.Categorie" %>
+<%@ page import="com.eni.encheres.bo.Categorie" %>
 <%@ page isELIgnored="false"%>
 <%@ page import="com.eni.encheres.bo.ArticleVendu" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%! private List<Categorie> lesCategories; %>
-<%! private String idCategorie; %>
-<%! private String nomArticle; %>
-<%! private List<ArticleVendu> lesArticles; %>
-<%! private int nbSides; %>
 <html>
   <head>
     <%@ include file="template/head.jsp" %>
     <title>ENI - Enchères</title>
   </head>
   <body>
-    <% lesCategories = (List<Categorie>) request.getAttribute("lesCategories"); %>
-    <% lesArticles = (List<ArticleVendu>) request.getAttribute("lesArticles"); %>
-    <% nbSides = (int) request.getAttribute("nbSides"); %>
-    <% if(request.getAttribute("idCategorie") == null) { idCategorie="" ;} else {idCategorie = (String) request.getAttribute("idCategorie");} %>
-    <% if(request.getAttribute("txtFiltreNom") == null) { nomArticle="" ;} else {nomArticle = (String) request.getAttribute("txtFiltreNom");} %>
+
+    <c:if test="${!empty requestScope.lesCategories}">
+      <c:set var="lesCategories" value="${requestScope.lesCategories}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty requestScope.lesArticles}">
+      <c:set var="lesArticles" value="${requestScope.lesArticles}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty requestScope.nbSides}">
+      <c:set var="nbSides" value="${requestScope.nbSides}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.idCategorie}">
+      <c:set var="idCategorie" value="${param.idCategorie}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.txtFiltreNom}">
+      <c:set var="nomArticle" value="${param.txtFiltreNom}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.groupeRadio}">
+      <c:if test="${param.groupeRadio.equals('achats')}">
+        <c:set var="radioAchats" value="${param.groupeRadio}" scope="page" />
+      </c:if>
+      <c:if test="${param.groupeRadio.equals('ventes')}">
+        <c:set var="radioVentes" value="${param.groupeRadio}" scope="page" />
+      </c:if>
+    </c:if>
+
+    <c:if test="${!empty param.encheres_ouvertes}">
+      <c:set var="encheres_ouvertes" value="${param.encheres_ouvertes}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.encheres_en_cours}">
+      <c:set var="encheres_en_cours" value="${param.encheres_en_cours}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.encheres_remportees && null != param}">
+      <c:set var="encheres_remportees" value="${param.encheres_remportees}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.ventes_en_cours}">
+      <c:set var="ventes_en_cours" value="${param.ventes_en_cours}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.ventes_non_debutees}">
+      <c:set var="ventes_non_debutees" value="${param.ventes_non_debutees}" scope="page" />
+    </c:if>
+
+    <c:if test="${!empty param.ventes_terminees}">
+      <c:set var="ventes_terminees" value="${param.ventes_terminees}" scope="page" />
+    </c:if>
 
     <%@ include file="template/header.jsp" %>
 
@@ -33,31 +77,31 @@
           <div class="row align-items-center">
             <div class="col-md-4">
                 <label class="mdb-main-label grey-text">Filtres</label>
-                <input class="form-control" id="txtFiltreNom" name="txtFiltreNom" placeholder="Nom de l'article" value="<%=nomArticle%>"/>
+                <input class="form-control" id="txtFiltreNom" name="txtFiltreNom" placeholder="Nom de l'article" value="${nomArticle}"/>
             </div>
-            <c:if test="${unUtilisateur != null }">
+            <c:if test="${!empty unUtilisateur}">
 
             <div class="col-md-4">
               <!-- Material unchecked -->
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="radioAchats" name="groupeRadio" value="achats" checked>
+                <input type="radio" class="form-check-input" id="radioAchats" name="groupeRadio" value="achats" <c:if test="${!empty radioAchats}">checked</c:if>/>
                 <label class="form-check-label" for="radioAchats">Achats</label>
 
                 <!-- Material inline 1 -->
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresOuvertes">
+                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresOuvertes" name="encheres_ouvertes" <c:if test="${(empty radioAchats && empty radioVentes) || !empty radioVentes}">disabled</c:if> <c:if test="${!empty encheres_ouvertes}">checked</c:if>/>
                   <label class="form-check-label checkAchats" for="checkEncheresOuvertes">Enchères ouvertes</label>
                 </div>
 
                 <!-- Material inline 2 -->
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresEnCours">
+                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresEnCours" name="encheres_en_cours" <c:if test="${(empty radioAchats && empty radioVentes) || !empty radioVentes}">disabled</c:if> <c:if test="${!empty encheres_en_cours}">checked</c:if>/>
                   <label class="form-check-label checkAchats" for="checkEncheresEnCours">Mes enchères en cours</label>
                 </div>
 
                 <!-- Material inline 3 -->
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresRemportees">
+                  <input type="checkbox" class="form-check-input checkAchats" id="checkEncheresRemportees" name="encheres_remportees" <c:if test="${ (empty radioAchats && empty radioVentes) || !empty radioVentes}">disabled</c:if> <c:if test="${!empty encheres_remportees}">checked</c:if> />
                   <label class="form-check-label checkAchats" for="checkEncheresRemportees">Mes enchères remportées</label>
                 </div>
 
@@ -66,24 +110,24 @@
             <div class="col-md-4">
               <!-- Material checked -->
               <div class="form-check">
-                <input type="radio" class="form-check-input" id="radioVentes" name="groupeRadio"  value="ventes">
+                <input type="radio" class="form-check-input" id="radioVentes" name="groupeRadio"  value="ventes" <c:if test="${!empty radioVentes}">checked</c:if>/>
                 <label class="form-check-label" for="radioVentes">Mes ventes</label>
 
                 <!-- Material inline 1 -->
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesEnCours" disabled>
+                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesEnCours" name="ventes_en_cours" <c:if test="${(empty radioAchats && empty radioVentes) || !empty radioAchats}">disabled</c:if> <c:if test="${!empty ventes_en_cours}">checked</c:if> />
                   <label class="form-check-label checkVentes" for="checkVentesEnCours">Mes ventes en cours</label>
                 </div>
 
                 <!-- Material inline 2 -->
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesNonDebutees" disabled>
+                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesNonDebutees" name="ventes_non_debutees" <c:if test="${(empty radioAchats && empty radioVentes) || !empty radioAchats}">disabled</c:if> <c:if test="${!empty ventes_non_debutees}">checked</c:if> />
                   <label class="form-check-label checkVentes" for="checkVentesNonDebutees">Mes ventes non débutées</label>
                 </div>
 
                 <!-- Material inline 3 -->
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesTerminees" disabled>
+                  <input type="checkbox" class="form-check-input checkVentes" id="checkVentesTerminees" name="ventes_terminees" <c:if test="${(empty radioAchats && empty radioVentes) || !empty radioAchats}">disabled</c:if> <c:if test="${!empty ventes_terminees}">checked</c:if> />
                   <label class="form-check-label checkVentes" for="checkVentesTerminees">Ventes terminées</label>
                 </div>
 
@@ -135,7 +179,7 @@
       </div>
     </form>
 
-    <div class="container mt-5">
+    <div class="container mt-5  col-sm-10">
       <c:if test="${lesArticles.size() > 0 }">
         <!--Section: Content-->
         <section class="dark-grey-text text-center">
@@ -176,14 +220,14 @@
                   <!-- Other slide -->
                   <div class="carousel-item">
                 </c:if>
-                    <c:forEach items="${lesArticles}" begin="${startIndex}" end="${startIndex +2}" var="article" varStatus="vs3">
+                    <c:forEach items="${lesArticles}" begin="${startIndex}" end="${startIndex +5}" var="article" varStatus="vs3">
                       <c:set var="currentIndex" value="${currentIndex+1}"/>
                       <!-- Card -->
                       <c:if test="${vs3.first}">
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-2 mb-2">
                       </c:if>
                       <c:if test="${!vs3.first}">
-                        <div class="col-md-4 mb-2 clearfix d-none d-md-block">
+                        <div class="col-md-2 mb-2 clearfix d-none d-md-block">
                       </c:if>
 
                       <div class="card card-cascade narrower card-ecommerce">
@@ -191,13 +235,20 @@
                         <div class="view view-cascade overlay">
                           <img src="<%=request.getContextPath()%>/img/articles/${article.getNomImage()}" class="card-img-top"
                                alt="${article.getNomImage()}">
-
                             <div class="mask rgba-white-slight"></div>
-
                         </div>
                         <!-- Card image -->
                         <!-- Card content -->
                         <div class="card-body card-body-cascade text-center">
+                          <c:if test="${article.getEtatVente().equals('en_cours')}">
+                            <span class="badge badge-success product mb-4 ml-xl-0 ml-4">EN COURS</span>
+                          </c:if>
+                          <c:if test="${article.getEtatVente().equals('non_debutee')}">
+                            <span class="badge badge-warning product mb-4 ml-xl-0 ml-4">NON DÉBUTÉE</span>
+                          </c:if>
+                          <c:if test="${article.getEtatVente().equals('terminee')}">
+                            <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">TERMINÉE</span>
+                          </c:if>
                           <!-- Category & Title -->
                           <p class="text-muted">
                             <h5>${article.getUneCategorie().getLibelle()}</h5>
@@ -247,11 +298,11 @@
         </section>
         <!--Section: Content-->
       </c:if>
-
+    </div>
+    <div class="container mt-5">
       <c:if test="${lesArticles.size() == 0 }">
         <h5> Oups, il n'y a aucune enchère qui correspond à votre recherche ! </h5>
       </c:if>
-
     </div>
 
     <script>
@@ -263,10 +314,12 @@
       $('input[type=radio][name=groupeRadio]').change(function () {
         switch ($(this).val()) {
           case 'ventes':
+            $('.checkAchats').prop("checked", false);
             $('.checkAchats').attr("disabled", true);
             $('.checkVentes').attr("disabled", false);
             break;
           case 'achats':
+            $('.checkVentes').prop("checked", false);
             $('.checkVentes').attr("disabled", true);
             $('.checkAchats').attr("disabled", false);
             break;
