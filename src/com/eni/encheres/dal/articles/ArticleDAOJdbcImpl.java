@@ -7,7 +7,9 @@ import com.eni.encheres.dal.ConnectionProvider;
 import com.eni.encheres.dal.encheres.EnchereDAO;
 import com.eni.encheres.dal.exceptions.ArticleDAOException;
 
+import javax.ejb.Local;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             "FROM ARTICLES_VENDUS as A  " +
             "INNER JOIN UTILISATEURS as U on U.no_utilisateur = A.no_utilisateur " +
             "INNER JOIN CATEGORIES as C on C.no_categorie = A.no_categorie  " +
-            "WHERE CURRENT_TIMESTAMP BETWEEN A.date_debut_encheres AND A.date_fin_encheres "+
             "AND A.no_article = ? ";
 
     @Override
@@ -149,6 +150,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             while(res.next())
             {
                 ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
 
                 if(!lesArticles.contains(unArticleVendu)) {
                     lesArticles.add(unArticleVendu);
@@ -175,6 +177,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             while(res.next())
             {
                 ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
 
                 if(!lesArticles.contains(unArticleVendu)) {
                     lesArticles.add(unArticleVendu);
@@ -201,6 +204,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             while(res.next())
             {
                 ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
 
                 if(!lesArticles.contains(unArticleVendu)) {
                     lesArticles.add(unArticleVendu);
@@ -228,6 +232,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             while(res.next())
             {
                 ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
 
                 if(!lesArticles.contains(unArticleVendu)) {
                     lesArticles.add(unArticleVendu);
@@ -253,6 +258,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             while(res.next())
             {
                 unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
             }
         }
         catch(Exception e)
@@ -260,6 +266,27 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             e.printStackTrace();
         }
         return unArticleVendu;
+    }
+
+    private String getStatut(ArticleVendu unArticle)
+    {
+        String statut="";
+        if (null != unArticle.getDateDebutEncheres() && null != unArticle.getDateFinEncheres())
+        {
+            if((unArticle.getDateDebutEncheres().isBefore(LocalDate.now()) || unArticle.getDateDebutEncheres().equals(LocalDate.now())) && unArticle.getDateFinEncheres().isAfter(LocalDate.now()))
+            {
+                statut = "en_cours";
+            }
+            else if(unArticle.getDateDebutEncheres().isAfter(LocalDate.now()))
+            {
+                statut = "non_debutee";
+            }
+            else if(unArticle.getDateFinEncheres().isBefore(LocalDate.now()))
+            {
+                statut = "terminee";
+            }
+        }
+        return statut;
     }
 }
 
