@@ -75,6 +75,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 
     }
 
+
     public void majUtilisateur(Utilisateur utilisateur){
 
     }
