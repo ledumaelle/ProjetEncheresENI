@@ -21,7 +21,7 @@ import java.lang.*;
 /**
  * Class ServletPageAccueil
  */
-@WebServlet(name="ServletPageAccueil",urlPatterns ={"/index.html"})
+@WebServlet(name="ServletPageAccueil",urlPatterns ={""})
 public class ServletPageAccueil extends HttpServlet {
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
@@ -61,7 +61,7 @@ public class ServletPageAccueil extends HttpServlet {
 
     private int calculSides(List<ArticleVendu> lesArticles)
     {
-        float value = (float) lesArticles.size() / 3;
+        float value = (float) lesArticles.size() / 6;
         int nbSides = (int) Math.ceil(value);
         return nbSides;
     }

@@ -26,7 +26,7 @@
     <%@ include file="template/header.jsp" %>
 
     <h1 class="text-center"> Liste des enchères </h1>
-    <form method="get" action=<%=request.getContextPath()%>"/index.html">
+    <form method="get" action="<%=request.getContextPath()%>/">
       <div class="container z-depth-1 p-5 my-5">
         <section>
           <!-- Filter Area -->
@@ -118,7 +118,7 @@
             </div>
             <div class="col-8 col-md-8 text-right">
 
-              <a class="btn btn-default-color btn-rounded" href=<%=request.getContextPath()%>"/index.html">
+              <a class="btn btn-default-color btn-rounded" href="<%=request.getContextPath()%>/">
                 <i class="fas fa-times-circle mr-2" aria-hidden="true"></i>
                 <strong>Effacer</strong>
               </a>
@@ -189,7 +189,7 @@
                       <div class="card card-cascade narrower card-ecommerce">
                         <!-- Card image -->
                         <div class="view view-cascade overlay">
-                          <img src=<%=request.getContextPath()%>"/img/articles/${article.getNomImage()}" class="card-img-top"
+                          <img src="<%=request.getContextPath()%>/img/articles/${article.getNomImage()}" class="card-img-top"
                                alt="${article.getNomImage()}">
 
                             <div class="mask rgba-white-slight"></div>
@@ -205,10 +205,10 @@
                           <h4 class="card-title my-4">
                             <strong>
                               <c:if test="${unUtilisateur == null }">
-                                <a href=<%=request.getContextPath()%>"/seConnecter">${article.getNomArticle()}</a>
+                                <a href="<%=request.getContextPath()%>/seConnecter">${article.getNomArticle()}</a>
                               </c:if>
                               <c:if test="${unUtilisateur != null }">
-                                <a href=<%=request.getContextPath()%>"/details_enchere.html?no_article=${article.getNoArticle()}">${article.getNomArticle()}</a>
+                                <a href="<%=request.getContextPath()%>/details_enchere?no_article=${article.getNoArticle()}">${article.getNomArticle()}</a>
                               </c:if>
                             </strong>
                           </h4>
