@@ -1,8 +1,8 @@
-package com.eni.encheres.bll;
+package com.eni.encheres.bll.utilisateurs;
 
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.DAOFactory;
-import com.eni.encheres.dal.utilisateur.UtilisateurDao;
+import com.eni.encheres.dal.utilisateurs.UtilisateurDao;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -74,9 +74,11 @@ public class UtilisateurManager {
 
     public Utilisateur connexionUtilisateur(String mail,String mdp){
 
+
+
         Utilisateur user = utilisateurDao.getUtilisateurByMail(mail);
 
-        if(user.getMotDePasse().equals(mdp)){
+        if(user != null && user.getMotDePasse().equals(mdp)){
             return user;
         }
         return null;

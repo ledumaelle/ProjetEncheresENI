@@ -26,7 +26,7 @@
     <%@ include file="template/header.jsp" %>
 
     <h1 class="text-center"> Liste des enchères </h1>
-    <form method="get" action="<%=request.getContextPath()%>/">
+    <form method="get" action=${pageContext.servletContext.contextPath}>
       <div class="container z-depth-1 p-5 my-5">
         <section>
           <!-- Filter Area -->
@@ -189,7 +189,7 @@
                       <div class="card card-cascade narrower card-ecommerce">
                         <!-- Card image -->
                         <div class="view view-cascade overlay">
-                          <img src="<%=request.getContextPath()%>/img/articles/${article.getNomImage()}" class="card-img-top"
+                          <img src=${pageContext.servletContext.contextPath}"/img/articles/${article.getNomImage()}" class="card-img-top"
                                alt="${article.getNomImage()}">
 
                             <div class="mask rgba-white-slight"></div>

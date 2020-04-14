@@ -6,8 +6,8 @@ import com.eni.encheres.dal.categories.CategorieDAO;
 import com.eni.encheres.dal.categories.CategorieDAOJdbcImpl;
 import com.eni.encheres.dal.encheres.EnchereDAO;
 import com.eni.encheres.dal.encheres.EnchereDAOJdbcImpl;
-import com.eni.encheres.dal.utilisateur.UtilisateurDao;
-import com.eni.encheres.dal.utilisateur.UtilisateurDaoImpl;
+import com.eni.encheres.dal.utilisateurs.UtilisateurDao;
+import com.eni.encheres.dal.utilisateurs.UtilisateurDaoImpl;
 
 public abstract class DAOFactory {
 
