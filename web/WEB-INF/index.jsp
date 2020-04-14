@@ -233,7 +233,7 @@
                       <div class="card card-cascade narrower card-ecommerce">
                         <!-- Card image -->
                         <div class="view view-cascade overlay">
-                          <img src=${pageContext.servletContext.contextPath}"/img/articles/${article.getNomImage()}" class="card-img-top"
+                          <img src="${pageContext.servletContext.contextPath}/img/articles/${article.getNomImage()}" class="card-img-top"
                                alt="${article.getNomImage()}">
                             <div class="mask rgba-white-slight"></div>
                         </div>
