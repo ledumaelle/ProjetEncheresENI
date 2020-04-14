@@ -47,7 +47,7 @@ class ArticleDaoTest {
             ic.bind("java:comp/env/jdbc/pool_cnx",ds);
 
             article = new ArticleVendu("nomArticle", "description", LocalDate.of(2020, 4, 10),
-                    LocalDate.of(2020, 4, 30), 0, new Categorie(1), new Utilisateur(22));
+                    LocalDate.of(2020, 4, 30), 0, new Categorie(1), new Utilisateur(22), "test.jpg");
         }catch (Exception e){
             e.printStackTrace();
         }

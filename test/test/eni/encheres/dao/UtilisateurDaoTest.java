@@ -1,9 +1,9 @@
 package test.eni.encheres.dao;
 
 import com.eni.encheres.bo.Utilisateur;
-import com.eni.encheres.dal.utilisateur.UtilisateurDao;
+import com.eni.encheres.dal.utilisateurs.UtilisateurDao;
 
-import com.eni.encheres.dal.utilisateur.UtilisateurDaoImpl;
+import com.eni.encheres.dal.utilisateurs.UtilisateurDaoImpl;
 
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;

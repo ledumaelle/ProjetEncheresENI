@@ -1,4 +1,4 @@
-package com.eni.encheres.servlets;
+package com.eni.encheres.servlets.utilistateurs;
 
 import java.io.IOException;
 
@@ -22,10 +22,9 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.removeAttribute("utilisateur");
+            session.removeAttribute("unUtilisateur");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect(request.getContextPath());
         }
     }
 

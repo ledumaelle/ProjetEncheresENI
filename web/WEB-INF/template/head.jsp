@@ -13,5 +13,4 @@
 <script src="<%= request.getContextPath()%>/bootstrap/mdb.min.js"></script>
 <script src="<%= request.getContextPath()%>/bootstrap/notify.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
-<script src="<%= request.getContextPath()%>/script/script.js"></script>
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/css/style.css">
