@@ -13,8 +13,12 @@ public class Categorie {
 
     }
 
-    public Categorie(int noCategorie, String libelle) {
+    public Categorie(int noCategorie) {
         this.noCategorie = noCategorie;
+    }
+
+    public Categorie(int noCategorie, String libelle) {
+        this(noCategorie);
         this.libelle = libelle;
     }
 
