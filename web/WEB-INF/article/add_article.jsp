@@ -1,7 +1,6 @@
 <%@ page import="com.eni.encheres.bo.Utilisateur" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.eni.encheres.bo.Categorie" %>
-<%@ page import="jdk.jshell.execution.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%!
@@ -11,6 +10,7 @@
 <html>
     <head>
         <jsp:include page="../template/head.jsp"/>
+        <script src="<%= request.getContextPath()%>/script/addArticle.js"></script>
         <title>Ajouter un article</title>
     </head>
     <body>
@@ -44,7 +44,7 @@
                                 </c:forEach>
                             </select>
                             <div class="form-group">
-                                <input required placeholder="Prix" type="number" min="1" value="150" id="prix" name="prix" class="form-control">
+                                <input required placeholder="Prix" type="number" min="5" step="5" value="150" id="prix" name="prix" class="form-control">
                             </div>
                             <div class="form-group">
                                 <input placeholder="Début de l'enchère" type="text" id="debut" class="form-control datepicker" name="debut">
