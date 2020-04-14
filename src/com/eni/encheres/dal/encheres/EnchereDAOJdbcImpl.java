@@ -1,15 +1,12 @@
 package com.eni.encheres.dal.encheres;
 
-import com.eni.encheres.bo.ArticleVendu;
-import com.eni.encheres.bo.Categorie;
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.ConnectionProvider;
+import com.eni.encheres.dal.exceptions.EnchereDAOException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +17,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
     "INNER JOIN UTILISATEURS as U on U.no_utilisateur = E.no_utilisateur "+
     "WHERE E.no_article = ? " +
     "GROUP BY date_enchere, U.no_utilisateur, U.nom, U.prenom, U.pseudo, U.email,  U.telephone, U.mot_de_passe, U.rue, U.code_postal, U.ville, U.credit, U.administrateur";
+
+    private static final String INSERT_NULL_EXCEPTION = "Une enchère ne peut pas être null";
+    private static final String INSERT = "INSERT INTO ENCHERES (date_enchere, montant_enchere, no_utilisateur, no_article) VALUES (?,?,?,?)";
+    private static final String UPDATE = "UPDATE ENCHERES SET date_enchere = ?, montant_enchere = ? WHERE no_utilisateur = ? AND no_article = ?";
+
+    private static final String FIND_ENCHERE_BY_USER_ID = "SELECT COUNT(*) FROM ENCHERES WHERE no_utilisateur = ? and no_article = ?";
 
     private Enchere construireEnchere(ResultSet res) throws SQLException {
         Enchere uneEnchere = itemBuilder(res);
@@ -62,5 +65,48 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
             e.printStackTrace();
         }
         return lesEncheres;
+    }
+
+    @Override
+    public void makeEnchere(Enchere enchere) throws EnchereDAOException {
+
+        if(null == enchere) {
+            throw new EnchereDAOException(INSERT_NULL_EXCEPTION);
+        }
+
+        String query = INSERT;
+        if(findEnchereByUserId(enchere.getUnUtilisateur().getNoUtilisateur(), enchere.getUnArticleVendu().getNoArticle())){
+            query = UPDATE;
+        }
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement st = cnx.prepareStatement(query);
+            st.setDate(1, new Date(java.util.Date.from(enchere.getDateEnchere().atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime()));
+            st.setInt(2, enchere.getMontantEnchere());
+            st.setInt(3, enchere.getUnUtilisateur().getNoUtilisateur());
+            st.setInt(4, enchere.getUnArticleVendu().getNoArticle());
+            st.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            throw new EnchereDAOException(e.getMessage());
+        }
+    }
+
+    private boolean findEnchereByUserId(int utilisateurId, int articleId) throws EnchereDAOException {
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement rs = cnx.prepareStatement(FIND_ENCHERE_BY_USER_ID);
+            rs.setInt(1, utilisateurId);
+            rs.setInt(2, articleId);
+            ResultSet res = rs.executeQuery();
+
+            return res.next();
+        }
+        catch(Exception e)
+        {
+            throw new EnchereDAOException(e.getMessage());
+        }
     }
 }

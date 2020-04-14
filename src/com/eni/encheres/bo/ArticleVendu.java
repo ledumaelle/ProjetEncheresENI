@@ -24,6 +24,11 @@ public class ArticleVendu {
 
     }
 
+    public ArticleVendu(int noArticle)
+    {
+        this.noArticle = noArticle;
+    }
+
     public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, Categorie uneCategorie, Utilisateur unUtilisateur, String nomImage) {
         this.nomArticle = nomArticle;
         this.description = description;
