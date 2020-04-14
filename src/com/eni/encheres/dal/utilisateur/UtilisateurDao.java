@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface UtilisateurDao {
 
-
     public int creerUtilisateur(Utilisateur utilisateur);
 
     public void majUtilisateur(Utilisateur utilisateur);
@@ -15,9 +14,8 @@ public interface UtilisateurDao {
 
     public Utilisateur getUtilisateurByMail(String mail);
 
-
     public List<Utilisateur> getUtilisateurs();
 
-
     public void deleteUtilisateur(int id);
+
 }
