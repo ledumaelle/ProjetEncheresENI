@@ -1,11 +1,10 @@
-package com.eni.encheres.dal;
+package com.eni.encheres.dal.utilisateurs;
 
 import com.eni.encheres.bo.Utilisateur;
 
 import java.util.List;
 
 public interface UtilisateurDao {
-
 
     public int creerUtilisateur(Utilisateur utilisateur);
 
@@ -15,9 +14,8 @@ public interface UtilisateurDao {
 
     public Utilisateur getUtilisateurByMail(String mail);
 
-
     public List<Utilisateur> getUtilisateurs();
 
-
     public void deleteUtilisateur(int id);
+
 }

@@ -19,10 +19,10 @@
             <h5 class="card-header info-color white-text text-center py-4">
                 <strong>NOUVELLE VENTE</strong>
             </h5>
-            <form class="text-center border border-light p-5" action="<%= request.getContextPath() %>/articles/add" method="post" name="form">
+            <form class="text-center border border-light p-5" action="${pageContext.servletContext.contextPath}/articles/add" method="post" name="form">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="<%= request.getContextPath() %>/img/articles/no-image.png" class="img-thumbnail" id="img-preview">
+                        <img src="${pageContext.servletContext.contextPath}/img/articles/no-image.png" class="img-thumbnail" id="img-preview">
                         <div class="file-field">
                             <div class="btn btn-info btn-upload">
                                 <span>Photo</span>

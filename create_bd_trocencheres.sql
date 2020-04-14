@@ -59,7 +59,8 @@ CREATE TABLE ARTICLES_VENDUS (
     prix_initial                  INTEGER,
     prix_vente                    INTEGER,
     no_utilisateur                INTEGER NOT NULL,
-    no_categorie                  INTEGER NOT NULL
+    no_categorie                  INTEGER NOT NULL,
+    nom_image                     VARCHAR(50)
 )
 
 ALTER TABLE ARTICLES_VENDUS ADD constraint articles_vendus_pk PRIMARY KEY (no_article)

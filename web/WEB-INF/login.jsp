@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- Created by IntelliJ IDEA. --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -156,15 +157,15 @@
       <div class="card card-signin">
         <div class="card-body">
           <h5 class="card-title text-center">Connexion</h5>
-          <p id="message_error" class="text-danger" style="display:none;">Mauvaise combinaison identifiant/mot de passe ou l'utilisateur est inactif.</p>
+          <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
           <form class="form-signin" action="login" method="post" id="loginForm">
             <div class="form-label-group">
-              <input type="text" id="email" class="form-control" placeholder="Identifiant" required autofocus>
+              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" required autofocus>
               <label for="email">Identifiant</label>
             </div>
 
             <div class="form-label-group">
-              <input type="password" id="password" class="form-control" placeholder="Mot de passe" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" required>
               <label for="password">Mot de passe</label>
             </div>
             <button class="btn btn-lg btn-primary btn-block text-uppercase" id="submit_form_connection" type="submit">Connexion</button>

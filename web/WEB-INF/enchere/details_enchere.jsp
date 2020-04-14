@@ -34,7 +34,7 @@
 
             <div class="col-lg-6">
 
-                <img src=<%=request.getContextPath()%>"/img/articles/${unArticle.getNomImage()}"
+                <img src=${pageContext.servletContext.contextPath}"/img/articles/${unArticle.getNomImage()}"
                      alt="${unArticle.getNomImage()}" class="img-fluid">
             </div>
 
