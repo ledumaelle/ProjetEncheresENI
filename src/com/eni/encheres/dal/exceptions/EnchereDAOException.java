@@ -5,11 +5,11 @@ public class EnchereDAOException extends DAOException {
     }
 
     public EnchereDAOException(String message) {
-        super("ARTICLE ----- " + message);
+        super("ENCHERE ----- " + message);
     }
 
     public EnchereDAOException(String message, Throwable exception) {
-        super("ARTICLE ----- " + message, exception);
+        super("ENCHERE ----- " + message, exception);
     }
 
     @Override

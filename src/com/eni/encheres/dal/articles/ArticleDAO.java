@@ -9,6 +9,8 @@ import java.util.List;
 public interface ArticleDAO {
     void insert(ArticleVendu article) throws ArticleDAOException;
 
+    void updatePrixVente(int id, int montant) throws ArticleDAOException;
+
     int countArticles() throws ArticleDAOException;
 
     List<ArticleVendu> getLesArticles();

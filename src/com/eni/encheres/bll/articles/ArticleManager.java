@@ -46,6 +46,10 @@ public class ArticleManager {
             articleDAO.insert(new ArticleVendu(libelle, description, dateDebut, dateFin, prix, new Categorie(categorieId), user, imageName));
     }
 
+    public void updatePrixVente (int articleId, int montant) throws ArticleDAOException {
+        articleDAO.updatePrixVente(articleId, montant);
+    }
+
     private boolean checkAdresse(String rue, String codePostal, String ville){
         String patternCodePostal = "^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$";
         return rue.length() < 31 && codePostal.length() == 5 && Pattern.matches(patternCodePostal, codePostal) && ville.length() < 30;

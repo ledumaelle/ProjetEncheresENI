@@ -2,6 +2,7 @@ package com.eni.encheres.dal.utilisateurs;
 
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.ConnectionProvider;
+import com.eni.encheres.dal.exceptions.UtilisateurDAOException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 
     private static final String INSERT = "INSERT INTO utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=?,credit=?,administrateur=? WHERE no_utilisateur=? ";
+    private static final String UPDATE_CREDIT_PLUS = "update UTILISATEURS set credit = credit + ? where no_utilisateur = ?";
+    private static final String UPDATE_CREDIT_MOINS = "update UTILISATEURS set credit = credit - ? where no_utilisateur = ?";
     private static final String DELETE = "DELETE FROM utilisateurs WHERE no_utilisateur=?";
 
 
@@ -266,5 +269,22 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         }
     }
 
-
+    @Override
+    public void updateCredit(int id, int credit, String type) throws UtilisateurDAOException {
+        String query = UPDATE_CREDIT_MOINS;
+        if(type.equals("plus")){
+            query = UPDATE_CREDIT_PLUS;
+        }
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement st = cnx.prepareStatement(query);
+            st.setInt(1, credit);
+            st.setInt(2, id);
+            st.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            throw new UtilisateurDAOException(e.getMessage());
+        }
+    }
 }
