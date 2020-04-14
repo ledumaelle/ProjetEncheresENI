@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Class ServletDetailsEnchere
  */
-@WebServlet(name="ServletDetailsEnchere",urlPatterns ={"/details_enchere.html"})
+@WebServlet(name="ServletDetailsEnchere",urlPatterns ={"/details_enchere"})
 public class ServletDetailsEnchere extends HttpServlet {
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
@@ -28,10 +28,6 @@ public class ServletDetailsEnchere extends HttpServlet {
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
-
-        Utilisateur unUtilisateur = new Utilisateur(1,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
-        HttpSession session = request.getSession();
-        session.setAttribute("unUtilisateur", unUtilisateur);
 
         int noArticle = Integer.parseInt(request.getParameter("no_article"));
        request.setAttribute("unArticle",getUnArticleByID(noArticle));

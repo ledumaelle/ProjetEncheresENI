@@ -1,4 +1,4 @@
-package com.eni.encheres.servlets.encheres;
+package com.eni.encheres.servlets.articles;
 
 import com.eni.encheres.bll.articles.ArticleManager;
 import com.eni.encheres.bll.categories.CategorieManager;
@@ -61,7 +61,7 @@ public class ServletPageAccueil extends HttpServlet {
 
     private int calculSides(List<ArticleVendu> lesArticles)
     {
-        float value = (float) lesArticles.size() / 3;
+        float value = (float) lesArticles.size() / 6;
         int nbSides = (int) Math.ceil(value);
         return nbSides;
     }

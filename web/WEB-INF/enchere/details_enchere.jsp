@@ -17,35 +17,33 @@
         <%@ include file="../template/head.jsp" %>
         <title>Détails d'une enchère</title>
     </head>
-<body>
-    <% unArticle = (ArticleVendu) request.getAttribute("unArticle"); %>
-    <% lastEnchere = (Enchere) request.getAttribute("lastEnchere"); %>
-    <%@ include file="../template/header.jsp" %>
-<div class="container my-5 py-5 z-depth-1">
+    <body>
+        <% unArticle = (ArticleVendu) request.getAttribute("unArticle"); %>
+        <% lastEnchere = (Enchere) request.getAttribute("lastEnchere"); %>
+        <%@ include file="../template/header.jsp" %>
 
+        <div class="container my-5 py-5 z-depth-1">
+            <!--Section: Content-->
+            <section class="text-center">
+                <!-- Section heading -->
+                <h3 class="font-weight-bold mb-5">Détails d'une enchère</h3>
 
-    <!--Section: Content-->
-    <section class="text-center">
+                <div class="row">
 
-        <!-- Section heading -->
-        <h3 class="font-weight-bold mb-5">Détails d'une enchère</h3>
-
-        <div class="row">
-
-            <div class="col-lg-6">
+                    <div class="col-lg-6">
 
                 <img src=${pageContext.servletContext.contextPath}"/img/articles/${unArticle.getNomImage()}"
                      alt="${unArticle.getNomImage()}" class="img-fluid">
             </div>
 
-            <div class="col-lg-5 text-center text-md-left">
+                    <div class="col-lg-5 text-center text-md-left">
 
-                <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
-                    <strong>${unArticle.getNomArticle()}</strong>
-                </h2>
-                <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">${unArticle.getUneCategorie().getLibelle()}</span>
-                <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
-          <span class="red-text font-weight-bold">
+                        <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
+                            <strong>${unArticle.getNomArticle()}</strong>
+                        </h2>
+                        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">${unArticle.getUneCategorie().getLibelle()}</span>
+                        <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
+                            <span class="red-text font-weight-bold">
 
               <strong class="material-tooltip-main" data-toggle="tooltip" data-placement="bottom" data-html="true"
                       title="Meilleure offre par <b>${lastEnchere.getUnUtilisateur().getPseudo()}</b>">
