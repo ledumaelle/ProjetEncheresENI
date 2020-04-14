@@ -1,7 +1,6 @@
 <%@ page import="com.eni.encheres.bo.Utilisateur" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.eni.encheres.bo.Categorie" %>
-<%@ page import="jdk.jshell.execution.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%!

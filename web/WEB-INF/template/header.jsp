@@ -11,7 +11,7 @@
     %>
     <!--Navbar -->
     <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
-        <a class="navbar-brand" href="index.html">ENI - Enchères</a>
+        <a class="navbar-brand" href="<%= request.getContextPath() %>/">ENI - Enchères</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
                 aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,14 +20,14 @@
             <ul class="navbar-nav ml-auto">
                 <c:if test="${unUtilisateur == null }">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="<%= request.getContextPath() %>/seConnecter">
                             <i class="fas fa-sign-in-alt"></i> S'inscrire - Se connecter
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${unUtilisateur != null }">
                     <li class="nav-item">
-                        <a class="nav-link" href="<%= request.getContextPath() %>/index.html">
+                        <a class="nav-link" href="<%= request.getContextPath() %>/">
                             <i class="fas fa-balance-scale"></i> Enchères</a>
                     </li>
                     <li class="nav-item">
