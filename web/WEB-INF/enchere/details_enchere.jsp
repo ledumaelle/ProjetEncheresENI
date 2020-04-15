@@ -1,12 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: LE DU Maëlle
-  Date: 10/04/2020
-  Time: 10:12
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page import="com.eni.encheres.bo.Enchere" %>
-<%@ page import="com.eni.encheres.bo.ArticleVendu" %>
+<%@ page import="java.time.temporal.ChronoUnit" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
@@ -25,6 +18,10 @@
             <c:set var="lastEnchere" value="${requestScope.lastEnchere}" scope="page" />
         </c:if>
 
+        <c:if test="${!empty requestScope.unRetrait}">
+            <c:set var="unRetrait" value="${requestScope.unRetrait}" scope="page" />
+        </c:if>
+
         <fmt:parseDate  value="${unArticle.getDateDebutEncheres()}"  type="date" pattern="yyyy-MM-dd" var="debutDate"/>
         <fmt:parseDate  value="${unArticle.getDateFinEncheres()}"  type="date" pattern="yyyy-MM-dd" var="finDate"/>
 
@@ -37,6 +34,10 @@
                     <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('non_debutee')}">
                         <button class="btn btn-secondary-color btn-rounded">
                             <i class="fas fa-edit mr-2" aria-hidden="true"></i> Modifier</button>
+                    </c:if>
+                    <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('terminee') && !unRetrait.getRetire()}">
+                        <a href="<%= request.getContextPath() %>/retirer?no_article=${unArticle.getNoArticle()}&credit=${unArticle.getPrixVente()}" class="btn btn-secondary-color btn-rounded">
+                            <i class="fas fa-box-open" aria-hidden="true"></i> Retirer</a>
                     </c:if>
                 </div>
             </div>
@@ -70,29 +71,35 @@
                             <span class="badge badge-success product mb-4 ml-xl-0 ml-4">EN COURS</span>
                         </c:if>
                         <c:if test="${unArticle.getEtatVente().equals('non_debutee')}">
-                            <span class="badge badge-warning product mb-4 ml-xl-0 ml-4">NON DÉBUTÉE</span>
+                            <c:set var="dayBefore" value="${ChronoUnit.DAYS.between(LocalDate.now(), unArticle.getDateDebutEncheres())}" scope="page" />
+                            <span class="badge badge-warning product mb-4 ml-xl-0 ml-4">NON DÉBUTÉE J-${dayBefore}</span>
                         </c:if>
                         <c:if test="${unArticle.getEtatVente().equals('terminee')}">
                             <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">TERMINÉE</span>
                         </c:if>
                         <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
-                            <c:if test="${empty lastEnchere.getMontantEnchere()}">
-                                <span>Aucune enchère pour le moment.</span><br/>
+                            <c:if test="${unArticle.getEtatVente().equals('non_debutee')}">
+                                <span>Les enchères n'ont pas encore commencé.</span><br/>
                             </c:if>
-                            <span class="red-text font-weight-bold">
+                            <c:if test="${!unArticle.getEtatVente().equals('non_debutee')}">
+                                <c:if test="${empty lastEnchere.getMontantEnchere()}">
+                                    <span>Aucune enchère pour le moment.</span><br/>
+                                </c:if>
                                 <c:if test="${!empty lastEnchere.getMontantEnchere()}">
+                                <span class="red-text font-weight-bold">
                                     <strong class="material-tooltip-main" data-toggle="tooltip" data-placement="bottom" data-html="true"
-                                        title="Meilleure offre par <b>${lastEnchere.getUnUtilisateur().getPseudo()}</b>">
+                                            title="Meilleure offre par <b>${lastEnchere.getUnUtilisateur().getPseudo()}</b>">
                                         ${lastEnchere.getMontantEnchere()} pts
-                                    </c:if>
-                                </strong>
+                                    </strong>
+                                </span>
+                                </c:if>
+                            </c:if>
                             <span class="grey-text">
                                 <small>
                                     <span class="material-tooltip-main" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Mise à prix">${unArticle.getMiseAPrix()} pts
                                     </span>
                                 </small>
                             </span>
-                          </span>
                         </h3>
 
                         <!--Accordion wrapper-->
@@ -166,9 +173,9 @@
                                 <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
                                      data-parent="#accordionEx">
                                     <div class="card-body">
-                                        <span> <b> Rue : </b> ${unArticle.getUnUtilisateur().getRue()}</span><br/>
-                                        <span> <b> CP : </b> ${unArticle.getUnUtilisateur().getCodePostal()}</span><br/>
-                                        <span> <b> Ville : </b> ${unArticle.getUnUtilisateur().getVille()}</span><br/>
+                                        <span> <b> Rue : </b> ${unRetrait.getRue()}</span><br/>
+                                        <span> <b> CP : </b> ${unRetrait.getCodePostal()}</span><br/>
+                                        <span> <b> Ville : </b> ${unRetrait.getVille()}</span><br/>
                                     </div>
                                 </div>
                             </div>
@@ -202,6 +209,9 @@
                                                     <i class="fas fa-cart-plus mr-2" aria-hidden="true"></i> Enchérir</button>
                                             </div>
                                         </form>
+                                    </div>
+                                    <div class="row" id="erreur-credit">
+                                        <span class="text-danger"><i class="fas fa-exclamation-circle"></i>Vous n'avez pas assez de crédit pour faire une enchère</span>
                                     </div>
                                 </div>
                             </section>
