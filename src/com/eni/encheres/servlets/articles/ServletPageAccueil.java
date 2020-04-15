@@ -24,15 +24,22 @@ import java.lang.*;
 @WebServlet(name="ServletPageAccueil",urlPatterns ={""})
 public class ServletPageAccueil extends HttpServlet {
 
+    Utilisateur unUtilisateur = new Utilisateur(3,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
+
+
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
 
-        Utilisateur unUtilisateur = new Utilisateur(3,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
         HttpSession session = request.getSession();
-        session.setAttribute("unUtilisateur", unUtilisateur);
+        session.setAttribute("unUtilisateur",unUtilisateur);
+
+        /*if(null != session.getAttribute("unUtilisateur"))
+        {
+            unUtilisateur = (Utilisateur) session.getAttribute("unUtilisateur");
+        }*/
 
         request.setAttribute("lesCategories", getLesCategories());
 
@@ -47,16 +54,15 @@ public class ServletPageAccueil extends HttpServlet {
             nomArticle = request.getParameter("txtFiltreNom");
         }
 
+        boolean encheresOuvertes = false;
+        boolean encheresEnCours = false;
+        boolean encheresRemportees = false;
+        boolean ventesEnCours = false;
+        boolean ventesNonDebutees = false;
+        boolean ventesTerminees = false;
         String groupeRadio="";
         if(null != request.getParameter("groupeRadio") && (!request.getParameter("groupeRadio").equals("")))
         {
-            boolean encheresOuvertes;
-            boolean encheresEnCours;
-            boolean encheresRemportees;
-            boolean ventesEnCours;
-            boolean ventesNonDebutees;
-            boolean ventesTerminees;
-
             switch(request.getParameter("groupeRadio"))
             {
                 case "achats":
@@ -66,11 +72,11 @@ public class ServletPageAccueil extends HttpServlet {
                     }
                     if(null != request.getParameter("encheres_en_cours"))
                     {
-                        encheresEnCours = request.getParameter("encheres_ouvertes").equals("on");
+                        encheresEnCours = request.getParameter("encheres_en_cours").equals("on");
                     }
                     if(null != request.getParameter("encheres_remportees"))
                     {
-                        encheresRemportees = request.getParameter("encheres_ouvertes").equals("on");
+                        encheresRemportees = request.getParameter("encheres_remportees").equals("on");
                     }
                     break;
                 case "ventes":
@@ -92,7 +98,17 @@ public class ServletPageAccueil extends HttpServlet {
             }
         }
 
-        List<ArticleVendu> lesArticles = getLesArticles(idCategorie,nomArticle);
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+
+        if(null != unUtilisateur)
+        {
+            lesArticles = getLesArticles(idCategorie,nomArticle,encheresOuvertes,encheresEnCours,encheresRemportees,ventesEnCours,ventesNonDebutees,ventesTerminees);
+        }
+        else
+        {
+            lesArticles = getLesArticles(idCategorie,nomArticle);
+
+        }
         request.setAttribute("lesArticles",lesArticles);
 
         request.setAttribute("idCategorie",idCategorie);
@@ -142,6 +158,76 @@ public class ServletPageAccueil extends HttpServlet {
             else if(!nomArticle.equals(""))
             {
                 lesArticles = managerArticle.getLesArticlesByNom(nomArticle);
+            }
+            else
+            {
+                lesArticles = managerArticle.getLesArticles();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lesArticles;
+    }
+
+    private List<ArticleVendu> getLesArticles(String idCategorie, String nomArticle, boolean encheresOuvertes, boolean encheresEnCours, boolean encheresRemportees,boolean ventesEncours, boolean ventesNonDebutees, boolean ventesTerminees)
+    {
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+        try {
+            ArticleManager managerArticle = ArticleManager.getInstance();
+
+            if(!idCategorie.equals("") && !nomArticle.equals(""))
+            {
+                lesArticles = managerArticle.getLesArticlesByParams(Integer.parseInt(idCategorie),nomArticle);
+            }
+            else if(!idCategorie.equals(""))
+            {
+                lesArticles = managerArticle.getLesArticlesByCategorieID(Integer.parseInt(idCategorie));
+            }
+            else if(!nomArticle.equals(""))
+            {
+                lesArticles = managerArticle.getLesArticlesByNom(nomArticle);
+            }
+            else if(encheresOuvertes & encheresEnCours &!encheresRemportees)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresOuvertes & encheresRemportees &!encheresEnCours)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresEnCours & encheresRemportees &!encheresOuvertes)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresEnCoursAndEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresOuvertes & encheresEnCours & encheresRemportees)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresOuvertes)
+            {
+                lesArticles = managerArticle.getLesArticles();
+            }
+            else if(encheresEnCours)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresRemportees)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesEncours)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesNonDebutees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesNonDebuteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesTerminees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesTermineesAndUserID(unUtilisateur.getNoUtilisateur());
             }
             else
             {

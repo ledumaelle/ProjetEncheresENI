@@ -37,7 +37,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
         return new Enchere(res.getDate("date_enchere").toLocalDate(),res.getInt("montant_enchere"));
     }
 
-
     @Override
     public List<Enchere> getLesEncheresByArticleID(int noArticle)
     {

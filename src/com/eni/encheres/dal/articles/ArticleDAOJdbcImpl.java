@@ -2,6 +2,7 @@ package com.eni.encheres.dal.articles;
 
 import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Categorie;
+import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.ConnectionProvider;
 import com.eni.encheres.dal.encheres.EnchereDAO;
@@ -64,6 +65,54 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             "INNER JOIN UTILISATEURS as U on U.no_utilisateur = A.no_utilisateur " +
             "INNER JOIN CATEGORIES as C on C.no_categorie = A.no_categorie  " +
             "AND A.no_article = ? ";
+
+    private static final String SELECT_ARTICLES_BY_ENCHERES_EN_COURS_AND_USER="SELECT date_enchere,montant_enchere, E.no_utilisateur, U.no_utilisateur, U.nom, U.prenom, U.pseudo, U.email,  U.telephone, U.mot_de_passe, U.rue, U.code_postal, U.ville, U.credit, U.administrateur," +
+            "A.no_article, A.nom_article, A.description, A.prix_initial, A.prix_vente, A.date_fin_encheres, A.date_debut_encheres, A.nom_image," +
+            "C.no_categorie, C.libelle " +
+            "FROM ENCHERES as E " +
+            "INNER JOIN ARTICLES_VENDUS as A on E.no_article = A.no_article " +
+            "INNER JOIN UTILISATEURS as U on U.no_utilisateur = A.no_utilisateur  " +
+            "INNER JOIN CATEGORIES as C on C.no_categorie = A.no_categorie " +
+            "WHERE E.no_utilisateur = ? " +
+            "AND CURRENT_TIMESTAMP BETWEEN A.date_debut_encheres AND A.date_fin_encheres";
+
+    private static final String SELECT_ARTICLES_BY_ENCHERES_REMPORTEES_AND_USER="SELECT date_enchere,montant_enchere, E.no_utilisateur, U.no_utilisateur, U.nom, U.prenom, U.pseudo, U.email,  U.telephone, U.mot_de_passe, U.rue, U.code_postal, U.ville, U.credit, U.administrateur,  \n" +
+            "A.no_article, A.nom_article, A.description, A.prix_initial, A.prix_vente, A.date_fin_encheres, A.date_debut_encheres, A.nom_image, \n" +
+            "C.no_categorie, C.libelle " +
+            "FROM ENCHERES as E " +
+            "INNER JOIN ARTICLES_VENDUS as A on E.no_article = A.no_article " +
+            "INNER JOIN UTILISATEURS as U on U.no_utilisateur = A.no_utilisateur " +
+            "INNER JOIN CATEGORIES as C on C.no_categorie = A.no_categorie " +
+            "WHERE E.no_utilisateur = ? " +
+            "AND A.prix_vente = E.montant_enchere " +
+            "AND CURRENT_TIMESTAMP > A.date_fin_encheres";
+
+    private static final String SELECT_ARTICLES_BY_VENTES_EN_COURS_AND_USER="SELECT U.no_utilisateur, U.nom, U.prenom, U.pseudo, U.email,  U.telephone, U.mot_de_passe, U.rue, U.code_postal, U.ville, U.credit, U.administrateur,"+
+            "A.no_article, A.nom_article, A.description, A.prix_initial, A.prix_vente, A.date_fin_encheres, A.date_debut_encheres, A.nom_image, "+
+            "C.no_categorie, C.libelle "+
+            "FROM ARTICLES_VENDUS as A "+
+            "INNER JOIN UTILISATEURS as U on U.no_utilisateur = A.no_utilisateur "+
+            "INNER JOIN CATEGORIES as C on C.no_categorie = A.no_categorie "+
+            "WHERE U.no_utilisateur = ? "+
+            "AND CURRENT_TIMESTAMP BETWEEN A.date_debut_encheres AND A.date_fin_encheres";
+
+    private static final String SELECT_ARTICLES_BY_VENTES_NON_DEBUTEES_AND_USER="SELECT U.no_utilisateur, U.nom, U.prenom, U.pseudo, U.email,  U.telephone, U.mot_de_passe, U.rue, U.code_postal, U.ville, U.credit, U.administrateur,"+
+            "A.no_article, A.nom_article, A.description, A.prix_initial, A.prix_vente, A.date_fin_encheres, A.date_debut_encheres, A.nom_image, "+
+            "C.no_categorie, C.libelle "+
+            "FROM ARTICLES_VENDUS as A "+
+            "INNER JOIN UTILISATEURS as U on U.no_utilisateur = A.no_utilisateur "+
+            "INNER JOIN CATEGORIES as C on C.no_categorie = A.no_categorie "+
+            "WHERE U.no_utilisateur = ? "+
+            "AND CURRENT_TIMESTAMP < A.date_debut_encheres";
+
+    private static final String SELECT_ARTICLES_BY_VENTES_TERMINEES_AND_USER="SELECT U.no_utilisateur, U.nom, U.prenom, U.pseudo, U.email,  U.telephone, U.mot_de_passe, U.rue, U.code_postal, U.ville, U.credit, U.administrateur,"+
+            "A.no_article, A.nom_article, A.description, A.prix_initial, A.prix_vente, A.date_fin_encheres, A.date_debut_encheres, A.nom_image, "+
+            "C.no_categorie, C.libelle "+
+            "FROM ARTICLES_VENDUS as A "+
+            "INNER JOIN UTILISATEURS as U on U.no_utilisateur = A.no_utilisateur "+
+            "INNER JOIN CATEGORIES as C on C.no_categorie = A.no_categorie "+
+            "WHERE U.no_utilisateur = ? "+
+            "AND CURRENT_TIMESTAMP > A.date_fin_encheres";
 
     @Override
     public void insert(ArticleVendu article) throws ArticleDAOException {
@@ -228,6 +277,141 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             PreparedStatement requete = cnx.prepareStatement(SELECT_ALL_BY_PARAMS);
             requete.setInt(1,idCategorie);
             requete.setString(2,"%"+nomArticle+"%");
+            ResultSet res = requete.executeQuery();
+            while(res.next())
+            {
+                ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
+
+                if(!lesArticles.contains(unArticleVendu)) {
+                    lesArticles.add(unArticleVendu);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return lesArticles;
+    }
+
+    @Override
+    public List<ArticleVendu> getLesArticlesByEncheresEnCoursAndUserID(int idEncherisseur) {
+
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement requete = cnx.prepareStatement(SELECT_ARTICLES_BY_ENCHERES_EN_COURS_AND_USER);
+            requete.setInt(1,idEncherisseur);
+            ResultSet res = requete.executeQuery();
+            while(res.next())
+            {
+                ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
+
+                if(!lesArticles.contains(unArticleVendu)) {
+                    lesArticles.add(unArticleVendu);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return lesArticles;
+    }
+
+    @Override
+    public List<ArticleVendu> getLesArticlesByEncheresRemporteesAndUserID(int idEncherisseur) {
+
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement requete = cnx.prepareStatement(SELECT_ARTICLES_BY_ENCHERES_REMPORTEES_AND_USER);
+            requete.setInt(1,idEncherisseur);
+            ResultSet res = requete.executeQuery();
+            while(res.next())
+            {
+                ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
+
+                if(!lesArticles.contains(unArticleVendu)) {
+                    lesArticles.add(unArticleVendu);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return lesArticles;
+    }
+
+    @Override
+    public List<ArticleVendu> getLesArticlesByVentesEnCoursAndUserID(int idVendeur) {
+
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement requete = cnx.prepareStatement(SELECT_ARTICLES_BY_VENTES_EN_COURS_AND_USER);
+            requete.setInt(1,idVendeur);
+            ResultSet res = requete.executeQuery();
+            while(res.next())
+            {
+                ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
+
+                if(!lesArticles.contains(unArticleVendu)) {
+                    lesArticles.add(unArticleVendu);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return lesArticles;
+    }
+
+    @Override
+    public List<ArticleVendu> getLesArticlesByVentesNonDebuteesAndUserID(int idVendeur) {
+
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement requete = cnx.prepareStatement(SELECT_ARTICLES_BY_VENTES_NON_DEBUTEES_AND_USER);
+            requete.setInt(1,idVendeur);
+            ResultSet res = requete.executeQuery();
+            while(res.next())
+            {
+                ArticleVendu unArticleVendu = construireArticle(res);
+                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
+
+                if(!lesArticles.contains(unArticleVendu)) {
+                    lesArticles.add(unArticleVendu);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return lesArticles;
+    }
+
+    @Override
+    public List<ArticleVendu> getLesArticlesByVentesTermineesAndUserID(int idVendeur) {
+
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement requete = cnx.prepareStatement(SELECT_ARTICLES_BY_VENTES_TERMINEES_AND_USER);
+            requete.setInt(1,idVendeur);
             ResultSet res = requete.executeQuery();
             while(res.next())
             {
