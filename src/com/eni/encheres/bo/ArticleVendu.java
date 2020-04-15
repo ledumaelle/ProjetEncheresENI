@@ -19,8 +19,7 @@ public class ArticleVendu {
     private Categorie uneCategorie;
     private Utilisateur unUtilisateur;
 
-    public ArticleVendu()
-    {
+    public ArticleVendu() {
 
     }
 

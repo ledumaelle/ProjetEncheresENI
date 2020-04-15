@@ -29,11 +29,6 @@ public class ServletPageAccueil extends HttpServlet {
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
-
-
-        HttpSession session = request.getSession();
-
-
         request.setAttribute("lesCategories", getLesCategories());
 
         String idCategorie="";

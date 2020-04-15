@@ -3,10 +3,6 @@
 <%@ page import="com.eni.encheres.bo.Categorie" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%!
-    private List<Categorie> categories;
-    private Utilisateur utilisateur;
-%>
 <html>
     <head>
         <jsp:include page="../template/head.jsp"/>
@@ -17,8 +13,6 @@
         <jsp:include page="../template/header.jsp"/>
         <div class="container my-5 py-5 z-depth-1">
             <section class="text-center">
-                <h3 class="font-weight-bold mb-5">Nouvelle vente</h3>
-
                 <form class="text-center" action="<%= request.getContextPath() %>/articles/add" method="post" name="form">
                     <div class="row">
                         <div class="col-md-4">
@@ -38,7 +32,9 @@
                             </div>
                             <select required class="browser-default custom-select mb-4" name="categorie">
                                 <option value="" disabled>Chosir une catégorie</option>
-                                <% categories = (List<Categorie>) request.getAttribute("categories"); %>
+                                <c:if test="${!empty requestScope.categories}">
+                                    <c:set var="categories" value="${requestScope.categories}" scope="page" />
+                                </c:if>
                                 <c:forEach items="${categories}" var="categorie" varStatus="vs">
                                     <option value="${categorie.noCategorie}">${categorie.libelle}</option>
                                 </c:forEach>
@@ -57,8 +53,7 @@
                                     <h2 class="card-header-title">Retrait</h2>
                                 </div>
                                 <div class="card-body card-body-cascade text-center">
-                                    <% utilisateur = (Utilisateur) session.getAttribute("unUtilisateur"); %>
-                                    <input required maxlength="30" type="text" id="rue" class="form-control mb-4" placeholder="Rue" value="<%= utilisateur.getRue() %>">
+                                    <input required maxlength="30" type="text" id="rue" class="form-control mb-4" placeholder="Rue" value="${unUtilisateur.getRue()}">
                                     <input
                                             required type="text"
                                             maxlength="5"
@@ -66,8 +61,8 @@
                                             pattern="^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$"
                                             id="cp" class="form-control mb-4"
                                             placeholder="Code postal"
-                                            value="<%= utilisateur.getCodePostal() %>">
-                                    <input required maxlength="30" type="text" id="ville" class="form-control mb-4" placeholder="Ville" value="<%= utilisateur.getVille() %>">
+                                            value="${unUtilisateur.getCodePostal()}">
+                                    <input required maxlength="30" type="text" id="ville" class="form-control mb-4" placeholder="Ville" value="${unUtilisateur.getVille()}">
                                 </div>
                             </div>
                             <div class="row m-4">
@@ -80,6 +75,5 @@
                 </form>
             </section>
         </div>
-        <jsp:include page="../template/footer.jsp"/>
     </body>
 </html>
