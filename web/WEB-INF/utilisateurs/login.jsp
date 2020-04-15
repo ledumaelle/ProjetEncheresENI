@@ -162,7 +162,7 @@
           <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
           <form class="form-signin" action="login" method="post" id="loginForm">
             <div class="form-label-group">
-              <input type="email" id="email" name="email" class="form-control" placeholder="Identifiant" required autofocus>
+              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" required autofocus>
               <label for="email">Identifiant</label>
             </div>
 
