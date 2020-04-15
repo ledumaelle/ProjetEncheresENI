@@ -3,7 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <jsp:include page="../template/head.jsp"/>
+
+    <jsp:include page="../template/head.jsp"/>
 </head>
 <style>
   :root {
@@ -151,6 +152,7 @@
 
 </style>
 <body>
+<jsp:include page="../template/header.jsp"/>
 <div class="container">
   <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -160,7 +162,7 @@
           <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
           <form class="form-signin" action="login" method="post" id="loginForm">
             <div class="form-label-group">
-              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" required autofocus>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Identifiant" required autofocus>
               <label for="email">Identifiant</label>
             </div>
 

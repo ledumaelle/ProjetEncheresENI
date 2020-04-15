@@ -1,10 +1,9 @@
-package com.eni.encheres.servlets.utilistateurs;
+package com.eni.encheres.servlets.utilisateurs;
 
 import com.eni.encheres.bll.utilisateurs.UtilisateurManager;
 import com.eni.encheres.bo.Utilisateur;
 
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/utilisateurs/login.jsp").forward(request,response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/login.jsp").forward(request,response);
 	}
 
 }

@@ -1,8 +1,7 @@
-package com.eni.encheres.servlets.utilistateurs;
+package com.eni.encheres.servlets.utilisateurs;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
