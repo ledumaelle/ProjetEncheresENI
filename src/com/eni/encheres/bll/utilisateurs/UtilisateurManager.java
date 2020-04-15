@@ -72,11 +72,17 @@ public class UtilisateurManager {
 
     }
 
-    public Utilisateur connexionUtilisateur(String mail,String mdp){
+    public Utilisateur connexionUtilisateur(String identifiant,String mdp){
+        Utilisateur user ;
 
+        if(identifiant.matches(".+@\\w+.\\w+")){
 
+             user = utilisateurDao.getUtilisateurByMail(identifiant);
 
-        Utilisateur user = utilisateurDao.getUtilisateurByMail(mail);
+        }else {
+
+            user = utilisateurDao.getUtilisateurByPseudo(identifiant);
+        }
 
         if(user != null && user.getMotDePasse().equals(mdp)){
             return user;

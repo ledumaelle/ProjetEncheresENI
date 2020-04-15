@@ -95,9 +95,14 @@ ON DELETE NO ACTION
     ON UPDATE no action 
 
 
-	--ajout d'un contrainte d'unicité dans le mail utilisateur
+	--ajout d'un contrainte d'unicité dans le mail et pseudo utilisateur
 ALTER TABLE UTILISATEURS
 ADD CONSTRAINT email_unique UNIQUE (email);   
+
+	GO
+
+ALTER TABLE UTILISATEURS
+ADD CONSTRAINT pseudo_unique UNIQUE (pseudo);
 
 	GO
 

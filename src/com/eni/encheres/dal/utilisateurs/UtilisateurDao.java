@@ -14,6 +14,8 @@ public interface UtilisateurDao {
 
     public Utilisateur getUtilisateurByMail(String mail);
 
+    public Utilisateur getUtilisateurByPseudo(String pseudo);
+
     public List<Utilisateur> getUtilisateurs();
 
     public void deleteUtilisateur(int id);
