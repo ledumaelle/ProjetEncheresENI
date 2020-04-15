@@ -32,7 +32,7 @@ public class UtilisateurManager {
 
     public int creerUtilisateur(Utilisateur utilisateur){
 
-        if(checkUtilisateur(utilisateur)){
+        if(utilisateur != null && checkUtilisateur(utilisateur)){
             return utilisateurDao.creerUtilisateur(utilisateur);
         }else {
             LOGGER.info("Utilisateur non creer car champs non valide");
@@ -106,5 +106,13 @@ public class UtilisateurManager {
     }
 
 
+    public Utilisateur getUtilisateurByPseudo(String pseudo) {
+        return utilisateurDao.getUtilisateurByPseudo(pseudo);
+    }
 
+
+    public boolean isUnique(Utilisateur user){
+       return getUtilisateurByMail(user.getEmail())==null && getUtilisateurByPseudo(user.getPseudo())==null;
+
+    }
 }
