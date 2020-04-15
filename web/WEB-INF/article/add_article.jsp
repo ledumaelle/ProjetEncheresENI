@@ -13,7 +13,7 @@
         <jsp:include page="../template/header.jsp"/>
         <div class="container my-5 py-5 z-depth-1">
             <section class="text-center">
-                <form class="text-center" action="<%= request.getContextPath() %>/articles/add" method="post" name="form">
+                <form class="text-center needs-validation" novalidate action="<%= request.getContextPath() %>/articles/add" method="post" name="form">
                     <div class="row">
                         <div class="col-md-4">
                             <img src="<%= request.getContextPath() %>/img/articles/no-image.png" class="img-thumbnail" id="img-preview">
@@ -21,7 +21,14 @@
                                 <div class="btn btn-primary btn-rounded btn-upload">
                                     <span>Photo</span>
                                     <input required type="file" accept="image/*" id="photo" name="photo" enctype="multipart/form-data">
-                                    <input required type="text" hidden id="photoB64" name="photoB64">
+                                </div>
+                                <div>
+                                    <input required type="text" class="form-control" hidden id="photoB64" name="photoB64">
+                                    <div class="invalid-feedback">Veuillez chosir une photo.</div>
+                                </div>
+                                <div>
+                                    <input required type="number" hidden min="0" value="0" max="2000000" id="photoSize" name="photoSize" class="form-control">
+                                    <div class="invalid-feedback">La taille de la photo est trop importante.</div>
                                 </div>
                             </div>
                         </div>
@@ -43,10 +50,10 @@
                                 <input required placeholder="Prix" type="number" min="5" step="5" value="150" id="prix" name="prix" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input placeholder="Début de l'enchère" type="text" id="debut" class="form-control datepicker" name="debut">
+                                <input required placeholder="Début de l'enchère" type="text" id="debut" class="form-control datepicker" name="debut">
                             </div>
                             <div class="form-group">
-                                <input placeholder="Fin de l'enchère" type="text" id="fin" class="form-control datepicker" name="fin">
+                                <input required placeholder="Fin de l'enchère" type="text" id="fin" class="form-control datepicker" name="fin">
                             </div>
                             <div class="card card-cascade narrower" id="card-retrait">
                                 <div class="view view-cascade gradient-card-header blue-gradient">
@@ -66,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="row m-4">
-                                <div class="col-md-5"><button class="btn btn-primary btn-rounded" type="submit" onclick="submitForm()">ENREGISTRER</button></div>
+                                <div class="col-md-5"><button class="btn btn-primary btn-rounded" type="submit">ENREGISTRER</button></div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-5"><a href="<%=request.getContextPath()%>" class="btn btn-outline-primary btn-rounded">ANNULER</a></div>
                             </div>

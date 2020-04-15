@@ -71,13 +71,13 @@ public class ArticleManager {
             if(file.createNewFile()){
                 //convert base64 string to binary data
                 byte[] imageBite = Base64.getDecoder().decode(image[1]);
-                OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
+                OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file), 2000000);
                 outputStream.write(imageBite);
             }else{
                 System.out.println(imageName + " exite déjà");
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ArticleBLLException(e.getMessage());
         }
     }
