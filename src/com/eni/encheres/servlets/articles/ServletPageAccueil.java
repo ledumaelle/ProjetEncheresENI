@@ -189,6 +189,8 @@ public class ServletPageAccueil extends HttpServlet {
             {
                 lesArticles = managerArticle.getLesArticlesByNom(nomArticle);
             }
+
+            //ENCHERES
             else if(encheresOuvertes & encheresEnCours &!encheresRemportees)
             {
                 lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
@@ -216,6 +218,25 @@ public class ServletPageAccueil extends HttpServlet {
             else if(encheresRemportees)
             {
                 lesArticles = managerArticle.getLesArticlesByEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+
+            }
+
+            //VENTES
+            else if(ventesEncours & ventesNonDebutees & ventesTerminees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndVentesTermineesUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesEncours & ventesNonDebutees & !ventesTerminees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesTerminessUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesEncours &ventesTerminees & !ventesNonDebutees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesNonDebutees & ventesTerminees & !ventesEncours)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesNonDebuteesAndVentesTermineesUserID(unUtilisateur.getNoUtilisateur());
             }
             else if(ventesEncours)
             {
@@ -229,6 +250,9 @@ public class ServletPageAccueil extends HttpServlet {
             {
                 lesArticles = managerArticle.getLesArticlesByVentesTermineesAndUserID(unUtilisateur.getNoUtilisateur());
             }
+
+
+            //SANS FILTRE articles où les enchères sont en cours
             else
             {
                 lesArticles = managerArticle.getLesArticles();

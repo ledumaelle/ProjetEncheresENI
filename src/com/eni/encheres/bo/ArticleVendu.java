@@ -1,6 +1,8 @@
 package com.eni.encheres.bo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class ArticleVendu
@@ -19,12 +21,15 @@ public class ArticleVendu {
     private Categorie uneCategorie;
     private Utilisateur unUtilisateur;
 
+    private List<Enchere> lesEncheres;
+
     public ArticleVendu()
     {
-
+        lesEncheres = new ArrayList<>();
     }
 
     public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, Categorie uneCategorie, Utilisateur unUtilisateur, String nomImage) {
+        lesEncheres = new ArrayList<>();
         this.nomArticle = nomArticle;
         this.description = description;
         this.dateDebutEncheres = dateDebutEncheres;
@@ -37,6 +42,7 @@ public class ArticleVendu {
     }
 
     public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String nomImage) {
+        lesEncheres = new ArrayList<>();
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -145,6 +151,18 @@ public class ArticleVendu {
         this.nomImage = nomImage;
     }
 
+    public List<Enchere> getLesEncheres() {
+        return lesEncheres;
+    }
+
+    public void ajouterUneEnchere(Enchere uneEnchere)
+    {
+        if(!lesEncheres.contains(uneEnchere))
+        {
+            lesEncheres.add(uneEnchere);
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -166,6 +184,7 @@ public class ArticleVendu {
                 ", etatVente='" + etatVente + '\'' +
                 ", uneCategorie=" + uneCategorie +
                 ", unUtilisateur=" + unUtilisateur +
+                ", lesEncheres=" + lesEncheres +
                 '}';
     }
 }

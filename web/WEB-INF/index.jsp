@@ -13,6 +13,8 @@
     <title>ENI - Enchères</title>
   </head>
   <body>
+    <dsp:importbean var="requestLocale" bean="/atg/dynamo/servlet/RequestLocale" />
+    <fmt:setLocale value="${requestLocale.locale}"/>
 
     <c:if test="${!empty requestScope.lesCategories}">
       <c:set var="lesCategories" value="${requestScope.lesCategories}" scope="page" />
@@ -221,6 +223,19 @@
                   <div class="carousel-item">
                 </c:if>
                     <c:forEach items="${lesArticles}" begin="${startIndex}" end="${startIndex +5}" var="article" varStatus="vs3">
+                      <c:if test="${!empty article.getLesEncheres()}">
+                        <c:set var="meilleurEnchere" value="${article.getLesEncheres().get(0)}" scope="page" />
+                        <c:set var="isEncherir" value="false" scope="page" />
+                        <c:forEach items="${article.getLesEncheres()}" var="enchere">
+                          <c:if test="${meilleurEnchere.getMontantEnchere() > enchere.getMontantEnchere()}">
+                            <c:set var="meilleurEnchere" value="${enchere}" scope="page" />
+                          </c:if>
+                          <c:if test="${meilleurEnchere.getUnUtilisateur().getNoUtilisateur() == unUtilisateur.getNoUtilisateur()}">
+                            <c:set var="isEncherir" value="true" scope="page" />
+                          </c:if>
+                        </c:forEach>
+                      </c:if>
+
                       <c:set var="currentIndex" value="${currentIndex+1}"/>
                       <!-- Card -->
                       <c:if test="${vs3.first}">
@@ -248,6 +263,14 @@
                           </c:if>
                           <c:if test="${article.getEtatVente().equals('terminee')}">
                             <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">TERMINÉE</span>
+                          </c:if>
+                          <c:if test="${article.getEtatVente().equals('en_cours') && isEncherir}">
+                            <img src="${pageContext.servletContext.contextPath}/img/bid.png" class="rounded float-right"
+                               alt="enchère">
+                          </c:if>
+                          <c:if test="${article.getEtatVente().equals('terminee') && meilleurEnchere.getUnUtilisateur().getNoUtilisateur() == unUtilisateur.getNoUtilisateur()}">
+                            <img src="${pageContext.servletContext.contextPath}/img/win.png" class="rounded float-right"
+                                 alt="gagné">
                           </c:if>
                           <!-- Category & Title -->
                           <p class="text-muted">

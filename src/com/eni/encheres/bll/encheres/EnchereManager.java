@@ -39,23 +39,8 @@ public class EnchereManager {
         return this.enchereDAO.getLesEncheresByArticleID(noArticle);
     }
 
-    public Enchere getBestEnchereByArticleID(int noArticle)
+    public Enchere getMaxEnchereByArticleID(int noArticle)
     {
-        List<Enchere> lesEncheres = getLesEncheresByArticleID(noArticle);
-        Enchere bestEnchere = null;
-
-        for(int i=0;i<lesEncheres.size();i++)
-        {
-            if(i==0)
-            {
-                bestEnchere = lesEncheres.get(i);
-            }
-           if(lesEncheres.get(i).getMontantEnchere() > bestEnchere.getMontantEnchere())
-           {
-               bestEnchere = lesEncheres.get(i);
-           }
-        }
-
-        return bestEnchere;
+        return this.enchereDAO.getMaxEnchereByArticleID(noArticle);
     }
 }
