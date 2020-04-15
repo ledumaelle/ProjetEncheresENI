@@ -1,10 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- Created by IntelliJ IDEA. --%>
+<%@ page import="com.eni.encheres.bo.Enchere" %>
+<%@ page import="com.eni.encheres.bo.ArticleVendu" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-
-    <jsp:include page="../template/head.jsp"/>
+  <%@ include file="../template/head.jsp" %>
 </head>
 <style>
   :root {
@@ -174,6 +175,7 @@
             <div class="text-center">
               <div class="card-option text-center">
                 <hr class="my-4">
+                <a href="${pageContext.servletContext.contextPath}/register" id="register">Pas encore de compte ?</a><br>
                 <a href="#" id="mdpforgot">Mot de passe oublié ?</a>
               </div>
             </div>
@@ -198,6 +200,7 @@
           <span aria-hidden="true" class="white-text">&times;</span>
         </button>
       </div>
+
 
       <!--Body-->
       <div class="modal-body">

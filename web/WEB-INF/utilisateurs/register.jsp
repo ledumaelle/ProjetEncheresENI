@@ -1,14 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: tcollin
-  Date: 09/04/2020
-  Time: 14:36
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.eni.encheres.bo.Enchere" %>
+<%@ page import="com.eni.encheres.bo.ArticleVendu" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <jsp:include page="../../include.jsp"/>
+    <%@ include file="../template/head.jsp" %>
 </head>
 <body>
 <div class="container">
@@ -20,9 +17,10 @@
                     </br></br>
                     <h5 class="card-title text-center font-italic">Création Compte</h5>
 
-                    <form class="form-signin" method="post" action="registerAdd.php">
+                    <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
+                    <form class="form-signin" method="post" action="">
                         <div class="form-label-group">
-                            <input type="text" id="inputPseudo" name="inputPseudo" class="form-control" placeholder="Nom" required autofocus>
+                            <input type="text" id="inputPseudo" name="inputPseudo" class="form-control" placeholder="Pseudo" required autofocus>
                             <label for="inputPseudo"><i class="fas fa-user"></i>   Pseudo</label>
                         </div>
 
@@ -52,8 +50,8 @@
                         </div>
 
                         <div class="form-label-group">
-                            <input type="tel"  name="inputPhone" id="inputPhone" class="form-control" placeholder="Code Postal" required>
-                            <label for="inputPhone"><i class="fas fa-phone"></i>  Téléphone mobile</label>
+                            <input type="tel"  name="inputPhone" id="inputPhone" class="form-control" placeholder="Téléphone" required>
+                            <label for="inputPhone"><i class="fas fa-phone"></i> Téléphone mobile</label>
                         </div>
 
                         <div class="form-label-group">
