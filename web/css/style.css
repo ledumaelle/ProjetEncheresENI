@@ -9,3 +9,7 @@
 input.invalid, textarea.invalid, select.invalid {
     border-color: #dc3545;
 }
+
+#card-retrait {
+    margin-top: 40px;
+}
