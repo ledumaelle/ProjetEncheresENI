@@ -22,7 +22,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
     private static final String INSERT = "INSERT INTO ENCHERES (date_enchere, montant_enchere, no_utilisateur, no_article) VALUES (?,?,?,?)";
     private static final String UPDATE = "UPDATE ENCHERES SET date_enchere = ?, montant_enchere = ? WHERE no_utilisateur = ? AND no_article = ?";
 
-    private static final String FIND_ENCHERE_BY_USER_ID = "SELECT COUNT(*) FROM ENCHERES WHERE no_utilisateur = ? and no_article = ?";
+    private static final String FIND_ENCHERE_BY_USER_ID = "SELECT * FROM ENCHERES WHERE no_utilisateur = ? and no_article = ?";
 
     private Enchere construireEnchere(ResultSet res) throws SQLException {
         Enchere uneEnchere = itemBuilder(res);
@@ -69,7 +69,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
     @Override
     public void makeEnchere(Enchere enchere) throws EnchereDAOException {
-
         if(null == enchere) {
             throw new EnchereDAOException(INSERT_NULL_EXCEPTION);
         }

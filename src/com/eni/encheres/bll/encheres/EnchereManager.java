@@ -1,6 +1,5 @@
 package com.eni.encheres.bll.encheres;
 
-import com.eni.encheres.bll.UtilisateurManager;
 import com.eni.encheres.bll.exceptions.EncheresBLLException;
 import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Enchere;
@@ -10,11 +9,7 @@ import com.eni.encheres.dal.encheres.EnchereDAO;
 import com.eni.encheres.dal.exceptions.EnchereDAOException;
 import com.eni.encheres.dal.exceptions.UtilisateurDAOException;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

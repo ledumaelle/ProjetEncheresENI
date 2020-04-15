@@ -12,7 +12,8 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
     <head>
-        <%@ include file="../template/head.jsp" %>
+        <jsp:include page="../template/head.jsp"/>
+        <script src="<%= request.getContextPath()%>/script/detailsEnchere.js"></script>
         <title>Détails d'une enchère</title>
     </head>
     <body>
@@ -27,23 +28,12 @@
         <fmt:parseDate  value="${unArticle.getDateDebutEncheres()}"  type="date" pattern="yyyy-MM-dd" var="debutDate"/>
         <fmt:parseDate  value="${unArticle.getDateFinEncheres()}"  type="date" pattern="yyyy-MM-dd" var="finDate"/>
 
-        <%@ include file="../template/header.jsp" %>
+        <jsp:include page="../template/header.jsp"/>
 
 
         <div class="container my-5 py-5 z-depth-1">
             <div class="row">
-                <div class="text-center text-md-left text-md-right col-sm-2">
-                    <c:if test="${unArticle.getEtatVente().equals('en_cours')}">
-                        <span class="badge badge-success product mb-4 ml-xl-0 ml-4">EN COURS</span>
-                    </c:if>
-                    <c:if test="${unArticle.getEtatVente().equals('non_debutee')}">
-                        <span class="badge badge-warning product mb-4 ml-xl-0 ml-4">NON DÉBUTÉE</span>
-                    </c:if>
-                    <c:if test="${unArticle.getEtatVente().equals('terminee')}">
-                        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">TERMINÉE</span>
-                    </c:if>
-                </div>
-                <div class="text-center text-md-left text-md-right col-sm-10">
+                <div class="text-center text-md-left text-md-right col-sm-12">
                     <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('non_debutee')}">
                         <button class="btn btn-secondary-color btn-rounded">
                             <i class="fas fa-edit mr-2" aria-hidden="true"></i> Modifier</button>
@@ -53,9 +43,6 @@
 
             <!--Section: Content-->
             <section class="text-center">
-                <!-- Section heading -->
-                <h3 class="font-weight-bold mb-5">Détails d'une enchère</h3>
-
                 <div class="row">
 
                     <div class="col-lg-6">
@@ -65,11 +52,29 @@
                     </div>
 
                     <div class="col-lg-5 text-center text-md-left">
-
+                        <c:if test="${unArticle.getEtatVente().equals('terminee')}">
+                            <h4><span class="badge badge-pill badge-primary"><i class="fas fa-gavel"></i>
+                                <c:if test="${unUtilisateur.getNoUtilisateur() != lastEnchere.getUnUtilisateur().getNoUtilisateur()}">
+                                    ${lastEnchere.getUnUtilisateur().getPseudo()} a remporté l'enchère!
+                                </c:if>
+                                <c:if test="${unUtilisateur.getNoUtilisateur() == lastEnchere.getUnUtilisateur().getNoUtilisateur()}">
+                                    Vous avez remporté l'enchère!
+                                </c:if>
+                            </span></h4>
+                        </c:if>
                         <h2 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
                             <strong>${unArticle.getNomArticle()}</strong>
                         </h2>
-                        <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">${unArticle.getUneCategorie().getLibelle()}</span>
+                        <span class="badge purple product mb-4 ml-xl-0 ml-4">${unArticle.getUneCategorie().getLibelle()}</span>
+                        <c:if test="${unArticle.getEtatVente().equals('en_cours')}">
+                            <span class="badge badge-success product mb-4 ml-xl-0 ml-4">EN COURS</span>
+                        </c:if>
+                        <c:if test="${unArticle.getEtatVente().equals('non_debutee')}">
+                            <span class="badge badge-warning product mb-4 ml-xl-0 ml-4">NON DÉBUTÉE</span>
+                        </c:if>
+                        <c:if test="${unArticle.getEtatVente().equals('terminee')}">
+                            <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">TERMINÉE</span>
+                        </c:if>
                         <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
                             <c:if test="${empty lastEnchere.getMontantEnchere()}">
                                 <span>Aucune enchère pour le moment.</span><br/>
@@ -172,35 +177,39 @@
                         </div>
                         <!--/.Accordion wrapper-->
                         <c:if test="${unUtilisateur.getNoUtilisateur() != unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('en_cours')}">
-                            <!-- Add to Cart -->
                             <section class="color">
                                 <div class="mt-5">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <label class="mdb-main-label grey-text" for="nbProposition">Ma proposition</label>
-                                            <input type="number" class="form-control" id="nbProposition" name="nbProposition" value="${lastEnchere.getMontantEnchere()}">
-                                        </div>
+                                        <form  class="form-inline" action="<%= request.getContextPath() %>/details_enchere" method="post">
+                                            <div class="col-sm-6">
+                                                <label class="mdb-main-label grey-text" for="newEnchere">Ma proposition</label>
+                                                <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        id="newEnchere"
+                                                        name="newEnchere"
+                                                        min="${lastEnchere == null ? unArticle.getMiseAPrix() : (lastEnchere.getMontantEnchere() + 5)}"
+                                                        step="5"
+                                                        data-credit="${unUtilisateur.getCredit()}"
+                                                        onchange="disabledButton()"
+                                                        value="${lastEnchere == null ? unArticle.getMiseAPrix() : (lastEnchere.getMontantEnchere() + 5)}">
+                                                <input type="text" hidden name="idArticle" value="${unArticle.getNoArticle()}">
+                                                <input type="text" hidden name="dernierUser" value="${lastEnchere == null ? 0 : lastEnchere.getUnUtilisateur().getNoUtilisateur()}">
+                                                <input type="text" hidden name="derniereOffre" value="${lastEnchere == null ? 0 : lastEnchere.getMontantEnchere()}">
+                                            </div>
                                             <div class="col-sm-6 text-center text-md-left text-md-right mt-3">
-                                                <button class="btn btn-primary btn-rounded">
+                                                <button class="btn btn-primary btn-rounded" id="valideEnchere" type="submit">
                                                     <i class="fas fa-cart-plus mr-2" aria-hidden="true"></i> Enchérir</button>
                                             </div>
-
+                                        </form>
                                     </div>
                                 </div>
                             </section>
-                            <!-- /.Add to Cart -->
                         </c:if>
                         </div>
                     </div>
                 </section>
                 <!--Section: Content-->
             </div>
-        <script>
-            $(function () {
-                $('.material-tooltip-main').tooltip({
-                    template: '<div class="tooltip md-tooltip"><div class="tooltip-arrow md-arrow"></div><div class="tooltip-inner md-inner"></div></div>'
-                });
-            })
-        </script>
     </body>
 </html>

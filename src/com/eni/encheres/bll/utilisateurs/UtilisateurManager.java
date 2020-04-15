@@ -2,6 +2,7 @@ package com.eni.encheres.bll.utilisateurs;
 
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.DAOFactory;
+import com.eni.encheres.dal.exceptions.UtilisateurDAOException;
 import com.eni.encheres.dal.utilisateurs.UtilisateurDao;
 
 import java.util.List;
@@ -99,6 +100,8 @@ public class UtilisateurManager {
                 utilisateurDao.getUtilisateurByMail(utilisateur.getEmail())==null;
     }
 
-
+    public void updateCredit(int utilisateur, int credit, String type) throws UtilisateurDAOException {
+        utilisateurDao.updateCredit(utilisateur, credit, type);
+    }
 
 }

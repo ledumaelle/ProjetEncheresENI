@@ -3,6 +3,7 @@ package com.eni.encheres.servlets.encheres;
 import com.eni.encheres.bll.articles.ArticleManager;
 import com.eni.encheres.bll.categories.CategorieManager;
 import com.eni.encheres.bll.encheres.EnchereManager;
+import com.eni.encheres.bll.utilisateurs.UtilisateurManager;
 import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Categorie;
 import com.eni.encheres.bo.Enchere;
@@ -12,10 +13,9 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class ServletDetailsEnchere
@@ -23,12 +23,36 @@ import java.util.List;
 @WebServlet(name="ServletDetailsEnchere",urlPatterns ={"/details_enchere"})
 public class ServletDetailsEnchere extends HttpServlet {
 
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            EnchereManager enchereManager = EnchereManager.getInstance();
+            Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("unUtilisateur");
+            int newEnchere = Integer.parseInt(request.getParameter("newEnchere"));
+            int lastEnchere = Integer.parseInt(request.getParameter("derniereOffre"));
+            int lastUser = Integer.parseInt(request.getParameter("dernierUser"));
+            int articleId = Integer.parseInt(request.getParameter("idArticle"));
+            enchereManager.makeEnchere(
+                    utilisateur,
+                    articleId,
+                    newEnchere, lastEnchere);
 
+            UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+            if(0 != lastUser){
+                utilisateurManager.updateCredit(lastUser, lastEnchere, "plus");
+            }
+            utilisateurManager.updateCredit(utilisateur.getNoUtilisateur(), newEnchere, "moins");
+
+            ArticleManager articleManager = ArticleManager.getInstance();
+            articleManager.updatePrixVente(articleId, newEnchere);
+
+            response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+            response.setHeader("Location", request.getContextPath() + "/details_enchere?no_article=" + articleId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int noArticle = Integer.parseInt(request.getParameter("no_article"));
        request.setAttribute("unArticle",getUnArticleByID(noArticle));
 

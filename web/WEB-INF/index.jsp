@@ -256,7 +256,7 @@
                           <h4 class="card-title my-4">
                             <strong>
                               <c:if test="${unUtilisateur == null }">
-                                <a href="<%=request.getContextPath()%>/seConnecter">${article.getNomArticle()}</a>
+                                <a href="<%=request.getContextPath()%>/login">${article.getNomArticle()}</a>
                               </c:if>
                               <c:if test="${unUtilisateur != null }">
                                 <a href="<%=request.getContextPath()%>/details_enchere?no_article=${article.getNoArticle()}">${article.getNomArticle()}</a>

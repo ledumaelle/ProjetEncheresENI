@@ -1,6 +1,5 @@
 package com.eni.encheres.dal.encheres;
 
-import com.eni.encheres.bll.exceptions.EncheresBLLException;
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.dal.exceptions.EnchereDAOException;
 
