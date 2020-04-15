@@ -9,5 +9,11 @@ $(function () {
 })
 
 function disabledButton() {
-    $("#valideEnchere").prop("disabled", parseInt($("#newEnchere").data("credit")) - parseInt($("#newEnchere").val()) < 0)
+    if(parseInt($("#newEnchere").data("credit")) - parseInt($("#newEnchere").val()) > 0){
+        $('#erreur-credit').css("display", "none")
+        $("#valideEnchere").prop("disabled", false)
+    }else{
+        $('#erreur-credit').css("display", "block")
+        $("#valideEnchere").prop("disabled", true)
+    }
 }

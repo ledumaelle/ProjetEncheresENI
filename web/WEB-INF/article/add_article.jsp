@@ -60,7 +60,7 @@
                                     <h2 class="card-header-title">Retrait</h2>
                                 </div>
                                 <div class="card-body card-body-cascade text-center">
-                                    <input required maxlength="30" type="text" id="rue" class="form-control mb-4" placeholder="Rue" value="${unUtilisateur.getRue()}">
+                                    <input required maxlength="30" type="text" id="rue" name="rue" class="form-control mb-4" placeholder="Rue" value="${unUtilisateur.getRue()}">
                                     <input
                                             required type="text"
                                             maxlength="5"
@@ -68,8 +68,9 @@
                                             pattern="^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$"
                                             id="cp" class="form-control mb-4"
                                             placeholder="Code postal"
-                                            value="${unUtilisateur.getCodePostal()}">
-                                    <input required maxlength="30" type="text" id="ville" class="form-control mb-4" placeholder="Ville" value="${unUtilisateur.getVille()}">
+                                            value="${unUtilisateur.getCodePostal()}"
+                                            name="cp">
+                                    <input required maxlength="30" type="text" id="ville" name="ville" class="form-control mb-4" placeholder="Ville" value="${unUtilisateur.getVille()}">
                                 </div>
                             </div>
                             <div class="row m-4">

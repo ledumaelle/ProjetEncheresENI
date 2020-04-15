@@ -3,11 +3,10 @@ package com.eni.encheres.servlets.encheres;
 import com.eni.encheres.bll.articles.ArticleManager;
 import com.eni.encheres.bll.categories.CategorieManager;
 import com.eni.encheres.bll.encheres.EnchereManager;
+import com.eni.encheres.bll.retraits.RetraitManager;
 import com.eni.encheres.bll.utilisateurs.UtilisateurManager;
-import com.eni.encheres.bo.ArticleVendu;
-import com.eni.encheres.bo.Categorie;
-import com.eni.encheres.bo.Enchere;
-import com.eni.encheres.bo.Utilisateur;
+import com.eni.encheres.bo.*;
+import com.eni.encheres.dal.retraits.RetraitDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -58,6 +57,8 @@ public class ServletDetailsEnchere extends HttpServlet {
 
        request.setAttribute("lastEnchere",bestEnchereByArticleID(noArticle));
 
+       request.setAttribute("unRetrait", getRetraitArticle(noArticle));
+
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/enchere/details_enchere.jsp");
         rd.forward(request, response);
     }
@@ -88,6 +89,19 @@ public class ServletDetailsEnchere extends HttpServlet {
         }
 
         return unArticle;
+    }
+
+    private Retrait getRetraitArticle(int articleId)
+    {
+        RetraitManager retraitManager = RetraitManager.getInstance();
+        Retrait unRetrait = new Retrait();
+        try {
+            unRetrait = retraitManager.getRetraitByArticleId(articleId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return unRetrait;
     }
 
 }
