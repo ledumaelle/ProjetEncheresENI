@@ -55,9 +55,11 @@ public class UtilisateurServlet extends HttpServlet  {
 
 
 
+        }else{
+            response.sendRedirect(request.getContextPath());
         }
 
-        response.sendRedirect(request.getContextPath());
+
 
 
     }
