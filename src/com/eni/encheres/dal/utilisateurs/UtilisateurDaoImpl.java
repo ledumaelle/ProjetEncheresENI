@@ -20,6 +20,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     private static final String SELECT_ALL = "SELECT * FROM utilisateurs";
     private static final String SELECT_BY_ID = "SELECT * FROM utilisateurs WHERE no_utilisateur=? ";
     private static final String SELECT_BY_MAIL = "SELECT * FROM utilisateurs WHERE email=?";
+    private static final String SELECT_BY_PSEUDO = "SELECT * FROM utilisateurs WHERE pseudo=?";
 
     private static final String INSERT = "INSERT INTO utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=?,credit=?,administrateur=? WHERE no_utilisateur=? ";
@@ -27,10 +28,6 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 
 
     private static final Logger LOGGER = Logger.getLogger(UtilisateurDao.class.toString());
-
-
-
-
 
 
 
@@ -167,11 +164,37 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      */
     public Utilisateur getUtilisateurByMail(String mail){
 
-        Utilisateur utilisateur = new Utilisateur();
+
 
         try(Connection con = ConnectionProvider.getConnection()){
             PreparedStatement stmt = con.prepareStatement(SELECT_BY_MAIL);
             stmt.setString(1,mail);
+
+            if(stmt.execute()){
+                ResultSet resultSet = stmt.getResultSet();
+
+                if(resultSet.next()){
+
+
+                    return utilisateurBuilder(resultSet);
+                }
+            }
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Utilisateur getUtilisateurByPseudo(String pseudo) {
+
+
+
+        try(Connection con = ConnectionProvider.getConnection()){
+            PreparedStatement stmt = con.prepareStatement(SELECT_BY_PSEUDO);
+            stmt.setString(1,pseudo);
 
             if(stmt.execute()){
                 ResultSet resultSet = stmt.getResultSet();

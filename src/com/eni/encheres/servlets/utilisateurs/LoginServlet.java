@@ -27,6 +27,7 @@ public class LoginServlet extends HttpServlet {
 		UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
 
 
+
 		Utilisateur user = utilisateurManager.connexionUtilisateur(email, password);
 
 
