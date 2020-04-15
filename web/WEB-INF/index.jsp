@@ -269,7 +269,7 @@
                               <b>${article.getUnUtilisateur().getPseudo()}</b>
                             </c:if>
                             <c:if test="${unUtilisateur != null }">
-                              <a class="text-secondary" href="<%=request.getContextPath()%>/profil/${article.getUnUtilisateur().getNoUtilisateur()}"><b>${article.getUnUtilisateur().getPseudo()}</b></a>
+                              <a class="text-secondary" href="<%=request.getContextPath()%>/utilisateur/${article.getUnUtilisateur().getNoUtilisateur()}"><b>${article.getUnUtilisateur().getPseudo()}</b></a>
                             </c:if>
 
                           </p>
