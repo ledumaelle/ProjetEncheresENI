@@ -14,7 +14,7 @@ public class Enchere {
 
    public Enchere()
    {
-
+        this.montantEnchere = -1;
    }
 
     public Enchere(LocalDate dateEnchere, int montantEnchere) {

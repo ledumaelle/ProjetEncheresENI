@@ -15,6 +15,7 @@ import com.eni.encheres.dal.retraits.RetraitDAO;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -121,4 +122,166 @@ public class ArticleManager {
     {
         return this.articleDAO.getUnArticleByID(noArticle);
     }
+
+
+    //ENCHERES
+    public List<ArticleVendu> getLesArticlesByEncheresEnCoursAndUserID(int idEnrechisseur)
+    {
+        return this.articleDAO.getLesArticlesByEncheresEnCoursAndUserID(idEnrechisseur);
+    }
+
+    public List<ArticleVendu> getLesArticlesByEncheresRemporteesAndUserID(int idEnrechisseur)
+    {
+        return this.articleDAO.getLesArticlesByEncheresRemporteesAndUserID(idEnrechisseur);
+    }
+
+    public List<ArticleVendu> getLesArticlesByEncheresEnCoursAndEncheresRemporteesAndUserID(int idEnrechisseur)
+    {
+        List<ArticleVendu> lesArticlesEncheresEnCours = this.articleDAO.getLesArticlesByEncheresEnCoursAndUserID(idEnrechisseur);
+        List<ArticleVendu> lesArticlesEncheresRemportees = this.articleDAO.getLesArticlesByEncheresRemporteesAndUserID(idEnrechisseur);
+
+        for (ArticleVendu unArticle : lesArticlesEncheresRemportees) {
+            if (!lesArticlesEncheresEnCours.contains(unArticle)) {
+                lesArticlesEncheresEnCours.add(unArticle);
+            }
+        }
+
+        return lesArticlesEncheresEnCours;
+    }
+
+    public List<ArticleVendu> getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndUserID(int idEnrechisseur)
+    {
+        List<ArticleVendu> lesArticlesEncheresOuvertes = this.articleDAO.getLesArticles();
+        List<ArticleVendu> lesArticlesEncheresEnCours = this.articleDAO.getLesArticlesByEncheresEnCoursAndUserID(idEnrechisseur);
+
+        for (ArticleVendu unArticle : lesArticlesEncheresEnCours) {
+            if (!lesArticlesEncheresOuvertes.contains(unArticle)) {
+                lesArticlesEncheresOuvertes.add(unArticle);
+            }
+        }
+
+        return lesArticlesEncheresOuvertes;
+    }
+
+    public List<ArticleVendu> getLesArticlesByEncheresOuvertesAndEncheresRemporteesAndUserID(int idEnrechisseur)
+    {
+        List<ArticleVendu> lesArticlesEncheresOuvertes = this.articleDAO.getLesArticles();
+        List<ArticleVendu> lesArticlesEncheresRemportees = this.articleDAO.getLesArticlesByEncheresRemporteesAndUserID(idEnrechisseur);
+
+
+        for (ArticleVendu unArticle : lesArticlesEncheresRemportees) {
+            if (!lesArticlesEncheresOuvertes.contains(unArticle)) {
+                lesArticlesEncheresOuvertes.add(unArticle);
+            }
+        }
+
+        return lesArticlesEncheresOuvertes;
+    }
+
+    public List<ArticleVendu> getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndEncheresRemporteesAndUserID(int idEnrechisseur)
+    {
+        List<ArticleVendu> lesArticlesEncheresOuvertes = this.articleDAO.getLesArticles();
+        List<ArticleVendu> lesArticlesEncheresEnCours = this.articleDAO.getLesArticlesByEncheresEnCoursAndUserID(idEnrechisseur);
+        List<ArticleVendu> lesArticlesEncheresRemportees = this.articleDAO.getLesArticlesByEncheresRemporteesAndUserID(idEnrechisseur);
+
+
+        for (ArticleVendu unArticle : lesArticlesEncheresRemportees) {
+            if (!lesArticlesEncheresOuvertes.contains(unArticle)) {
+                lesArticlesEncheresOuvertes.add(unArticle);
+            }
+        }
+
+        for (ArticleVendu unArticle : lesArticlesEncheresEnCours) {
+            if (!lesArticlesEncheresOuvertes.contains(unArticle)) {
+                lesArticlesEncheresOuvertes.add(unArticle);
+            }
+        }
+
+        return lesArticlesEncheresOuvertes;
+    }
+
+    //VENTES
+    public List<ArticleVendu> getLesArticlesByVentesEnCoursAndUserID(int idVendeur)
+    {
+        return this.articleDAO.getLesArticlesByVentesEnCoursAndUserID(idVendeur);
+    }
+
+    public List<ArticleVendu> getLesArticlesByVentesNonDebuteesAndUserID(int idVendeur)
+    {
+        return this.articleDAO.getLesArticlesByVentesNonDebuteesAndUserID(idVendeur);
+    }
+
+    public List<ArticleVendu> getLesArticlesByVentesTermineesAndUserID(int idVendeur)
+    {
+        return this.articleDAO.getLesArticlesByVentesTermineesAndUserID(idVendeur);
+    }
+
+    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndVentesTermineesAndUserID(int idVendeur)
+    {
+        List<ArticleVendu> lesArticlesVentesEncours = this.articleDAO.getLesArticlesByVentesEnCoursAndUserID(idVendeur);
+        List<ArticleVendu> lesArticlesVentesNonDebutees = this.articleDAO.getLesArticlesByVentesNonDebuteesAndUserID(idVendeur);
+        List<ArticleVendu> lesArticlesVentesTerminees =this.articleDAO.getLesArticlesByVentesTermineesAndUserID(idVendeur);
+
+
+        for (ArticleVendu unArticle : lesArticlesVentesNonDebutees) {
+            if (!lesArticlesVentesEncours.contains(unArticle)) {
+                lesArticlesVentesEncours.add(unArticle);
+            }
+        }
+
+        for (ArticleVendu unArticle : lesArticlesVentesTerminees) {
+            if (!lesArticlesVentesEncours.contains(unArticle)) {
+                lesArticlesVentesEncours.add(unArticle);
+            }
+        }
+
+        return lesArticlesVentesEncours;
+    }
+
+    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesTermineesAndUserID(int idVendeur)
+    {
+        List<ArticleVendu> lesArticlesVentesEncours = this.articleDAO.getLesArticlesByVentesEnCoursAndUserID(idVendeur);
+        List<ArticleVendu> lesArticlesVentesTerminees =this.articleDAO.getLesArticlesByVentesTermineesAndUserID(idVendeur);
+
+
+        for (ArticleVendu unArticle : lesArticlesVentesTerminees) {
+            if (!lesArticlesVentesEncours.contains(unArticle)) {
+                lesArticlesVentesEncours.add(unArticle);
+            }
+        }
+
+        return lesArticlesVentesEncours;
+    }
+
+    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndUserID(int idVendeur)
+    {
+        List<ArticleVendu> lesArticlesVentesEncours = this.articleDAO.getLesArticlesByVentesEnCoursAndUserID(idVendeur);
+        List<ArticleVendu> lesArticlesVentesNonDebutees = this.articleDAO.getLesArticlesByVentesNonDebuteesAndUserID(idVendeur);
+
+        for (ArticleVendu unArticle : lesArticlesVentesNonDebutees) {
+            if (!lesArticlesVentesEncours.contains(unArticle)) {
+                lesArticlesVentesEncours.add(unArticle);
+            }
+        }
+        return lesArticlesVentesEncours;
+    }
+
+    public  List<ArticleVendu> getLesArticlesByVentesNonDebuteesAndVentesTermineesUserID(int idVendeur)
+    {
+        List<ArticleVendu> lesArticlesVentesNonDebutees = this.articleDAO.getLesArticlesByVentesNonDebuteesAndUserID(idVendeur);
+        List<ArticleVendu> lesArticlesVentesTerminees =this.articleDAO.getLesArticlesByVentesTermineesAndUserID(idVendeur);
+
+
+        for (ArticleVendu unArticle : lesArticlesVentesNonDebutees) {
+            if (!lesArticlesVentesTerminees.contains(unArticle)) {
+                lesArticlesVentesTerminees.add(unArticle);
+            }
+        }
+
+        return lesArticlesVentesTerminees;
+
+    }
+
+
+
 }

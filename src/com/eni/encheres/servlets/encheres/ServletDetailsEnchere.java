@@ -55,7 +55,8 @@ public class ServletDetailsEnchere extends HttpServlet {
         int noArticle = Integer.parseInt(request.getParameter("no_article"));
        request.setAttribute("unArticle",getUnArticleByID(noArticle));
 
-       request.setAttribute("lastEnchere",bestEnchereByArticleID(noArticle));
+        request.setAttribute("lesEncheres",getLesEncheresByArticleID(noArticle));
+       request.setAttribute("lastEnchere",maxEnchereByArticleID(noArticle));
 
        request.setAttribute("unRetrait", getRetraitArticle(noArticle));
 
@@ -63,17 +64,32 @@ public class ServletDetailsEnchere extends HttpServlet {
         rd.forward(request, response);
     }
 
-    private Enchere bestEnchereByArticleID(int noArticle)
+    private Enchere maxEnchereByArticleID(int noArticle)
     {
        Enchere bestEnchere = null;
         try {
            EnchereManager managerEnchere = EnchereManager.getInstance();
-            bestEnchere = managerEnchere.getBestEnchereByArticleID(noArticle);
+            bestEnchere = managerEnchere.getMaxEnchereByArticleID(noArticle);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return bestEnchere;
 
+    }
+
+    private List<Enchere> getLesEncheresByArticleID(int noArticle)
+    {
+        List<Enchere> lesEncheres = new ArrayList<>();
+        try {
+            EnchereManager enchereManager = EnchereManager.getInstance();
+
+            lesEncheres = enchereManager.getLesEncheresByArticleID(noArticle);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lesEncheres;
     }
 
     private ArticleVendu getUnArticleByID(int noArticle)

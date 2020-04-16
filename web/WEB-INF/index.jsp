@@ -13,6 +13,8 @@
     <title>ENI - Enchères</title>
   </head>
   <body>
+    <dsp:importbean var="requestLocale" bean="/atg/dynamo/servlet/RequestLocale" />
+    <fmt:setLocale value="${requestLocale.locale}"/>
 
     <c:if test="${!empty requestScope.lesCategories}">
       <c:set var="lesCategories" value="${requestScope.lesCategories}" scope="page" />
@@ -68,8 +70,6 @@
     </c:if>
 
     <%@ include file="template/header.jsp" %>
-
-    <h1 class="text-center"> Liste des enchères </h1>
     <form method="get" action=${pageContext.servletContext.contextPath}>
       <div class="container z-depth-1 p-5 my-5">
         <section>
@@ -221,6 +221,19 @@
                   <div class="carousel-item">
                 </c:if>
                     <c:forEach items="${lesArticles}" begin="${startIndex}" end="${startIndex +5}" var="article" varStatus="vs3">
+                      <c:if test="${!empty article.getLesEncheres()}">
+                        <c:set var="meilleurEnchere" value="${article.getLesEncheres().get(0)}" scope="page" />
+                        <c:set var="isEncherir" value="false" scope="page" />
+                        <c:forEach items="${article.getLesEncheres()}" var="enchere">
+                          <c:if test="${meilleurEnchere.getMontantEnchere() > enchere.getMontantEnchere()}">
+                            <c:set var="meilleurEnchere" value="${enchere}" scope="page" />
+                          </c:if>
+                          <c:if test="${meilleurEnchere.getUnUtilisateur().getNoUtilisateur() == unUtilisateur.getNoUtilisateur()}">
+                            <c:set var="isEncherir" value="true" scope="page" />
+                          </c:if>
+                        </c:forEach>
+                      </c:if>
+
                       <c:set var="currentIndex" value="${currentIndex+1}"/>
                       <!-- Card -->
                       <c:if test="${vs3.first}">
@@ -249,6 +262,14 @@
                           <c:if test="${article.getEtatVente().equals('terminee')}">
                             <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">TERMINÉE</span>
                           </c:if>
+                          <c:if test="${article.getEtatVente().equals('en_cours') && isEncherir}">
+                            <img src="${pageContext.servletContext.contextPath}/img/bid.png" class="rounded float-right"
+                               alt="enchère">
+                          </c:if>
+                          <c:if test="${article.getEtatVente().equals('terminee') && meilleurEnchere.getUnUtilisateur().getNoUtilisateur() == unUtilisateur.getNoUtilisateur()}">
+                            <img src="${pageContext.servletContext.contextPath}/img/win.png" class="rounded float-right"
+                                 alt="gagné">
+                          </c:if>
                           <!-- Category & Title -->
                           <p class="text-muted">
                             <h5>${article.getUneCategorie().getLibelle()}</h5>
@@ -269,7 +290,7 @@
                               <b>${article.getUnUtilisateur().getPseudo()}</b>
                             </c:if>
                             <c:if test="${unUtilisateur != null }">
-                              <a class="text-danger" href="<%=request.getContextPath()%>/profil/${article.getUnUtilisateur().getNoUtilisateur()}"><b>${article.getUnUtilisateur().getPseudo()}</b></a>
+                              <a class="text-secondary" href="<%=request.getContextPath()%>/utilisateur/${article.getUnUtilisateur().getNoUtilisateur()}"><b>${article.getUnUtilisateur().getPseudo()}</b></a>
                             </c:if>
 
                           </p>
