@@ -15,8 +15,6 @@ $(function(){
 
     $('.datepicker').removeAttr('readonly');
 
-    // $('#photoSize').prop('max', 10);
-
     $("#photo").change(function() {
         readURL(this);
     });

@@ -1,7 +1,6 @@
 package com.eni.encheres.dal.retraits;
 
 import com.eni.encheres.bo.Retrait;
-import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.ConnectionProvider;
 import com.eni.encheres.dal.exceptions.RetraitDAOException;
 
@@ -13,6 +12,11 @@ import java.sql.SQLException;
 public class RetraitDAOJdbcImpl implements RetraitDAO {
     private final String INSERT_NULL_EXCEPTION = "Un retrait ne peut pas être null";
     private final String INSERT = "INSERT INTO RETRAITS (no_article, rue, code_postal, ville) VALUES (?,?,?,?)";
+
+    private final String UPDATE = "UPDATE RETRAITS SET rue = ?, " +
+            "code_postal = ?, " +
+            "ville = ? " +
+            "WHERE no_article = ?";
 
     private final String UPDATE_IS_RETIRE = "UPDATE RETRAITS SET is_retire = 1 where no_article = ?";
 
@@ -31,6 +35,27 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
             st.setString(2, retrait.getRue());
             st.setString(3, retrait.getCodePostal());
             st.setString(4, retrait.getVille());
+            st.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            throw new RetraitDAOException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(Retrait retrait) throws RetraitDAOException {
+        if(null == retrait) {
+            throw new RetraitDAOException(INSERT_NULL_EXCEPTION);
+        }
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement st = cnx.prepareStatement(UPDATE);
+            st.setString(1, retrait.getRue());
+            st.setString(2, retrait.getCodePostal());
+            st.setString(3, retrait.getVille());
+            st.setInt(4, retrait.getUnArticleVendu().getNoArticle());
             st.executeUpdate();
         }
         catch(Exception e)

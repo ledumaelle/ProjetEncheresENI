@@ -40,6 +40,16 @@ public class ArticleVendu {
         this.nomImage = nomImage;
     }
 
+    public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, Categorie uneCategorie) {
+        this.noArticle = noArticle;
+        this.nomArticle = nomArticle;
+        this.description = description;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.miseAPrix = miseAPrix;
+        this.uneCategorie = uneCategorie;
+    }
+
     public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String nomImage) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;

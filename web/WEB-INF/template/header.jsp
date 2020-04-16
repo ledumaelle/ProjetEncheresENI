@@ -33,7 +33,7 @@
                             <i class="fas fa-balance-scale"></i> Enchères</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/articles/add">
+                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/articles/form">
                             <i class="fas fa-shopping-cart"></i> Vendre un article</a>
                     </li>
                     <li class="nav-item">

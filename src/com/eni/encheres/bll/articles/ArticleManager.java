@@ -58,12 +58,32 @@ public class ArticleManager {
         }
     }
 
+    public void update (int noArticle, String libelle, String description, int categorieId, int prix, String debut, String fin, String rue, String codePostal, String ville) throws ArticleBLLException, ArticleDAOException {
+        LocalDate dateDebut = transformStringToLocalDate(debut);
+        LocalDate dateFin = transformStringToLocalDate(fin);
+        if(!checkDate(dateDebut, dateFin) && !checkArticleWithoutImg(libelle, description, prix)){
+            throw new ArticleBLLException("Les données saisies sont incorrectes");
+        }
+        ArticleVendu article = new ArticleVendu(noArticle, libelle, description, dateDebut, dateFin, prix, new Categorie(categorieId));
+        articleDAO.update(article);
+        RetraitManager retraitManager = RetraitManager.getInstance();
+        try {
+            retraitManager.update(rue, codePostal, ville, article);
+        }catch (RetraitBLLException | RetraitDAOException e){
+            throw new ArticleBLLException(e.getMessage());
+        }
+    }
+
     public void updatePrixVente (int articleId, int montant) throws ArticleDAOException {
         articleDAO.updatePrixVente(articleId, montant);
     }
 
     private boolean checkArticle(String libelle, String description, int prix, String imageName) {
         return libelle.length() < 31 && description.length() < 301 && prix > 0 && imageName.length() < 51;
+    }
+
+    private boolean checkArticleWithoutImg(String libelle, String description, int prix) {
+        return libelle.length() < 31 && description.length() < 301 && prix > 0;
     }
 
     private boolean checkDate(LocalDate debut, LocalDate fin){

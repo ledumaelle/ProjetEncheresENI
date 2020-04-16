@@ -35,6 +35,13 @@ public class RetraitManager {
         retraitDAO.insert(new Retrait(rue, codePostal, ville, article));
     }
 
+    public void update(String rue, String codePostal, String ville, ArticleVendu article) throws RetraitDAOException, RetraitBLLException {
+        if(!checkRetrait(rue, codePostal, ville)){
+            throw new RetraitBLLException("Les données saisies sont incorrectes");
+        }
+        retraitDAO.update(new Retrait(rue, codePostal, ville, article));
+    }
+
     private boolean checkRetrait(String rue, String codePostal, String ville){
         String patternCodePostal = "^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$";
         return rue.length() < 31 && codePostal.length() == 5 && Pattern.matches(patternCodePostal, codePostal) && ville.length() < 30;

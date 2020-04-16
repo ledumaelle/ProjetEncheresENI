@@ -19,6 +19,13 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
     private final String INSERT = "INSERT INTO ARTICLES_VENDUS VALUES (?,?,?,?,?,?,?,?,?)";
 
     private final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente = ? WHERE no_article = ?";
+    private final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, " +
+            "description = ?, " +
+            "date_debut_encheres = ?, " +
+            "date_fin_encheres = ?, " +
+            "prix_initial = ?, " +
+            "no_categorie = ? " +
+            "WHERE no_article = ?";
 
     private final String COUNT_ALL = "SELECT COUNT(*) as nbArticles FROM ARTICLES_VENDUS";
 
@@ -91,6 +98,30 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             {
                 article.setNoArticle(rs.getInt(1));
             }
+        }
+        catch(Exception e)
+        {
+            throw new ArticleDAOException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(ArticleVendu article) throws ArticleDAOException {
+        if(null == article) {
+            throw new ArticleDAOException(INSERT_NULL_EXCEPTION);
+        }
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement st = cnx.prepareStatement(UPDATE);
+            st.setString(1, article.getNomArticle());
+            st.setString(2, article.getDescription());
+            st.setDate(3, new Date(java.util.Date.from(article.getDateDebutEncheres().atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime()));
+            st.setDate(4, new Date(java.util.Date.from(article.getDateFinEncheres().atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime()));
+            st.setInt(5, article.getMiseAPrix());
+            st.setInt(6, article.getUneCategorie().getNoCategorie());
+            st.setInt(7, article.getNoArticle());
+            st.executeUpdate();
         }
         catch(Exception e)
         {
