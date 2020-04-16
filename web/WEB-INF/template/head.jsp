@@ -4,7 +4,6 @@
     <%@include file="/bootstrap/bootstrap.min.css" %>
     <%@include file="/bootstrap/mdb.min.css" %>
     <%@include file="/bootstrap/mdb.min.css" %>
-    <%@include file="/css/style.css" %>
 </style>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
