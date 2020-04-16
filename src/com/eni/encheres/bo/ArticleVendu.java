@@ -25,12 +25,13 @@ public class ArticleVendu {
     public ArticleVendu()
     {
         lesEncheres = new ArrayList<>();
+        this.noArticle =-1;
     }
 
     public ArticleVendu(int noArticle)
     {
         this.noArticle = noArticle;
-
+        lesEncheres = new ArrayList<>();
     }
 
     public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, Categorie uneCategorie, Utilisateur unUtilisateur, String nomImage) {

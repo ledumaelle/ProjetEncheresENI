@@ -72,7 +72,9 @@ public class Enchere {
 
     @Override
     public boolean equals(Object object) {
-       Enchere enchere = (Enchere) object;
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Enchere enchere = (Enchere) object;
         return this.getUnUtilisateur().getNoUtilisateur() == enchere.getUnUtilisateur().getNoUtilisateur() &&
                 this.getUnArticleVendu().getNoArticle() == enchere.getUnArticleVendu().getNoArticle() &&
                 this.getDateEnchere().isEqual(enchere.getDateEnchere()) &&

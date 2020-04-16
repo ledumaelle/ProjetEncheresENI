@@ -9,7 +9,7 @@
     </c:if>
 
     <!--Navbar -->
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color sticky-top">
         <a class="navbar-brand" href="${pageContext.servletContext.contextPath}">ENI - Enchères</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
                 aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
