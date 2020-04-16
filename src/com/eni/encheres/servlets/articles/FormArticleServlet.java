@@ -9,8 +9,6 @@ import com.eni.encheres.bo.Retrait;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.exceptions.ArticleDAOException;
 import com.eni.encheres.dal.exceptions.RetraitDAOException;
-import jdk.jshell.execution.Util;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
