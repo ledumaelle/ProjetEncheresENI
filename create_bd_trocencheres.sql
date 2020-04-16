@@ -25,7 +25,8 @@ CREATE TABLE RETRAITS (
 	no_article         INTEGER NOT NULL,
     rue              VARCHAR(30) NOT NULL,
     code_postal      VARCHAR(15) NOT NULL,
-    ville            VARCHAR(30) NOT NULL
+    ville            VARCHAR(30) NOT NULL,
+    is_retire        bit DEFAULT 0
 )
 
 ALTER TABLE RETRAITS ADD constraint retrait_pk PRIMARY KEY  (no_article)
