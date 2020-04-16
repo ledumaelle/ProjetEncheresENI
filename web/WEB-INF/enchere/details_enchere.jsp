@@ -41,8 +41,41 @@
                         </c:if>
                         <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('terminee') && !unRetrait.getRetire()}">
                             <div class="text-center text-md-left text-md-right col-sm-12">
-                                <a href="<%= request.getContextPath() %>/retirer?no_article=${unArticle.getNoArticle()}&credit=${unArticle.getPrixVente()}" class="btn btn-secondary-color btn-rounded">
+                                <a href class="btn btn-secondary-color btn-rounded" data-toggle="modal" data-target="#modalRetrait">
                                     <i class="fas fa-box-open mr-2" aria-hidden="true"></i> Retirer</a>
+                            </div>
+
+                            <%--MODAL RETRAIT--%>
+                            <div class="modal fade" id="modalRetrait" tabindex="-1" role="dialog" aria-labelledby="modalRetrait"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form action="<%= request.getContextPath() %>/retirer?no_article=${unArticle.getNoArticle()}&credit=${unArticle.getPrixVente()}" method="post">
+                                            <div class="modal-header white-text text-center blue-gradient">
+                                                <h4 class="modal-title w-100 font-weight-bold">Retrait</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true" class="white-text">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body mx-3">
+                                                <input required maxlength="30" type="text" id="rue" name="rue" class="form-control mb-4" placeholder="Rue" value="${unRetrait.getRue()}">
+                                                <input
+                                                        required type="text"
+                                                        maxlength="5"
+                                                        minlength="5"
+                                                        pattern="^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$"
+                                                        id="cp" class="form-control mb-4"
+                                                        placeholder="Code postal"
+                                                        value="${unRetrait.getCodePostal()}"
+                                                        name="cp">
+                                                <input required maxlength="30" type="text" id="ville" name="ville" class="form-control mb-4" placeholder="Ville" value="${unRetrait.getVille()}">
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button class="btn btn-primary btn-rounded" type="submit">Retirer</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </c:if>
                 </div>

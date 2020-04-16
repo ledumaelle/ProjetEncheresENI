@@ -69,7 +69,7 @@ public class ArticleManager {
         articleDAO.update(article);
         RetraitManager retraitManager = RetraitManager.getInstance();
         try {
-            retraitManager.update(rue, codePostal, ville, article);
+            retraitManager.update(rue, codePostal, ville, false, article);
         }catch (RetraitBLLException | RetraitDAOException e){
             throw new ArticleBLLException(e.getMessage());
         }

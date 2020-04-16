@@ -35,11 +35,11 @@ public class RetraitManager {
         retraitDAO.insert(new Retrait(rue, codePostal, ville, article));
     }
 
-    public void update(String rue, String codePostal, String ville, ArticleVendu article) throws RetraitDAOException, RetraitBLLException {
+    public void update(String rue, String codePostal, String ville, Boolean isRetire, ArticleVendu article) throws RetraitDAOException, RetraitBLLException {
         if(!checkRetrait(rue, codePostal, ville)){
             throw new RetraitBLLException("Les données saisies sont incorrectes");
         }
-        retraitDAO.update(new Retrait(rue, codePostal, ville, article));
+        retraitDAO.update(new Retrait(rue, codePostal, ville, isRetire, article));
     }
 
     public void delete(int articleId) throws RetraitDAOException {
@@ -53,9 +53,5 @@ public class RetraitManager {
 
     public Retrait getRetraitByArticleId(int id) throws RetraitDAOException {
         return retraitDAO.getRetraitByArticleId(id);
-    }
-
-    public void setArticleIsRetire(int articleIsRetire) throws RetraitDAOException{
-        retraitDAO.setArticleIsRetire(articleIsRetire);
     }
 }
