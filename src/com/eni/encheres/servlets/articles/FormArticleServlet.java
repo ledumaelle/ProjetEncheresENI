@@ -100,7 +100,7 @@ public class FormArticleServlet extends HttpServlet {
 
     private String getImagePath(String photoName){
         String photoPath =  getServletConfig().getServletContext().getRealPath("");
-        photoPath+="/img/articles/";
+        photoPath+="img/articles/";
         photoPath+=photoName;
 
         return photoPath.replace("\\","/");
