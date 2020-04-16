@@ -81,6 +81,7 @@ public class ArticleManager {
                 byte[] imageBite = Base64.getDecoder().decode(image[1]);
                 OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file), 2000000);
                 outputStream.write(imageBite);
+                outputStream.flush();
             }else{
                 System.out.println(imageName + " exite déjà");
             }

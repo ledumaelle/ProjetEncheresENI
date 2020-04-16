@@ -34,7 +34,7 @@ public class AddArticleServlet extends HttpServlet {
         String path = request.getContextPath() + "/";
         try {
             String photoPath =  getServletConfig().getServletContext().getRealPath("");
-            photoPath+="/img/articles/";
+            photoPath+="img/articles/";
             if(request.getParameter("photo")!=null){
                 photoPath+=request.getParameter("photo");
             }
