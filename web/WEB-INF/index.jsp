@@ -221,14 +221,15 @@
                   <div class="carousel-item">
                 </c:if>
                     <c:forEach items="${lesArticles}" begin="${startIndex}" end="${startIndex +5}" var="article" varStatus="vs3">
+                      <c:set var="isEncherir" value="false" scope="page" />
                       <c:if test="${!empty article.getLesEncheres()}">
                         <c:set var="meilleurEnchere" value="${article.getLesEncheres().get(0)}" scope="page" />
-                        <c:set var="isEncherir" value="false" scope="page" />
+                        <span>${article.getLesEncheres().size()}</span>
                         <c:forEach items="${article.getLesEncheres()}" var="enchere">
                           <c:if test="${meilleurEnchere.getMontantEnchere() > enchere.getMontantEnchere()}">
                             <c:set var="meilleurEnchere" value="${enchere}" scope="page" />
                           </c:if>
-                          <c:if test="${meilleurEnchere.getUnUtilisateur().getNoUtilisateur() == unUtilisateur.getNoUtilisateur()}">
+                          <c:if test="${enchere.getUnUtilisateur().getNoUtilisateur() == unUtilisateur.getNoUtilisateur() && article.getUnUtilisateur().getNoUtilisateur() != unUtilisateur.getNoUtilisateur()}">
                             <c:set var="isEncherir" value="true" scope="page" />
                           </c:if>
                         </c:forEach>

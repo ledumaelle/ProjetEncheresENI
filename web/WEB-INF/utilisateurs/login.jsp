@@ -229,6 +229,7 @@
     <!--/.Content-->
   </div>
 </div>
+<%@ include file="../template/footer.jsp" %>
 </body>
 <script type="text/javascript">
   // Animations initialization
