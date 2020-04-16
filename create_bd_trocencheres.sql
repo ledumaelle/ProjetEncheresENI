@@ -97,13 +97,15 @@ ON DELETE NO ACTION
 
 	--ajout d'un contrainte d'unicité dans le mail et pseudo utilisateur
 ALTER TABLE UTILISATEURS
-ADD CONSTRAINT email_unique UNIQUE (email);   
-
+ADD CONSTRAINT email_unique UNIQUE (email);
 	GO
 
 ALTER TABLE UTILISATEURS
 ADD CONSTRAINT pseudo_unique UNIQUE (pseudo);
-
 	GO
 
+ALTER TABLE RETRAITS
+ADD is_retire bit default 0;
 
+ALTER TABLE ARTICLES_VENDUS
+ADD nom_image nvarchar(50);
