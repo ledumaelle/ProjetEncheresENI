@@ -69,13 +69,4 @@ public class Enchere {
                 ", montantEnchere=" + montantEnchere +
                 '}';
     }
-
-    @Override
-    public boolean equals(Object object) {
-       Enchere enchere = (Enchere) object;
-        return this.getUnUtilisateur().getNoUtilisateur() == enchere.getUnUtilisateur().getNoUtilisateur() &&
-                this.getUnArticleVendu().getNoArticle() == enchere.getUnArticleVendu().getNoArticle() &&
-                this.getDateEnchere().isEqual(enchere.getDateEnchere()) &&
-                this.getMontantEnchere() == enchere.getMontantEnchere();
-    }
 }
