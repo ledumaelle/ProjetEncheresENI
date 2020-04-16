@@ -27,7 +27,7 @@
 
         <jsp:include page="../template/header.jsp"/>
 
-        <c:if test="${!empty unArticle}">
+        <c:if test="${!empty unArticle && unArticle.getNoArticle() != -1}">
 
             <div class="container my-5 py-5 z-depth-1">
                 <div class="row">
@@ -247,7 +247,7 @@
                     <!--Section: Content-->
                 </div>
         </c:if>
-        <c:if test="${empty unArticle}">
+        <c:if test="${empty unArticle || unArticle.getNoArticle() == -1 }">
             <div class="container">
                 <div class="row">
                     <div class="mt-5 text-center col-sm-12">
