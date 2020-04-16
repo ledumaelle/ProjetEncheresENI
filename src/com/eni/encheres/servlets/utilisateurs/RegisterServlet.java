@@ -71,7 +71,11 @@ public class RegisterServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/register.jsp").forward(request,response);
+		if(request.getSession().getAttribute("unUtilisateur")==null) {
+			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/register.jsp").forward(request, response);
+		}else{
+			this.getServletContext().getRequestDispatcher(request.getContextPath());
+		}
 	}
 
 }

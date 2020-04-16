@@ -1,7 +1,5 @@
 package com.eni.encheres.servlets.utilisateurs;
 
-
-
 import com.eni.encheres.bll.utilisateurs.UtilisateurManager;
 import com.eni.encheres.bo.Utilisateur;
 
@@ -10,28 +8,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
+@WebServlet("/deleteUser/*")
+public class DeleteServlet extends HttpServlet {
 
-@WebServlet("/utilisateur/*")
-public class UtilisateurServlet extends HttpServlet  {
 
-    public UtilisateurServlet(){super();}
+
+    public DeleteServlet(){super();}
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }
 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String pathInfo = request.getPathInfo();
 
         String[] pathParts = pathInfo.split("/");
 
 
-        if(pathParts.length==2 && pathParts[1].matches("\\d+")) {
+        if(pathParts.length==2 && pathParts[1].matches("\\d+") && request.getSession().getAttribute("unUtilisateur") != null) {
 
             String parram = pathParts[1];
             try {
@@ -41,10 +39,17 @@ public class UtilisateurServlet extends HttpServlet  {
 
                 Utilisateur user = utilisateurManager.getUtilisateurById(id);
 
-                if(user!=null) {
-                    request.setAttribute("userAffiche", user);
+                Utilisateur userConnected = (Utilisateur) request.getSession().getAttribute("unUtilisateur");
 
-                    this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/afficheUtilisateur.jsp").forward(request, response);
+                if(user!=null && userConnected.equals(user)) {
+
+                    utilisateurManager.deleteUtilisateur(id);
+                    request.getSession().removeAttribute("unUtilisateur");
+
+                    this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/deleteUser.jsp").forward(request, response);
+
+                }else {
+                    response.sendRedirect(request.getContextPath());
                 }
 
 
@@ -63,8 +68,6 @@ public class UtilisateurServlet extends HttpServlet  {
 
 
     }
-
-
-
-
 }
+
+

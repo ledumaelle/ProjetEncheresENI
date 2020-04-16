@@ -33,7 +33,7 @@ public class UtilisateurManager {
 
     public int creerUtilisateur(Utilisateur utilisateur){
 
-        if(utilisateur != null && checkUtilisateur(utilisateur)){
+        if(utilisateur != null && checkUtilisateur(utilisateur) && utilisateurDao.getUtilisateurByMail(utilisateur.getEmail())==null){
             return utilisateurDao.creerUtilisateur(utilisateur);
         }else {
             LOGGER.info("Utilisateur non creer car champs non valide");
@@ -102,8 +102,7 @@ public class UtilisateurManager {
                 utilisateur.getCodePostal().length()<=10 && !utilisateur.getCodePostal().isBlank() &&
                 utilisateur.getVille().length()<=30 && !utilisateur.getVille().isBlank() &&
                 utilisateur.getMotDePasse().length()<=30 && !utilisateur.getMotDePasse().isBlank() &&
-                utilisateur.getTelephone().length()<=15  &&
-                utilisateurDao.getUtilisateurByMail(utilisateur.getEmail())==null;
+                utilisateur.getTelephone().length()<=15  ;
     }
 
     public void updateCredit(int utilisateur, int credit, String type) throws UtilisateurDAOException {

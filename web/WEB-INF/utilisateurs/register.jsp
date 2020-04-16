@@ -13,7 +13,7 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin">
                 <div class="card-body">
-                    <button class="btn btn-dark hBack" type="button" onclick="back()">&#8249; Retour</button>
+                    <button class="btn btn-dark hBack" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}';">&#8249; Retour</button>
                     </br></br>
                     <h5 class="card-title text-center font-italic">Création Compte</h5>
 
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="form-label-group">
-                            <input type="tel"  name="inputPhone" id="inputPhone" class="form-control" placeholder="Téléphone" required>
+                            <input type="tel"  name="inputPhone" id="inputPhone" class="form-control" placeholder="Téléphone" >
                             <label for="inputPhone"><i class="fas fa-phone"></i> Téléphone mobile</label>
                         </div>
 
