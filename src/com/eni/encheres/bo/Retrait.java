@@ -9,6 +9,7 @@ public class Retrait {
     private String codePostal;
     private String ville;
     private ArticleVendu unArticleVendu;
+    private Boolean isRetire;
 
     public Retrait() {
 
@@ -18,6 +19,13 @@ public class Retrait {
         this.rue = rue;
         this.codePostal = codePostal;
         this.ville = ville;
+    }
+
+    public Retrait(String rue, String codePostal, String ville, Boolean isRetire) {
+        this.rue = rue;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.isRetire = isRetire;
     }
 
     public Retrait(String rue, String codePostal, String ville, ArticleVendu unArticleVendu) {
@@ -57,13 +65,22 @@ public class Retrait {
         this.unArticleVendu = unArticleVendu;
     }
 
+    public Boolean getRetire() {
+        return isRetire;
+    }
+
+    public void setRetire(Boolean retire) {
+        isRetire = retire;
+    }
+
     @Override
     public String toString() {
         return "Retrait{" +
                 "rue='" + rue + '\'' +
                 ", codePostal='" + codePostal + '\'' +
                 ", ville='" + ville + '\'' +
-                ", unArticleVendu=" + unArticleVendu +
+                ", unArticleVendu=" + unArticleVendu + '\'' +
+                ", isRetire=" + isRetire +
                 '}';
     }
 }

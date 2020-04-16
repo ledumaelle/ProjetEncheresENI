@@ -20,12 +20,17 @@ public class ArticleVendu {
     private String etatVente;
     private Categorie uneCategorie;
     private Utilisateur unUtilisateur;
-
     private List<Enchere> lesEncheres;
 
     public ArticleVendu()
     {
         lesEncheres = new ArrayList<>();
+    }
+
+    public ArticleVendu(int noArticle)
+    {
+        this.noArticle = noArticle;
+
     }
 
     public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, Categorie uneCategorie, Utilisateur unUtilisateur, String nomImage) {

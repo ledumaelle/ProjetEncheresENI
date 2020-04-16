@@ -1,6 +1,7 @@
 package com.eni.encheres.dal.utilisateurs;
 
 import com.eni.encheres.bo.Utilisateur;
+import com.eni.encheres.dal.exceptions.UtilisateurDAOException;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface UtilisateurDao {
 
     public void deleteUtilisateur(int id);
 
+    public void updateCredit(int id, int credit, String type) throws UtilisateurDAOException;
 }

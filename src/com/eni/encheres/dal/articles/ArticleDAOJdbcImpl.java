@@ -5,7 +5,6 @@ import com.eni.encheres.bo.Categorie;
 import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.ConnectionProvider;
-import com.eni.encheres.dal.encheres.EnchereDAO;
 import com.eni.encheres.dal.exceptions.ArticleDAOException;
 
 import javax.ejb.Local;
@@ -19,6 +18,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
     private final String INSERT_NULL_EXCEPTION = "Un article ne peut pas être null";
     private final String INSERT = "INSERT INTO ARTICLES_VENDUS VALUES (?,?,?,?,?,?,?,?,?)";
+
+    private final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente = ? WHERE no_article = ?";
 
     private final String COUNT_ALL = "SELECT COUNT(*) as nbArticles FROM ARTICLES_VENDUS";
 
@@ -199,6 +200,21 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             {
                 article.setNoArticle(rs.getInt(1));
             }
+        }
+        catch(Exception e)
+        {
+            throw new ArticleDAOException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updatePrixVente(int id, int montant) throws ArticleDAOException {
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement st = cnx.prepareStatement(UPDATE_PRIX_VENTE);
+            st.setInt(1, montant);
+            st.setInt(2, id);
+            st.executeUpdate();
         }
         catch(Exception e)
         {

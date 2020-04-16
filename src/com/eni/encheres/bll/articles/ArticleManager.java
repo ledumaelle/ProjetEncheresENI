@@ -1,12 +1,17 @@
 package com.eni.encheres.bll.articles;
 
 import com.eni.encheres.bll.exceptions.ArticleBLLException;
+import com.eni.encheres.bll.exceptions.RetraitBLLException;
+import com.eni.encheres.bll.retraits.RetraitManager;
 import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Categorie;
+import com.eni.encheres.bo.Retrait;
 import com.eni.encheres.bo.Utilisateur;
 import com.eni.encheres.dal.DAOFactory;
 import com.eni.encheres.dal.articles.ArticleDAO;
 import com.eni.encheres.dal.exceptions.ArticleDAOException;
+import com.eni.encheres.dal.exceptions.RetraitDAOException;
+import com.eni.encheres.dal.retraits.RetraitDAO;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -39,17 +44,23 @@ public class ArticleManager {
 
     public void insert (String libelle, String description, String imagePath, String imageName, String imageEncode, int categorieId, int prix, String debut, String fin, String rue, String codePostal, String ville, Utilisateur user) throws ArticleBLLException, ArticleDAOException {
         LocalDate dateDebut = transformStringToLocalDate(debut);
-            LocalDate dateFin = transformStringToLocalDate(fin);
-            setImageOnServer(imagePath, imageEncode);
-            if(!checkDate(dateDebut, dateFin) && !checkAdresse(rue, codePostal, ville) && !checkArticle(libelle, description, prix, imageName)){
-                throw new ArticleBLLException("Les données saisies sont incorrectes");
-            }
-            articleDAO.insert(new ArticleVendu(libelle, description, dateDebut, dateFin, prix, new Categorie(categorieId), user, imageName));
+        LocalDate dateFin = transformStringToLocalDate(fin);
+        setImageOnServer(imagePath, imageEncode);
+        if(!checkDate(dateDebut, dateFin) && !checkArticle(libelle, description, prix, imageName)){
+            throw new ArticleBLLException("Les données saisies sont incorrectes");
+        }
+        ArticleVendu article = new ArticleVendu(libelle, description, dateDebut, dateFin, prix, new Categorie(categorieId), user, imageName);
+        articleDAO.insert(article);
+        RetraitManager retraitManager = RetraitManager.getInstance();
+        try {
+            retraitManager.insert(rue, codePostal, ville, article);
+        }catch (RetraitBLLException | RetraitDAOException e){
+            throw new ArticleBLLException(e.getMessage());
+        }
     }
 
-    private boolean checkAdresse(String rue, String codePostal, String ville){
-        String patternCodePostal = "^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$";
-        return rue.length() < 31 && codePostal.length() == 5 && Pattern.matches(patternCodePostal, codePostal) && ville.length() < 30;
+    public void updatePrixVente (int articleId, int montant) throws ArticleDAOException {
+        articleDAO.updatePrixVente(articleId, montant);
     }
 
     private boolean checkArticle(String libelle, String description, int prix, String imageName) {
@@ -68,13 +79,13 @@ public class ArticleManager {
             if(file.createNewFile()){
                 //convert base64 string to binary data
                 byte[] imageBite = Base64.getDecoder().decode(image[1]);
-                OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
+                OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file), 2000000);
                 outputStream.write(imageBite);
             }else{
                 System.out.println(imageName + " exite déjà");
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ArticleBLLException(e.getMessage());
         }
     }

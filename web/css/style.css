@@ -1,13 +1,9 @@
-.form-control[readonly], .form-control:disabled {
+.form-control:disabled {
     background-color: #fff !important;
 }
 
 .btn-upload {
     width: 95%;
-}
-
-input.invalid, textarea.invalid, select.invalid {
-    border-color: #dc3545;
 }
 
 #card-retrait {

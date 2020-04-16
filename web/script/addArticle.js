@@ -13,6 +13,10 @@ $(function(){
         }
     );
 
+    $('.datepicker').removeAttr('readonly');
+
+    // $('#photoSize').prop('max', 10);
+
     $("#photo").change(function() {
         readURL(this);
     });
@@ -25,22 +29,26 @@ function readURL(input) {
         reader.onload = function(e) {
             $('#img-preview').attr('src', e.target.result);
             $('#photoB64').attr('value', e.target.result);
+            $('#photoSize').attr('value', input.files[0].size)
         }
 
         reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
 }
 
-function submitForm(){
-    let invalidClassName = 'invalid'
-    let inputs = document.querySelectorAll('input, select, textarea')
-    inputs.forEach(function (input) {
-        if(input.id !== '' && $('#' + input.id).val() === ''){
-            input.classList.add(invalidClassName)
-        }
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
 
-        if(input.id !== '' && $('#' + input.id).val() !== ''){
-            input.classList.remove(invalidClassName)
-        }
-    });
-}
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();

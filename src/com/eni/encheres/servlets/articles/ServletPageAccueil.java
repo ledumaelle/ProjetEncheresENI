@@ -39,7 +39,7 @@ public class ServletPageAccueil extends HttpServlet {
         {
             unUtilisateur = (Utilisateur) session.getAttribute("unUtilisateur");
         }
-
+      
         request.setAttribute("lesCategories", getLesCategories());
 
         String idCategorie="";

@@ -25,8 +25,9 @@
                     </li>
                 </c:if>
                 <c:if test="${!empty unUtilisateur}">
-
-
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fas fa-coins"></i> ${unUtilisateur.getCredit()} crédits</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.servletContext.contextPath}">
                             <i class="fas fa-balance-scale"></i> Enchères</a>
