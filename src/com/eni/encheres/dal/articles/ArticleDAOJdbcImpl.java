@@ -290,7 +290,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
     public List<ArticleVendu> getLesArticles()
     {
         List<ArticleVendu> lesArticles = new ArrayList<>();
-        List<Enchere> lesEncheres = new ArrayList<>();
 
         try(Connection cnx = ConnectionProvider.getConnection())
         {
@@ -312,9 +311,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
                 }
                 else
                 {
-                    int index = lesArticles.indexOf(unArticleVendu);
-                    lesArticles.remove(index);
-                    lesArticles.add(index, unArticleVendu);
+                    if(uneEnchere.getMontantEnchere() != -1 && !lesArticles.get(lesArticles.indexOf(unArticleVendu)).getLesEncheres().contains(uneEnchere))
+                    {
+                        lesArticles.get(lesArticles.indexOf(unArticleVendu)).ajouterUneEnchere(uneEnchere);
+                    }
                 }
             }
         }

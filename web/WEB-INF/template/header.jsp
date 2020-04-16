@@ -8,7 +8,6 @@
         <c:set var="unUtilisateur" value="${sessionScope.unUtilisateur}" scope="page" />
     </c:if>
 
-    <!--Navbar -->
     <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color sticky-top">
         <a class="navbar-brand" href="${pageContext.servletContext.contextPath}">ENI - Enchères</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"

@@ -8,9 +8,10 @@
     <%@ include file="../template/head.jsp" %>
 </head>
 <body>
+<%@ include file="../template/header.jsp" %>
 <div class="container">
     <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="col-sm-12">
             <div class="card card-signin">
                 <div class="card-body">
                     <button class="btn btn-dark hBack" type="button" onclick="back()">&#8249; Retour</button>
@@ -79,6 +80,7 @@
         </div>
     </div>
 </div>
+<%@ include file="../template/footer.jsp" %>
 </body>
 
 <script>
