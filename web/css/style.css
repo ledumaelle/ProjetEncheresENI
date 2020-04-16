@@ -15,3 +15,7 @@
     overflow-y: scroll;
     max-height: 150px;
 }
+
+html,body {
+    height: 100vh;
+}
