@@ -42,6 +42,10 @@ public class RetraitManager {
         retraitDAO.update(new Retrait(rue, codePostal, ville, article));
     }
 
+    public void delete(int articleId) throws RetraitDAOException {
+        retraitDAO.delete(articleId);
+    }
+
     private boolean checkRetrait(String rue, String codePostal, String ville){
         String patternCodePostal = "^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$";
         return rue.length() < 31 && codePostal.length() == 5 && Pattern.matches(patternCodePostal, codePostal) && ville.length() < 30;

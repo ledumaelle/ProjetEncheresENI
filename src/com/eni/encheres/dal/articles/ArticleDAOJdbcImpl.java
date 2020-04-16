@@ -28,6 +28,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             "no_categorie = ? " +
             "WHERE no_article = ?";
 
+    private final String DELETE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
+
     private final String COUNT_ALL = "SELECT COUNT(*) as nbArticles FROM ARTICLES_VENDUS";
 
     private static final String SELECT_ALL="SELECT U.no_utilisateur, U.nom, U.prenom, U.pseudo, U.email,  U.telephone, U.mot_de_passe, U.rue, U.code_postal, U.ville, U.credit, U.administrateur, " +
@@ -230,6 +232,24 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             st.setInt(5, article.getMiseAPrix());
             st.setInt(6, article.getUneCategorie().getNoCategorie());
             st.setInt(7, article.getNoArticle());
+            st.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            throw new ArticleDAOException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(int articleId) throws ArticleDAOException {
+        if(0 == articleId) {
+            throw new ArticleDAOException(INSERT_NULL_EXCEPTION);
+        }
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement st = cnx.prepareStatement(DELETE);
+            st.setInt(1, articleId);
             st.executeUpdate();
         }
         catch(Exception e)

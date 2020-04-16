@@ -8,6 +8,8 @@ public interface RetraitDAO {
 
     void update(Retrait retrait) throws RetraitDAOException;
 
+    void delete(int articleId) throws RetraitDAOException;
+
     Retrait getRetraitByArticleId(int id) throws RetraitDAOException;
 
     void setArticleIsRetire(int articleId) throws  RetraitDAOException;

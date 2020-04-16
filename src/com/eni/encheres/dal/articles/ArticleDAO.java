@@ -10,6 +10,8 @@ public interface ArticleDAO {
 
     void update(ArticleVendu article) throws ArticleDAOException;
 
+    void delete(int articleId) throws ArticleDAOException;
+
     void updatePrixVente(int id, int montant) throws ArticleDAOException;
 
     int countArticles() throws ArticleDAOException;

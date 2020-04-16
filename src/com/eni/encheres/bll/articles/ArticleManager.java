@@ -75,6 +75,10 @@ public class ArticleManager {
         }
     }
 
+    public void delete (int noArticle) throws ArticleDAOException {
+        articleDAO.delete(noArticle);
+    }
+
     public void updatePrixVente (int articleId, int montant) throws ArticleDAOException {
         articleDAO.updatePrixVente(articleId, montant);
     }

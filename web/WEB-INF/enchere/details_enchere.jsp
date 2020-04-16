@@ -31,16 +31,20 @@
 
             <div class="container my-5 py-5 z-depth-1">
                 <div class="row">
-                    <div class="text-center text-md-left text-md-right col-sm-12">
                         <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('non_debutee')}">
-                            <a href="<%= request.getContextPath() %>/articles/form?no_article=${unArticle.getNoArticle()}" class="btn btn-secondary-color btn-rounded">
-                                <i class="fas fa-edit mr-2" aria-hidden="true"></i> Modifier</a>
+                            <div class="text-center text-md-left text-md-right col-sm-12">
+                                <a href="<%= request.getContextPath() %>/articles/cancel?no_article=${unArticle.getNoArticle()}" class="btn btn-secondary-color btn-rounded">
+                                    <i class="far fa-times-circle mr-2" aria-hidden="true"></i> Annuler</a>
+                                <a href="<%= request.getContextPath() %>/articles/form?no_article=${unArticle.getNoArticle()}" class="btn btn-secondary-color btn-rounded">
+                                    <i class="fas fa-edit mr-2" aria-hidden="true"></i> Modifier</a>
+                            </div>
                         </c:if>
                         <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('terminee') && !unRetrait.getRetire()}">
-                            <a href="<%= request.getContextPath() %>/retirer?no_article=${unArticle.getNoArticle()}&credit=${unArticle.getPrixVente()}" class="btn btn-secondary-color btn-rounded">
-                                <i class="fas fa-box-open" aria-hidden="true"></i> Retirer</a>
+                            <div class="text-center text-md-left text-md-right col-sm-12">
+                                <a href="<%= request.getContextPath() %>/retirer?no_article=${unArticle.getNoArticle()}&credit=${unArticle.getPrixVente()}" class="btn btn-secondary-color btn-rounded">
+                                    <i class="fas fa-box-open mr-2" aria-hidden="true"></i> Retirer</a>
+                            </div>
                         </c:if>
-                    </div>
                 </div>
 
                 <!--Section: Content-->

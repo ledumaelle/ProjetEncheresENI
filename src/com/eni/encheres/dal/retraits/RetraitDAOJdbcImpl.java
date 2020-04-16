@@ -18,6 +18,8 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
             "ville = ? " +
             "WHERE no_article = ?";
 
+    private final String DELETE = "DELETE RETRAITS WHERE no_article = ?";
+
     private final String UPDATE_IS_RETIRE = "UPDATE RETRAITS SET is_retire = 1 where no_article = ?";
 
     private final String SELECT_BY_ARTICLE_ID = "SELECT * FROM RETRAITS WHERE no_article = ?";
@@ -56,6 +58,24 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
             st.setString(2, retrait.getCodePostal());
             st.setString(3, retrait.getVille());
             st.setInt(4, retrait.getUnArticleVendu().getNoArticle());
+            st.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            throw new RetraitDAOException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(int articleId) throws RetraitDAOException {
+        if(0 == articleId) {
+            throw new RetraitDAOException(INSERT_NULL_EXCEPTION);
+        }
+
+        try(Connection cnx = ConnectionProvider.getConnection())
+        {
+            PreparedStatement st = cnx.prepareStatement(DELETE);
+            st.setInt(1, articleId);
             st.executeUpdate();
         }
         catch(Exception e)
