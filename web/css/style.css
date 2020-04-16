@@ -1,0 +1,11 @@
+.form-control:disabled {
+    background-color: #fff !important;
+}
+
+.btn-upload {
+    width: 95%;
+}
+
+#card-retrait {
+    margin-top: 40px;
+}
