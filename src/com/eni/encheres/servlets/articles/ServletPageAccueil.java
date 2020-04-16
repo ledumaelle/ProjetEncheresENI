@@ -2,10 +2,8 @@ package com.eni.encheres.servlets.articles;
 
 import com.eni.encheres.bll.articles.ArticleManager;
 import com.eni.encheres.bll.categories.CategorieManager;
-import com.eni.encheres.bll.encheres.EnchereManager;
 import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Categorie;
-import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.bo.Utilisateur;
 
 import javax.servlet.RequestDispatcher;
@@ -27,7 +25,7 @@ public class ServletPageAccueil extends HttpServlet {
     //Utilisateur unUtilisateur = new Utilisateur(3,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
     Utilisateur unUtilisateur = null;
 
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) {
 
     }
 
@@ -59,7 +57,6 @@ public class ServletPageAccueil extends HttpServlet {
         boolean ventesEnCours = false;
         boolean ventesNonDebutees = false;
         boolean ventesTerminees = false;
-        String groupeRadio="";
         if(null != request.getParameter("groupeRadio") && (!request.getParameter("groupeRadio").equals("")))
         {
             switch(request.getParameter("groupeRadio"))
@@ -121,8 +118,7 @@ public class ServletPageAccueil extends HttpServlet {
     private int calculSides(List<ArticleVendu> lesArticles)
     {
         float value = (float) lesArticles.size() / 6;
-        int nbSides = (int) Math.ceil(value);
-        return nbSides;
+        return (int) Math.ceil(value);
     }
 
     private List<Categorie> getLesCategories()
@@ -170,27 +166,57 @@ public class ServletPageAccueil extends HttpServlet {
         return lesArticles;
     }
 
+    private List<ArticleVendu> filtreNomAndCategorie(String idCategorie, String nomArticle, List<ArticleVendu> lesArticles)
+    {
+        List<ArticleVendu> lesArticlesFiltres = new ArrayList<>();
+        try {
+
+            //Filtre nom + catégorie
+            if(!idCategorie.equals("") && !nomArticle.equals(""))
+            {
+                for(ArticleVendu  unArticle  : lesArticles)
+                {
+                    if(unArticle.getUneCategorie().getNoCategorie() == Integer.parseInt(idCategorie) && !lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().matches(nomArticle))
+                    {
+                        lesArticlesFiltres.add(unArticle);
+                    }
+                }
+            }
+            else if(!idCategorie.equals(""))
+            {
+                for(ArticleVendu  unArticle  : lesArticles)
+                {
+                    if(unArticle.getUneCategorie().getNoCategorie() == Integer.parseInt(idCategorie) && !lesArticlesFiltres.contains(unArticle))
+                    {
+                        lesArticlesFiltres.add(unArticle);
+                    }
+                }
+            }
+            else if(!nomArticle.equals(""))
+            {
+                for(ArticleVendu  unArticle  : lesArticles)
+                {
+                    if(!lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().matches(nomArticle))
+                    {
+                        lesArticlesFiltres.add(unArticle);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lesArticlesFiltres;
+    }
+
     private List<ArticleVendu> getLesArticles(String idCategorie, String nomArticle, boolean encheresOuvertes, boolean encheresEnCours, boolean encheresRemportees,boolean ventesEncours, boolean ventesNonDebutees, boolean ventesTerminees)
     {
         List<ArticleVendu> lesArticles = new ArrayList<>();
         try {
             ArticleManager managerArticle = ArticleManager.getInstance();
 
-            if(!idCategorie.equals("") && !nomArticle.equals(""))
-            {
-                lesArticles = managerArticle.getLesArticlesByParams(Integer.parseInt(idCategorie),nomArticle);
-            }
-            else if(!idCategorie.equals(""))
-            {
-                lesArticles = managerArticle.getLesArticlesByCategorieID(Integer.parseInt(idCategorie));
-            }
-            else if(!nomArticle.equals(""))
-            {
-                lesArticles = managerArticle.getLesArticlesByNom(nomArticle);
-            }
-
             //ENCHERES
-            else if(encheresOuvertes & encheresEnCours &!encheresRemportees)
+            if(encheresOuvertes & encheresEnCours &!encheresRemportees)
             {
                 lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
             }
@@ -255,6 +281,11 @@ public class ServletPageAccueil extends HttpServlet {
             else
             {
                 lesArticles = managerArticle.getLesArticles();
+            }
+
+            if(!nomArticle.isEmpty() || !idCategorie.isEmpty())
+            {
+                lesArticles = filtreNomAndCategorie(idCategorie, nomArticle, lesArticles);
             }
 
         } catch (Exception e) {
