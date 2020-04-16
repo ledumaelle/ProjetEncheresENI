@@ -10,4 +10,12 @@ import java.util.List;
 public interface CategorieDAO {
 
     public List<Categorie> getLesCategories();
+
+    Categorie getCategorieById(int id);
+
+    void update(Categorie categorie);
+
+    int creer(Categorie categorie);
+
+    void delete(int id);
 }

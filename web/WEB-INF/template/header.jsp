@@ -24,6 +24,14 @@
                     </li>
                 </c:if>
                 <c:if test="${!empty unUtilisateur}">
+
+                    <c:if test="${unUtilisateur.administrateur}">
+                        <li class="nav-item" >
+                            <a class="nav-link" href="${pageContext.servletContext.contextPath}/admin">
+                                <i class="fas fa-user-cog"></i> Admin</a>
+                        </li>
+                    </c:if>
+
                     <li class="nav-item">
                         <a class="nav-link"><i class="fas fa-coins"></i> ${unUtilisateur.getCredit()} crédits</a>
                     </li>

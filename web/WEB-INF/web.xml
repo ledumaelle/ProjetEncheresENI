@@ -5,4 +5,7 @@
         http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <display-name>ProjetEncheresENI</display-name>
+    <session-config>
+        <session-timeout>5</session-timeout>
+    </session-config>
 </web-app>

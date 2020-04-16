@@ -163,14 +163,21 @@
           <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
           <form class="form-signin" action="login" method="post" id="loginForm">
             <div class="form-label-group">
-              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" required autofocus>
+              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" value="<c:out value="${cookie.LOGIN.getValue()}"  />" required autofocus>
               <label for="email">Identifiant</label>
             </div>
 
             <div class="form-label-group">
-              <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" value="<c:out value="${cookie.MDP.getValue()}"  />" required>
               <label for="password">Mot de passe</label>
             </div>
+
+            <div class="form-check-group ">
+              <input type="checkbox" class="form-check-input" id="memoire" name="memoire" <c:out value="${requestScope.checkMemoire}"  />  >
+              <label class="form-check-label" for="memoire">Se souvenir de moi</label>
+            </div>
+            <br>
+
             <button class="btn btn-lg btn-primary btn-block text-uppercase" id="submit_form_connection" type="submit">Connexion</button>
             <div class="text-center">
               <div class="card-option text-center">
