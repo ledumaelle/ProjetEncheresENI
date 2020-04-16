@@ -224,7 +224,6 @@
                       <c:set var="isEncherir" value="false" scope="page" />
                       <c:if test="${!empty article.getLesEncheres()}">
                         <c:set var="meilleurEnchere" value="${article.getLesEncheres().get(0)}" scope="page" />
-                        <span>${article.getLesEncheres().size()}</span>
                         <c:forEach items="${article.getLesEncheres()}" var="enchere">
                           <c:if test="${meilleurEnchere.getMontantEnchere() > enchere.getMontantEnchere()}">
                             <c:set var="meilleurEnchere" value="${enchere}" scope="page" />
