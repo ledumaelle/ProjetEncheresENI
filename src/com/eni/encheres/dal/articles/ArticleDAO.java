@@ -23,4 +23,14 @@ public interface ArticleDAO {
     List<ArticleVendu> getLesArticlesByParams(int idCategorie,String nomArticle);
 
     ArticleVendu getUnArticleByID(int noArticle);
+
+    List<ArticleVendu> getLesArticlesByEncheresEnCoursAndUserID(int idEncherisseur);
+
+    List<ArticleVendu> getLesArticlesByEncheresRemporteesAndUserID(int idEncherisseur);
+
+    List<ArticleVendu>  getLesArticlesByVentesEnCoursAndUserID(int idVendeur);
+
+    List<ArticleVendu> getLesArticlesByVentesNonDebuteesAndUserID(int idVendeur);
+
+    List<ArticleVendu> getLesArticlesByVentesTermineesAndUserID(int idVendeur);
 }
