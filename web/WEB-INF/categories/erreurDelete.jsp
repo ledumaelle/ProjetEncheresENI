@@ -17,7 +17,9 @@
 
 <div class="col-sm-4">
     <div id="myTabContent" class="tab-content">
-        <p> Suppression impossible car des articles sont lié a cette catégorie</p>
+        <p id="message" class="text-danger"> Suppression impossible car des articles sont liés a cette catégorie</p>
+        <button class="btn btn-dark hBack" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}/admin';" >Retour</button>
+
     </div>
 </div>
 </body>
