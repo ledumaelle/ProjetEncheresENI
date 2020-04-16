@@ -2,10 +2,8 @@ package com.eni.encheres.servlets.articles;
 
 import com.eni.encheres.bll.articles.ArticleManager;
 import com.eni.encheres.bll.categories.CategorieManager;
-import com.eni.encheres.bll.encheres.EnchereManager;
 import com.eni.encheres.bo.ArticleVendu;
 import com.eni.encheres.bo.Categorie;
-import com.eni.encheres.bo.Enchere;
 import com.eni.encheres.bo.Utilisateur;
 
 import javax.servlet.RequestDispatcher;
@@ -24,11 +22,22 @@ import java.lang.*;
 @WebServlet(name="ServletPageAccueil",urlPatterns ={""})
 public class ServletPageAccueil extends HttpServlet {
 
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
+    //Utilisateur unUtilisateur = new Utilisateur(3,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
+    Utilisateur unUtilisateur = null;
+
+    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) {
 
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+
+        if(null != session.getAttribute("unUtilisateur"))
+        {
+            unUtilisateur = (Utilisateur) session.getAttribute("unUtilisateur");
+        }
+      
         request.setAttribute("lesCategories", getLesCategories());
 
         String idCategorie="";
@@ -42,16 +51,14 @@ public class ServletPageAccueil extends HttpServlet {
             nomArticle = request.getParameter("txtFiltreNom");
         }
 
-        String groupeRadio="";
+        boolean encheresOuvertes = false;
+        boolean encheresEnCours = false;
+        boolean encheresRemportees = false;
+        boolean ventesEnCours = false;
+        boolean ventesNonDebutees = false;
+        boolean ventesTerminees = false;
         if(null != request.getParameter("groupeRadio") && (!request.getParameter("groupeRadio").equals("")))
         {
-            boolean encheresOuvertes;
-            boolean encheresEnCours;
-            boolean encheresRemportees;
-            boolean ventesEnCours;
-            boolean ventesNonDebutees;
-            boolean ventesTerminees;
-
             switch(request.getParameter("groupeRadio"))
             {
                 case "achats":
@@ -61,11 +68,11 @@ public class ServletPageAccueil extends HttpServlet {
                     }
                     if(null != request.getParameter("encheres_en_cours"))
                     {
-                        encheresEnCours = request.getParameter("encheres_ouvertes").equals("on");
+                        encheresEnCours = request.getParameter("encheres_en_cours").equals("on");
                     }
                     if(null != request.getParameter("encheres_remportees"))
                     {
-                        encheresRemportees = request.getParameter("encheres_ouvertes").equals("on");
+                        encheresRemportees = request.getParameter("encheres_remportees").equals("on");
                     }
                     break;
                 case "ventes":
@@ -87,7 +94,17 @@ public class ServletPageAccueil extends HttpServlet {
             }
         }
 
-        List<ArticleVendu> lesArticles = getLesArticles(idCategorie,nomArticle);
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+
+        if(null != unUtilisateur)
+        {
+            lesArticles = getLesArticles(idCategorie,nomArticle,encheresOuvertes,encheresEnCours,encheresRemportees,ventesEnCours,ventesNonDebutees,ventesTerminees);
+        }
+        else
+        {
+            lesArticles = getLesArticles(idCategorie,nomArticle);
+
+        }
         request.setAttribute("lesArticles",lesArticles);
 
         request.setAttribute("idCategorie",idCategorie);
@@ -101,8 +118,7 @@ public class ServletPageAccueil extends HttpServlet {
     private int calculSides(List<ArticleVendu> lesArticles)
     {
         float value = (float) lesArticles.size() / 6;
-        int nbSides = (int) Math.ceil(value);
-        return nbSides;
+        return (int) Math.ceil(value);
     }
 
     private List<Categorie> getLesCategories()
@@ -141,6 +157,135 @@ public class ServletPageAccueil extends HttpServlet {
             else
             {
                 lesArticles = managerArticle.getLesArticles();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lesArticles;
+    }
+
+    private List<ArticleVendu> filtreNomAndCategorie(String idCategorie, String nomArticle, List<ArticleVendu> lesArticles)
+    {
+        List<ArticleVendu> lesArticlesFiltres = new ArrayList<>();
+        try {
+
+            //Filtre nom + catégorie
+            if(!idCategorie.equals("") && !nomArticle.equals(""))
+            {
+                for(ArticleVendu  unArticle  : lesArticles)
+                {
+                    if(unArticle.getUneCategorie().getNoCategorie() == Integer.parseInt(idCategorie) && !lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().matches(nomArticle))
+                    {
+                        lesArticlesFiltres.add(unArticle);
+                    }
+                }
+            }
+            else if(!idCategorie.equals(""))
+            {
+                for(ArticleVendu  unArticle  : lesArticles)
+                {
+                    if(unArticle.getUneCategorie().getNoCategorie() == Integer.parseInt(idCategorie) && !lesArticlesFiltres.contains(unArticle))
+                    {
+                        lesArticlesFiltres.add(unArticle);
+                    }
+                }
+            }
+            else if(!nomArticle.equals(""))
+            {
+                for(ArticleVendu  unArticle  : lesArticles)
+                {
+                    if(!lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().matches(nomArticle))
+                    {
+                        lesArticlesFiltres.add(unArticle);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lesArticlesFiltres;
+    }
+
+    private List<ArticleVendu> getLesArticles(String idCategorie, String nomArticle, boolean encheresOuvertes, boolean encheresEnCours, boolean encheresRemportees,boolean ventesEncours, boolean ventesNonDebutees, boolean ventesTerminees)
+    {
+        List<ArticleVendu> lesArticles = new ArrayList<>();
+        try {
+            ArticleManager managerArticle = ArticleManager.getInstance();
+
+            //ENCHERES
+            if(encheresOuvertes & encheresEnCours &!encheresRemportees)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresOuvertes & encheresRemportees &!encheresEnCours)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresEnCours & encheresRemportees &!encheresOuvertes)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresEnCoursAndEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresOuvertes & encheresEnCours & encheresRemportees)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresOuvertesAndEncheresEnCoursAndEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresOuvertes)
+            {
+                lesArticles = managerArticle.getLesArticles();
+            }
+            else if(encheresEnCours)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(encheresRemportees)
+            {
+                lesArticles = managerArticle.getLesArticlesByEncheresRemporteesAndUserID(unUtilisateur.getNoUtilisateur());
+
+            }
+
+            //VENTES
+            else if(ventesEncours & ventesNonDebutees & ventesTerminees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndVentesTermineesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesEncours & ventesNonDebutees & !ventesTerminees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesEncours &ventesTerminees & !ventesNonDebutees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesTermineesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesNonDebutees & ventesTerminees & !ventesEncours)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesNonDebuteesAndVentesTermineesUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesEncours)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesNonDebutees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesNonDebuteesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+            else if(ventesTerminees)
+            {
+                lesArticles = managerArticle.getLesArticlesByVentesTermineesAndUserID(unUtilisateur.getNoUtilisateur());
+            }
+
+
+            //SANS FILTRE articles où les enchères sont en cours
+            else
+            {
+                lesArticles = managerArticle.getLesArticles();
+            }
+
+            if(!nomArticle.isEmpty() || !idCategorie.isEmpty())
+            {
+                lesArticles = filtreNomAndCategorie(idCategorie, nomArticle, lesArticles);
             }
 
         } catch (Exception e) {

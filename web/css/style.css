@@ -9,3 +9,13 @@
 #card-retrait {
     margin-top: 40px;
 }
+
+.scroll_vertical
+{
+    overflow-y: scroll;
+    max-height: 150px;
+}
+
+html,body {
+    min-height: 100vh !important;
+}

@@ -8,8 +8,7 @@
         <c:set var="unUtilisateur" value="${sessionScope.unUtilisateur}" scope="page" />
     </c:if>
 
-    <!--Navbar -->
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color sticky-top">
         <a class="navbar-brand" href="${pageContext.servletContext.contextPath}">ENI - Enchères</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
                 aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +40,7 @@
                             <i class="fas fa-balance-scale"></i> Enchères</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/articles/add">
+                        <a class="nav-link" href="${pageContext.servletContext.contextPath}/articles/form">
                             <i class="fas fa-shopping-cart"></i> Vendre un article</a>
                     </li>
                     <li class="nav-item">

@@ -9,5 +9,7 @@ public interface EnchereDAO {
 
     List<Enchere> getLesEncheresByArticleID(int noAtricle);
 
+    Enchere getMaxEnchereByArticleID(int noArticle);
+  
     void makeEnchere(Enchere enchere) throws EnchereDAOException;
 }

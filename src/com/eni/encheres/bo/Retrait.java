@@ -33,6 +33,11 @@ public class Retrait {
         this.unArticleVendu = unArticleVendu;
     }
 
+    public Retrait(String rue, String codePostal, String ville, Boolean isRetire, ArticleVendu unArticleVendu) {
+        this(rue,codePostal,ville, isRetire);
+        this.unArticleVendu = unArticleVendu;
+    }
+
     public String getRue() {
         return rue;
     }
