@@ -225,7 +225,7 @@
                                 <section class="color">
                                     <div class="mt-5">
                                         <div class="row">
-                                            <form  class="form-inline" action="<%= request.getContextPath() %>/details_enchere" method="post">
+                                            <form  class="form-inline" action="<%= request.getContextPath() %>/details_enchere?idArticle=${unArticle.getNoArticle()}&dernierUser=${lastEnchere == null ? 0 : lastEnchere.getUnUtilisateur().getNoUtilisateur()}&derniereOffre=${lastEnchere == null ? 0 : lastEnchere.getMontantEnchere()}" method="post">
                                                 <div class="col-sm-6">
                                                     <label class="mdb-main-label grey-text" for="newEnchere">Ma proposition</label>
                                                     <input
@@ -238,9 +238,6 @@
                                                             data-credit="${unUtilisateur.getCredit()}"
                                                             onchange="disabledButton()"
                                                             value="${lastEnchere == null ? unArticle.getMiseAPrix() : (lastEnchere.getMontantEnchere() + 5)}">
-                                                    <input type="text" hidden name="idArticle" value="${unArticle.getNoArticle()}">
-                                                    <input type="text" hidden name="dernierUser" value="${lastEnchere == null ? 0 : lastEnchere.getUnUtilisateur().getNoUtilisateur()}">
-                                                    <input type="text" hidden name="derniereOffre" value="${lastEnchere == null ? 0 : lastEnchere.getMontantEnchere()}">
                                                 </div>
                                                 <div class="col-sm-6 text-center text-md-left text-md-right mt-3">
                                                     <button class="btn btn-primary btn-rounded" id="valideEnchere" type="submit">
