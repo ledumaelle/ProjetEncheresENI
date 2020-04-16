@@ -1,5 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-                  pageEncoding="UTF-8"%>
-<footer>
-    <p>Copyright - Equipe de dev - 2020</p>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- Footer -->
+<footer class="page-footer font-small info-color sticky-bottom">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="#"> Thomas - Angélique - Julien - Maëlle </a>
+    </div>
+    <!-- Copyright -->
+
 </footer>
+<!-- Footer -->

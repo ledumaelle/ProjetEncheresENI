@@ -343,10 +343,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
                 }
                 else
                 {
-                    if(uneEnchere.getMontantEnchere() != -1 && !lesArticles.get(lesArticles.indexOf(unArticleVendu)).getLesEncheres().contains(uneEnchere))
-                    {
-                        lesArticles.get(lesArticles.indexOf(unArticleVendu)).ajouterUneEnchere(uneEnchere);
-                    }
+                    int index = lesArticles.indexOf(unArticleVendu);
+                    lesArticles.remove(index);
+                    lesArticles.add(index, unArticleVendu);
                 }
             }
         }
@@ -682,20 +681,24 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
     @Override
     public ArticleVendu getUnArticleByID(int noArticle) {
 
-        ArticleVendu unArticleVendu = null;
+        ArticleVendu unArticleVendu = new ArticleVendu();
         try(Connection cnx = ConnectionProvider.getConnection())
         {
             PreparedStatement requete = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
             requete.setInt(1,noArticle);
             ResultSet res = requete.executeQuery();
+
             while(res.next())
             {
-                unArticleVendu = construireArticle(res);
-                unArticleVendu.setEtatVente(getStatut(unArticleVendu));
+                if(unArticleVendu.getNoArticle() == -1 )
+                {
+                    unArticleVendu = construireArticle(res);
+                    unArticleVendu.setEtatVente(getStatut(unArticleVendu));
+                }
 
                 Enchere uneEnchere = construireEnchere(res);
 
-                if(!unArticleVendu.getLesEncheres().contains(uneEnchere)) {
+                if(uneEnchere.getMontantEnchere() != -1 && !unArticleVendu.getLesEncheres().contains(uneEnchere)) {
                     unArticleVendu.ajouterUneEnchere(uneEnchere);
                 }
             }
@@ -704,6 +707,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
         {
             e.printStackTrace();
         }
+
         return unArticleVendu;
     }
 
