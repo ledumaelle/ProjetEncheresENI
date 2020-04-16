@@ -24,8 +24,8 @@ import java.lang.*;
 @WebServlet(name="ServletPageAccueil",urlPatterns ={""})
 public class ServletPageAccueil extends HttpServlet {
 
-    Utilisateur unUtilisateur = new Utilisateur(3,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
-
+    //Utilisateur unUtilisateur = new Utilisateur(3,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
+    Utilisateur unUtilisateur = null;
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
 
@@ -34,12 +34,11 @@ public class ServletPageAccueil extends HttpServlet {
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        session.setAttribute("unUtilisateur",unUtilisateur);
 
-        /*if(null != session.getAttribute("unUtilisateur"))
+        if(null != session.getAttribute("unUtilisateur"))
         {
             unUtilisateur = (Utilisateur) session.getAttribute("unUtilisateur");
-        }*/
+        }
 
         request.setAttribute("lesCategories", getLesCategories());
 
@@ -224,15 +223,15 @@ public class ServletPageAccueil extends HttpServlet {
             //VENTES
             else if(ventesEncours & ventesNonDebutees & ventesTerminees)
             {
-                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndVentesTermineesUserID(unUtilisateur.getNoUtilisateur());
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndVentesTermineesAndUserID(unUtilisateur.getNoUtilisateur());
             }
             else if(ventesEncours & ventesNonDebutees & !ventesTerminees)
             {
-                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesTerminessUserID(unUtilisateur.getNoUtilisateur());
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndUserID(unUtilisateur.getNoUtilisateur());
             }
             else if(ventesEncours &ventesTerminees & !ventesNonDebutees)
             {
-                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesNonDebuteesUserID(unUtilisateur.getNoUtilisateur());
+                lesArticles = managerArticle.getLesArticlesByVentesEnCoursAndVentesTermineesAndUserID(unUtilisateur.getNoUtilisateur());
             }
             else if(ventesNonDebutees & ventesTerminees & !ventesEncours)
             {

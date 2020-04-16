@@ -205,7 +205,7 @@ public class ArticleManager {
         return this.articleDAO.getLesArticlesByVentesTermineesAndUserID(idVendeur);
     }
 
-    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndVentesTermineesUserID(int idVendeur)
+    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndVentesTermineesAndUserID(int idVendeur)
     {
         List<ArticleVendu> lesArticlesVentesEncours = this.articleDAO.getLesArticlesByVentesEnCoursAndUserID(idVendeur);
         List<ArticleVendu> lesArticlesVentesNonDebutees = this.articleDAO.getLesArticlesByVentesNonDebuteesAndUserID(idVendeur);
@@ -227,7 +227,7 @@ public class ArticleManager {
         return lesArticlesVentesEncours;
     }
 
-    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesTerminessUserID(int idVendeur)
+    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesTermineesAndUserID(int idVendeur)
     {
         List<ArticleVendu> lesArticlesVentesEncours = this.articleDAO.getLesArticlesByVentesEnCoursAndUserID(idVendeur);
         List<ArticleVendu> lesArticlesVentesTerminees =this.articleDAO.getLesArticlesByVentesTermineesAndUserID(idVendeur);
@@ -242,7 +242,7 @@ public class ArticleManager {
         return lesArticlesVentesEncours;
     }
 
-    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesNonDebuteesUserID(int idVendeur)
+    public  List<ArticleVendu> getLesArticlesByVentesEnCoursAndVentesNonDebuteesAndUserID(int idVendeur)
     {
         List<ArticleVendu> lesArticlesVentesEncours = this.articleDAO.getLesArticlesByVentesEnCoursAndUserID(idVendeur);
         List<ArticleVendu> lesArticlesVentesNonDebutees = this.articleDAO.getLesArticlesByVentesNonDebuteesAndUserID(idVendeur);

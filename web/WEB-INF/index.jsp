@@ -70,8 +70,6 @@
     </c:if>
 
     <%@ include file="template/header.jsp" %>
-
-    <h1 class="text-center"> Liste des enchères </h1>
     <form method="get" action=${pageContext.servletContext.contextPath}>
       <div class="container z-depth-1 p-5 my-5">
         <section>
