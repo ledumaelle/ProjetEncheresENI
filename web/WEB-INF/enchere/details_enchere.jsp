@@ -33,9 +33,9 @@
                 <div class="row">
                         <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('non_debutee')}">
                             <div class="text-center text-md-left text-md-right col-sm-12">
-                                <a href="<%= request.getContextPath() %>/articles/cancel?no_article=${unArticle.getNoArticle()}" class="btn btn-secondary-color btn-rounded">
+                                <a href="<%= request.getContextPath() %>/articles/cancel?no_article=${unArticle.getNoArticle()}" class="btn btn-danger btn-rounded">
                                     <i class="far fa-times-circle mr-2" aria-hidden="true"></i> Annuler</a>
-                                <a href="<%= request.getContextPath() %>/articles/form?no_article=${unArticle.getNoArticle()}" class="btn btn-secondary-color btn-rounded">
+                                <a href="<%= request.getContextPath() %>/articles/form?no_article=${unArticle.getNoArticle()}" class="btn btn-info btn-rounded">
                                     <i class="fas fa-edit mr-2" aria-hidden="true"></i> Modifier</a>
                             </div>
                         </c:if>

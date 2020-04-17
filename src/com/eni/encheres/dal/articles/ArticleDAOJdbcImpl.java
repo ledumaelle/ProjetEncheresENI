@@ -73,7 +73,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
             "LEFT JOIN ENCHERES as E on E.no_article = A.no_article " +
             "LEFT JOIN UTILISATEURS as U2 on U2.no_utilisateur = E.no_utilisateur  " +
             "WHERE CURRENT_TIMESTAMP BETWEEN A.date_debut_encheres AND A.date_fin_encheres " +
-            "AND A.nom_article LIKE ? " +
+            "AND A.nom_article LIKE CONCAT( '%',?,'%') " +
             "ORDER BY A.date_fin_encheres ASC, montant_enchere DESC";
 
 
@@ -425,7 +425,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
         try(Connection cnx = ConnectionProvider.getConnection())
         {
             PreparedStatement requete = cnx.prepareStatement(SELECT_ALL_BY_NOM);
-            requete.setString(1,"%"+nomArticle+"%");
+            requete.setString(1,nomArticle);
             ResultSet res = requete.executeQuery();
             while(res.next())
             {

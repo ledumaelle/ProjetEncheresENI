@@ -54,16 +54,24 @@ public class ServletDetailsEnchere extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int noArticle = Integer.parseInt(request.getParameter("no_article"));
-       request.setAttribute("unArticle",getUnArticleByID(noArticle));
 
-        request.setAttribute("lesEncheres",getLesEncheresByArticleID(noArticle));
-       request.setAttribute("lastEnchere",maxEnchereByArticleID(noArticle));
+        if(request.getSession().getAttribute("unUtilisateur") != null)
+        {
+            int noArticle = Integer.parseInt(request.getParameter("no_article"));
+           request.setAttribute("unArticle",getUnArticleByID(noArticle));
 
-       request.setAttribute("unRetrait", getRetraitArticle(noArticle));
+            request.setAttribute("lesEncheres",getLesEncheresByArticleID(noArticle));
+           request.setAttribute("lastEnchere",maxEnchereByArticleID(noArticle));
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/enchere/details_enchere.jsp");
-        rd.forward(request, response);
+           request.setAttribute("unRetrait", getRetraitArticle(noArticle));
+
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/enchere/details_enchere.jsp");
+            rd.forward(request, response);
+        }
+        else
+        {
+            response.sendRedirect(request.getContextPath());
+        }
     }
 
     private Enchere maxEnchereByArticleID(int noArticle)
