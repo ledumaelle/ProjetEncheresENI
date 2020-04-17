@@ -109,6 +109,10 @@ public class UtilisateurManager {
         utilisateurDao.updateCredit(utilisateur, credit, type);
     }
 
+    public boolean hasArticleOrEnchere(int id){
+        return utilisateurDao.hasArticleOrEnchere(id);
+    }
+
     public Utilisateur getUtilisateurByPseudo(String pseudo) {
         return utilisateurDao.getUtilisateurByPseudo(pseudo);
     }

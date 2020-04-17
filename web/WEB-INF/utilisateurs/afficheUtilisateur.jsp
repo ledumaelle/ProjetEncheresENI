@@ -108,8 +108,20 @@
                                 <div class="col-md-12 text-center text-md-right">
                                     <button class="btn btn-info btn-rounded" onclick="window.location.href = '${pageContext.servletContext.contextPath}/editUser/${user.noUtilisateur}';">
                                         <i class="fas fa-edit mr-2" aria-hidden="true"></i> Modifier</button>
-                                    <button class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#modalDeleteUser">
-                                        <i class="fas fa-trash mr-2" aria-hidden="true"></i> Supprimer</button>
+                                    <c:set var="hasArticleOrEnchere" value="${requestScope.hasArticleOrEnchere}" scope="page" />
+
+                                        <button class="btn btn-danger btn-rounded" data-toggle="modal" data-target="#modalDeleteUser"
+                                            <c:if test="${hasArticleOrEnchere}">
+                                                disabled
+                                            </c:if>
+                                        >
+                                            <i class="fas fa-trash mr-2" aria-hidden="true"></i> Supprimer
+                                        </button>
+                                        <c:if test="${hasArticleOrEnchere}">
+                                            <div class="row">
+                                                <span class="text-danger"><i class="fas fa-exclamation-circle"></i>Vous avez des ventes ou des enchères, la suppression de votre compte est impossible pour le moment.</span>
+                                            </div>
+                                        </c:if>
                                 </div>
 
                                 <!-- Modal DELETE USER -->

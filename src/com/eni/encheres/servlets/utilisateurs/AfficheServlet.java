@@ -43,6 +43,7 @@ public class AfficheServlet extends HttpServlet  {
 
                 if(user!=null) {
                     request.setAttribute("userAffiche", user);
+                    request.setAttribute("hasArticleOrEnchere", utilisateurManager.hasArticleOrEnchere(user.getNoUtilisateur()));
 
                     this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/afficheUtilisateur.jsp").forward(request, response);
                 }
