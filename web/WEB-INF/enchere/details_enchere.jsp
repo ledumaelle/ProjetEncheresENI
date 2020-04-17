@@ -41,7 +41,7 @@
                         </c:if>
                         <c:if test="${unUtilisateur.getNoUtilisateur() == unArticle.getUnUtilisateur().getNoUtilisateur() && unArticle.getEtatVente().equals('terminee') && !unRetrait.getRetire()}">
                             <div class="text-center text-md-left text-md-right col-sm-12">
-                                <a href class="btn btn-secondary-color btn-rounded" data-toggle="modal" data-target="#modalRetrait">
+                                <a href class="btn btn-info btn-rounded" data-toggle="modal" data-target="#modalRetrait">
                                     <i class="fas fa-box-open mr-2" aria-hidden="true"></i> Retirer</a>
                             </div>
 
