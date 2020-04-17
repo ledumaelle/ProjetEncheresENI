@@ -4,13 +4,14 @@ function select() {
     document.getElementById("name").value = text;
 }
 
-function deleteCat() {
+function deleteCat(url) {
     var result = confirm("Etes vous sûre de vouloir supprimer cette catégorie?");
 
     if (result == true) {
         var id = document.getElementById("selectCat").value;
 
-        window.location.href='${pageContext.servletContext.contextPath}/dellCat/'+id;
+
+        window.location.href=url+'/dellCat/'+id;
     }
 }
 

@@ -47,7 +47,7 @@
                         <button class="btn btn-primary btn-rounded">
                             <i class="fas fa-edit mr-2" aria-hidden="true"></i>Modifier
                         </button>
-                        <button class="btn btn-danger btn-rounded" type="button" onclick="deleteCat()">
+                        <button class="btn btn-danger btn-rounded" type="button" onclick="deleteCat('${pageContext.servletContext.contextPath}')">
                             <i class="fas fa-trash mr-2" aria-hidden="true"></i> Supprimer
                         </button>
                     </div>
