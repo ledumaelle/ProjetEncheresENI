@@ -29,7 +29,13 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
     private static final String UPDATE_CREDIT_MOINS = "update UTILISATEURS set credit = credit - ? where no_utilisateur = ?";
     private static final String DELETE = "DELETE FROM utilisateurs WHERE no_utilisateur=?";
 
-
+    private static final String HAS_ARTICLES_OR_ENCHERES = "select count(*) as count " +
+            "from ARTICLES_VENDUS a " +
+            "inner join ENCHERES e " +
+            "on e.no_article = a.no_article " +
+            "where a.no_utilisateur = ? " +
+            "or e.no_utilisateur = ?";
+    
     private static final Logger LOGGER = Logger.getLogger(UtilisateurDao.class.toString());
 
 
@@ -55,7 +61,25 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 
     }
 
+    public boolean hasArticleOrEnchere(int id){
+        boolean hasArticleOrEnchere = false;
+        try(Connection con = ConnectionProvider.getConnection()){
+            PreparedStatement stmt = con.prepareStatement(HAS_ARTICLES_OR_ENCHERES);
+            stmt.setInt(1,id);
+            stmt.setInt(2,id);
 
+            if(stmt.execute()){
+                ResultSet resultSet = stmt.getResultSet();
+                if(resultSet.next()){
+                    hasArticleOrEnchere = resultSet.getInt("count") > 0;
+
+                }
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return hasArticleOrEnchere;
+    }
 
     /**
      *
@@ -63,9 +87,6 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
      * @return noUtilisateur ou 0 si erreur
      */
     public int creerUtilisateur(Utilisateur utilisateur){
-
-
-
         try(Connection con = ConnectionProvider.getConnection()){
             PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 

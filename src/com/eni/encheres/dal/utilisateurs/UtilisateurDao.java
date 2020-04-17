@@ -11,6 +11,8 @@ public interface UtilisateurDao {
 
     public void majUtilisateur(Utilisateur utilisateur);
 
+    public boolean hasArticleOrEnchere(int id);
+
     public Utilisateur getUtilisateurById(int id);
 
     public Utilisateur getUtilisateurByMail(String mail);
