@@ -30,7 +30,6 @@
             <div class="tab-pane fade active show" id="update" role="tabpanel" aria-labelledby="update-tab-md">
                 <form method="post" action="" class="needs-validation" novalidate>
                     <div class="form-group">
-                        <label for="selectCat">Catégories :</label>
                         <select required class="form-control" id="selectCat" name="selectCat" onchange="select()">
                             <option disabled selected value> Selectionez une catégorie </option>
                             <c:forEach var="cat" items="${requestScope.liCat}"  >
