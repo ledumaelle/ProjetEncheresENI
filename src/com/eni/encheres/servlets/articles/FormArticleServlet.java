@@ -27,23 +27,30 @@ public class FormArticleServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
-            int noArticle = request.getParameter("no_article") == null ? 0 : Integer.parseInt(request.getParameter("no_article"));
-            ArticleVendu unArticle = new ArticleVendu(0);
-            if(0 != noArticle){
-                articleManager = ArticleManager.getInstance();
-                unArticle = articleManager.getUnArticleByID(noArticle);
-                RetraitManager retraitManager = RetraitManager.getInstance();
-                Retrait unRetrait = retraitManager.getRetraitByArticleId(noArticle);
-                request.setAttribute("unRetrait", unRetrait);
+        if(request.getSession().getAttribute("unUtilisateur") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+        }else{
+            try{
+                int noArticle = request.getParameter("no_article") == null ? 0 : Integer.parseInt(request.getParameter("no_article"));
+                ArticleVendu unArticle = new ArticleVendu(0);
+                if(0 != noArticle){
+                    articleManager = ArticleManager.getInstance();
+                    unArticle = articleManager.getUnArticleByID(noArticle);
+                    RetraitManager retraitManager = RetraitManager.getInstance();
+                    Retrait unRetrait = retraitManager.getRetraitByArticleId(noArticle);
+                    request.setAttribute("unRetrait", unRetrait);
+                }
+                CategorieManager categorieManager = CategorieManager.getInstance();
+                request.setAttribute("categories", categorieManager.getLesCategories());
+                request.setAttribute("unArticle", unArticle);
+                if(noArticle == 0 || unArticle.getUnUtilisateur().getNoUtilisateur() == ((Utilisateur)request.getSession().getAttribute("unUtilisateur")).getNoUtilisateur()){
+                    this.getServletContext().getRequestDispatcher("/WEB-INF/article/form_article.jsp").forward(request,response);
+                }else{
+                    response.sendRedirect(request.getContextPath());
+                }
+            }catch (RetraitDAOException e){
+                e.printStackTrace();
             }
-            CategorieManager categorieManager = CategorieManager.getInstance();
-            request.setAttribute("categories", categorieManager.getLesCategories());
-            request.setAttribute("unArticle", unArticle);
-            RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/article/form_article.jsp");
-            rq.forward(request, response);
-        }catch (RetraitDAOException e){
-            e.printStackTrace();
         }
     }
 
