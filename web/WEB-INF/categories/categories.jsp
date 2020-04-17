@@ -44,10 +44,12 @@
                     </div>
 
                     <div>
-                        <button class="btn btn-primary btn-rounded">Enregistrer</button>
-
-                        <button class="btn btn-outline-primary btn-rounded" type="button" onclick="deleteCat()">
-                            Supprimer</button>
+                        <button class="btn btn-primary btn-rounded">
+                            <i class="fas fa-edit mr-2" aria-hidden="true"></i>Modifier
+                        </button>
+                        <button class="btn btn-danger btn-rounded" type="button" onclick="deleteCat()">
+                            <i class="fas fa-trash mr-2" aria-hidden="true"></i> Supprimer
+                        </button>
                     </div>
                 </form>
             </div>
@@ -57,7 +59,7 @@
                         <input type="text" class="form-control" id="name2" name="nom" required placeholder="Nouvelle catégorie">
                     </div>
 
-                    <button class="btn btn-primary btn-rounded">Enregistrer</button>
+                    <button class="btn btn-primary btn-rounded">Créer</button>
                 </form>
             </div>
         </div>
