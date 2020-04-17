@@ -7,7 +7,7 @@
 <head>
     <jsp:include page="../template/head.jsp"/>
     <script src="<%= request.getContextPath()%>/script/detailsEnchere.js"></script>
-    <title>Détails d'une enchère</title>
+    <title>Erreur catégorie</title>
 </head>
 
 <body>

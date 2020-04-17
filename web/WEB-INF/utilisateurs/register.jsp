@@ -4,7 +4,7 @@
 <html>
     <head>
         <jsp:include page="../template/head.jsp"/>
-        <title>S'enregistrer</title>
+        <title>S'inscrire</title>
         <script src="<%= request.getContextPath()%>/script/register.js"></script>
     </head>
     <body>
@@ -18,9 +18,7 @@
                         <!--Card content-->
                         <div class="card-body">
                             <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
-
-                            <!-- Default form register -->
-                            <form class="needs-validation" method="post" action="<%=request.getContextPath()%>/register" novalidate>
+                              <form class="needs-validation" method="post" action="<%=request.getContextPath()%>/register" novalidate>
 
                                 <p class="h4 mb-4 text-center">S'enregistrer</p>
 

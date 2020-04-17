@@ -4,163 +4,119 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<head>
-    <%@ include file="../template/head.jsp" %>
+    <head>
+        <jsp:include page="../template/head.jsp"/>
+        <script src="<%= request.getContextPath()%>/script/editUser.js"></script>
+        <title>Modifier mon profil</title>
+    </head>
 
-</head>
+    <body>
+        <jsp:include page="../template/header.jsp"/>
+        <c:set var="user" value="${requestScope.userEdit}" scope="page" />
 
-<body>
-<jsp:include page="../template/header.jsp"/>
+        <div class="container my-5 py-5">
+            <section class="text-center">
+                <ul class="nav nav-tabs md-tabs blue-gradient" id="myTabMD" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link ${requestScope.homeNavActive}" id="profil-tab-md" data-toggle="tab" href="#profil" role="tab" aria-controls="profil-md"
+                           aria-selected="true">Mes infos personnelles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${requestScope.mdpNavActive}" id="mdp-tab-md" data-toggle="tab" href="#mdp-tab" role="tab" aria-controls="mdp-md"
+                           aria-selected="false">Mot de passe</a>
+                    </li>
+                </ul>
+                <div class="tab-content card pt-5" id="myTabContentMD">
+                    <div class="tab-pane fade ${requestScope.homeActive}" id="profil" role="tabpanel" aria-labelledby="profil-tab-md">
+                        <p id="message" class="text-success"><c:out value="${requestScope.message}" /></p>
+                        <form class="needs-validation" novalidate id="tab" method="post" action="${pageContext.servletContext.contextPath}/editUser/${user.noUtilisateur}/1">
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Pseudo" required value="<c:out value="${user.pseudo}" />" >
+                                </div>
+                            </div>
+                            <div class="form-group">
 
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom" required value="<c:out value="${user.nom}" />" >
+                                </div>
+                            </div>
+                            <div class="form-group">
 
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom" required value="<c:out value="${user.prenom}" />">
+                                </div>
+                            </div>
 
-<c:set var="user" value="${requestScope.userEdit}" scope="page" />
+                            <div class="form-group">
 
-<body>
+                                <div class="col-xs-6">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Mail" required value="<c:out value="${user.email}" />">
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Téléphone" required value="<c:out value="${user.telephone}" />">
+                                </div>
+                            </div>
+                            <div class="form-group">
 
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" name="rue" id="rue" placeholder="Rue" required value="<c:out value="${user.rue}" />">
+                                </div>
+                            </div>
+                            <div class="form-group">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" name="codePostal" id="codePostal" maxlength="5" minlength="5" pattern="^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$" placeholder="Code Postal" required value="<c:out value="${user.codePostal}" />">
+                                </div>
+                            </div>
+                            <div class="form-group">
 
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" name="ville" id="ville" placeholder="Ville" required value="<c:out value="${user.ville}" />">
+                                </div>
+                            </div>
 
-    <div class="navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav nav-tabs">
-            <li class="nav-item ${requestScope.homeNavActive}">
-                <a class="nav-link ${requestScope.homeNavActive}" href="#home" data-toggle="tab" role="tab" >Mes infos personnelles <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item ${requestScope.mdpNavActive}">
-                <a class="nav-link ${requestScope.mdpNavActive}" href="#profile" data-toggle="tab" role="tab" >Mot de passe</a>
-            </li>
+                            <div>
+                                <button class="btn btn-primary btn-rounded">Enregistrer</button>
+                                <button class="btn btn-outline-primary btn-rounded" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}/utilisateur/${user.noUtilisateur}';" >Annuler</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade ${requestScope.mdpActive}" id="mdp-tab" role="tabpanel" aria-labelledby="mdp-tab-md">
+                        <p id="message_succes" class="text-success"><c:out value="${requestScope.messageSucces}" /></p>
+                        <p id="message_error" class="text-danger"><c:out value="${requestScope.messageErreur}" /></p>
+                        <form class="needs-validation" novalidate id="tab2" method="post" action="${pageContext.servletContext.contextPath}/editUser/${user.noUtilisateur}/2">
 
-        </ul>
-    </div>
-</nav>
+                            <div class="form-group">
 
+                                <div class="col-xs-6">
+                                    <input type="password" class="form-control" name="old" id="old" required placeholder="Ancien mot de passe">
+                                </div>
+                            </div>
 
-    <div class="col-sm-4">
-    <div id="myTabContent" class="tab-content">
-        <div class="tab-pane ${requestScope.homeActive}" id="home">
-            <p id="message" class="text-success"><c:out value="${requestScope.message}" /></p>
-            <form id="tab" method="post" action="${pageContext.servletContext.contextPath}/editUser/${user.noUtilisateur}/1">
-                <div class="form-group">
+                            <div class="form-group">
 
-                    <div class="col-xs-6">
-                        <label for="pseudo"><h4>Pseudo</h4></label>
-                        <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Pseudo" required value="<c:out value="${user.pseudo}" />" >
+                                <div class="col-xs-6">
+                                    <input type="password" class="form-control" name="mdp" id="mdp" required placeholder="Nouveau mot de passe">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-xs-6">
+                                    <input type="password" class="form-control" name="confirm" id="confirm" required  placeholder="Confirmation mot de passe">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-rounded">Enregistrer</button>
+                            <button class="btn btn-outline-primary btn-rounded" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}/utilisateur/${user.noUtilisateur}';" >Annuler</button>
+
+                        </form>
                     </div>
                 </div>
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label for="nom"><h4>Nom</h4></label>
-                        <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom" required value="<c:out value="${user.nom}" />" >
-                    </div>
-                </div>
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label for="prenom"><h4>Prénom</h4></label>
-                        <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom" required value="<c:out value="${user.prenom}" />">
-                    </div>
-                </div>
-
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label for="email"><h4>Email</h4></label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="email" required value="<c:out value="${user.email}" />">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-xs-6">
-                        <label for="telephone"><h4>Téléphone</h4></label>
-                        <input type="text" class="form-control" name="telephone" id="telephone" placeholder="telephone" value="<c:out value="${user.telephone}" />">
-                    </div>
-                </div>
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label for="rue"><h4>Rue</h4></label>
-                        <input type="text" class="form-control" name="rue" id="rue" placeholder="rue" required value="<c:out value="${user.rue}" />">
-                    </div>
-                </div>
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label for="codePostal"><h4>Code Postal</h4></label>
-                        <input type="text" class="form-control" name="codePostal" id="codePostal" placeholder="Code Postal" required value="<c:out value="${user.codePostal}" />">
-                    </div>
-                </div>
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label for="ville"><h4>Ville</h4></label>
-                        <input type="text" class="form-control" name="ville" id="ville" placeholder="Ville" required value="<c:out value="${user.ville}" />">
-                    </div>
-                </div>
-
-                <div>
-                    <button class="btn btn-primary">Enregistré</button>
-                    <button class="btn btn-dark hBack" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}/utilisateur/${user.noUtilisateur}';" >Annuler</button>
-                </div>
-            </form>
-
+        </section>
         </div>
-        <div class="tab-pane ${requestScope.mdpActive}" id="profile">
-            <p id="message_succes" class="text-success"><c:out value="${requestScope.messageSucces}" /></p>
-            <p id="message_error" class="text-danger"><c:out value="${requestScope.messageErreur}" /></p>
-            <form id="tab2" method="post" action="${pageContext.servletContext.contextPath}/editUser/${user.noUtilisateur}/2">
-
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label>Mots de passe actuel</label>
-                        <input type="password" class="form-control" name="old" id="old" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label>Nouveau mots de passe</label>
-                        <input type="password" class="form-control" name="mdp" id="mdp" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-
-                    <div class="col-xs-6">
-                        <label>Confirmation</label>
-                        <input type="password" class="form-control" name="confirm" id="confirm" required>
-                    </div>
-                </div>
-                <button class="btn btn-primary">Valider</button>
-                <button class="btn btn-dark hBack" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}/utilisateur/${user.noUtilisateur}';" >Annuler</button>
-
-            </form>
-
-        </div>
-    </div>
-</body>
-
-<script>
-
-
-
-
-    var password = document.getElementById("mdp")
-        , confirm_password = document.getElementById("confirm");
-
-    function validatePassword(){
-        if(password.value != confirm_password.value) {
-            confirm_password.setCustomValidity("Mot de passe pas identique");
-        } else {
-            confirm_password.setCustomValidity('');
-        }
-    }
-
-    password.onchange = validatePassword;
-    confirm_password.onkeyup = validatePassword;
-</script>
+    </body>
 </html>

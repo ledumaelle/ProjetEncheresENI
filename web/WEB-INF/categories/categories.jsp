@@ -6,88 +6,69 @@
 <html>
 <head>
     <jsp:include page="../template/head.jsp"/>
-    <script src="<%= request.getContextPath()%>/script/detailsEnchere.js"></script>
-    <title>Détails d'une enchère</title>
+    <script src="<%= request.getContextPath()%>/script/categories.js"></script>
+    <title>Gestion des catégorie</title>
 </head>
 
 <body>
 <jsp:include page="../template/header.jsp"/>
 
 
+<div class="container my-5 py-5">
+    <section class="text-center">
+        <ul class="nav nav-tabs md-tabs blue-gradient" id="myTabMD" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" id="update-tab-md" data-toggle="tab" href="#update" role="tab" aria-controls="update-md"
+                   aria-selected="true">Modifier une catégorie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="create-tab-md" data-toggle="tab" href="#create" role="tab" aria-controls="create-md"
+                   aria-selected="false">Créer une catégorie</a>
+            </li>
+        </ul>
+        <div class="tab-content card pt-5" id="myTabContentMD">
+            <div class="tab-pane fade active show" id="update" role="tabpanel" aria-labelledby="update-tab-md">
+                <form method="post" action="" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="selectCat">Catégories :</label>
+                        <select required class="form-control" id="selectCat" name="selectCat" onchange="select()">
+                            <option disabled selected value> Selectionez une catégorie </option>
+                            <c:forEach var="cat" items="${requestScope.liCat}"  >
+                                <option value=" <c:out value="${cat.noCategorie}" /> " >
+                                    <c:out value="${cat.libelle}" />
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="name" name="nom" placeholder="Nouveau nom" required>
+                    </div>
 
-<div class="col-sm-4">
-    <div id="myTabContent" class="tab-content">
-        <form method="post" action="">
+                    <div>
+                        <button class="btn btn-primary btn-rounded">Enregistrer</button>
 
-            <div class="form-group">
-                <label for="selectCat">Catégories :</label>
-                <select class="form-control" id="selectCat" name="selectCat" onchange="select()">
-
-                    <option disabled selected value> Selectionez une catégorie </option>
-                    <c:forEach var="cat" items="${requestScope.liCat}"  >
-                        <option value=" <c:out value="${cat.noCategorie}" /> " >
-                            <c:out value="${cat.libelle}" />
-                        </option>
-
-                    </c:forEach>
-                </select>
+                        <button class="btn btn-outline-primary btn-rounded" type="button" onclick="deleteCat()">
+                            Supprimer</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="name">Nouveau nom</label>
-                <input type="text" class="form-control" id="name" name="nom" required>
+            <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="mdp-tab-md">
+                <form method="post" action="${pageContext.servletContext.contextPath}/addCat" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="name2" name="nom" required placeholder="Nouvelle catégorie">
+                    </div>
+
+                    <button class="btn btn-primary btn-rounded">Enregistrer</button>
+                </form>
             </div>
-
-            <div>
-                <button class="btn btn-primary">Enregistré</button>
-
-                <button class="btn btn-secondary-red btn-rounded" type="button" onclick="deleteCat()">
-                    <i class="fas fa-trash mr-2" aria-hidden="true"></i> Supprimer</button>
-            </div>
-        </form>
-    </div>
-
-    <div id="myTabContent2" class="tab-content">
-        <form method="post" action="${pageContext.servletContext.contextPath}/addCat">
-
-
-
-            <div class="form-group">
-                <label for="name">Nouvelle catégorie</label>
-                <input type="text" class="form-control" id="name2" name="nom" required>
-            </div>
-
-
-            <button class="btn btn-primary">Céer</button>
-        </form>
-    </div>
+        </div>
+    </section>
 </div>
 
 
 </body>
 <script>
-    function select() {
 
-
-        var sel = document.getElementById("selectCat");
-        var text= sel.options[sel.selectedIndex].text;
-        document.getElementById("name").value = text;
-
-
-
-    }
-
-    function deleteCat() {
-
-        var result = confirm("Etes vous sûre de vouloir supprimer cette catégorie?");
-
-        if (result == true) {
-            var id = document.getElementById("selectCat").value;
-
-
-            window.location.href='${pageContext.servletContext.contextPath}/dellCat/'+id;
-        }
-
-    }
     
 </script>
 </html>

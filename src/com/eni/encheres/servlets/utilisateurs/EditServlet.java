@@ -76,9 +76,9 @@ public class EditServlet extends HttpServlet {
     private void majUser(Utilisateur user, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        request.setAttribute("homeActive","active");
+        request.setAttribute("homeActive","active show");
         request.setAttribute("mdpActive","fade");
-        request.setAttribute("homeNavActive","active");
+        request.setAttribute("homeNavActive","active show");
 
         String pseudo = request.getParameter("pseudo");
         String nom =request.getParameter("nom");
@@ -105,22 +105,16 @@ public class EditServlet extends HttpServlet {
         request.setAttribute("userEdit", user);
         request.getSession().setAttribute("unUtilisateur",user);
 
-        request.setAttribute("message","informations enregistrées");
+        request.setAttribute("message","Informations enregistrées");
         this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/editUser.jsp").forward(request,response);
-
-
-
-
-
-
     }
 
     private void majPassword(Utilisateur user, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("userEdit", user);
         request.setAttribute("homeActive","fade");
-        request.setAttribute("mdpActive","active");
-        request.setAttribute("mdpNavActive","active");
+        request.setAttribute("mdpActive","active show");
+        request.setAttribute("mdpNavActive","active show");
 
 
         String oldMdp = request.getParameter("old");
@@ -134,14 +128,14 @@ public class EditServlet extends HttpServlet {
             request.setAttribute("userEdit", user);
             request.getSession().setAttribute("unUtilisateur",user);
 
-            request.setAttribute("messageSucces","mots de passe modifié avec succes");
+            request.setAttribute("messageSucces","Mot de passe modifié avec succès");
             this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/editUser.jsp").forward(request,response);
 
 
 
 
         }else {
-            request.setAttribute("messageErreur","ancien mots de passe invalide");
+            request.setAttribute("messageErreur","Ancien mot de passe invalide");
             this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/editUser.jsp").forward(request,response);
 
         }
@@ -175,10 +169,10 @@ public class EditServlet extends HttpServlet {
 
 
                     request.setAttribute("userEdit", user);
-                    request.setAttribute("homeActive","active");
+                    request.setAttribute("homeActive","active show");
                     request.setAttribute("mdpActive","fade");
 
-                    request.setAttribute("homeNavActive","active");
+                    request.setAttribute("homeNavActive","active show");
 
 
 
@@ -198,13 +192,5 @@ public class EditServlet extends HttpServlet {
         }else{
             response.sendRedirect(request.getContextPath());
         }
-
-
-
-
     }
-
-
-
-
 }
