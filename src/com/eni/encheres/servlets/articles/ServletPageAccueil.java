@@ -22,7 +22,7 @@ import java.lang.*;
 @WebServlet(name="ServletPageAccueil",urlPatterns ={""})
 public class ServletPageAccueil extends HttpServlet {
 
-    //Utilisateur unUtilisateur = new Utilisateur(3,"Kamicasis","LE DU","Maëlle","ledu.maelle98@gmail.com","0606060606","Impasse du clos des quilles","22120","HILLION","201298",200,true);
+
     Utilisateur unUtilisateur = null;
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) {
@@ -176,7 +176,7 @@ public class ServletPageAccueil extends HttpServlet {
             {
                 for(ArticleVendu  unArticle  : lesArticles)
                 {
-                    if(unArticle.getUneCategorie().getNoCategorie() == Integer.parseInt(idCategorie) && !lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().matches(nomArticle))
+                    if(unArticle.getUneCategorie().getNoCategorie() == Integer.parseInt(idCategorie) && !lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().toLowerCase().matches(".*"+nomArticle.toLowerCase()+".*"))
                     {
                         lesArticlesFiltres.add(unArticle);
                     }
@@ -196,7 +196,7 @@ public class ServletPageAccueil extends HttpServlet {
             {
                 for(ArticleVendu  unArticle  : lesArticles)
                 {
-                    if(!lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().matches(nomArticle))
+                    if(!lesArticlesFiltres.contains(unArticle) && unArticle.getNomArticle().toLowerCase().matches(".*"+nomArticle.toLowerCase()+".*"))
                     {
                         lesArticlesFiltres.add(unArticle);
                     }
