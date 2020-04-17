@@ -166,12 +166,12 @@
           <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
           <form class="form-signin" action="login" method="post" id="loginForm">
             <div class="form-label-group">
-              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" value="<c:out value="${URLDecoder.decode(cookie.LOGIN.getValue(),'UTF-8')}"  />" required autofocus>
+              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" value="<c:out value="${URLDecoder.decode(cookie.LOGIN.value,'UTF-8')}"  />" required autofocus>
               <label for="email">Identifiant</label>
             </div>
 
             <div class="form-label-group">
-              <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" value="<c:out value="${URLDecoder.decode(cookie.MDP.getValue(),'UTF-8')}"  />" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" value="<c:out value="${URLDecoder.decode(cookie.MDP.value,'UTF-8')}"  />" required>
               <label for="password">Mot de passe</label>
             </div>
 

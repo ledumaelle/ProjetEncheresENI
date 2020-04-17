@@ -74,7 +74,13 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	private static void setCookie( HttpServletResponse response, String nom, String valeur, int maxAge ) throws UnsupportedEncodingException {
-		Cookie cookie = new Cookie( nom, URLEncoder.encode( valeur, "UTF-8" ));
+		Cookie cookie;
+		if (valeur!=null) {
+			 cookie = new Cookie(nom, URLEncoder.encode(valeur, "UTF-8").trim());
+		}else{
+			 cookie = new Cookie(nom, null);
+		}
+
 		cookie.setMaxAge( maxAge );
 		response.addCookie( cookie );
 	}
