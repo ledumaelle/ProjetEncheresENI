@@ -1,0 +1,21 @@
+.form-control:disabled {
+    background-color: #fff !important;
+}
+
+.btn-upload {
+    width: 95%;
+}
+
+#card-retrait {
+    margin-top: 40px;
+}
+
+.scroll_vertical
+{
+    overflow-y: scroll;
+    max-height: 150px;
+}
+
+html,body {
+    min-height: 100vh !important;
+}
