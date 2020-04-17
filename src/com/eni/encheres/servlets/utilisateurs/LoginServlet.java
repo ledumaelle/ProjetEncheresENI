@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 @WebServlet("/login")
@@ -71,8 +73,8 @@ public class LoginServlet extends HttpServlet {
 		this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurs/login.jsp").forward(request,response);
 	}
 
-	private static void setCookie( HttpServletResponse response, String nom, String valeur, int maxAge ) {
-		Cookie cookie = new Cookie( nom, valeur );
+	private static void setCookie( HttpServletResponse response, String nom, String valeur, int maxAge ) throws UnsupportedEncodingException {
+		Cookie cookie = new Cookie( nom, URLEncoder.encode( valeur, "UTF-8" ));
 		cookie.setMaxAge( maxAge );
 		response.addCookie( cookie );
 	}

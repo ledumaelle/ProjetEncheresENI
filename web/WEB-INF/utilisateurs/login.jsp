@@ -1,11 +1,14 @@
 <%@ page import="com.eni.encheres.bo.Enchere" %>
 <%@ page import="com.eni.encheres.bo.ArticleVendu" %>
+<%@ page import="java.net.URLDecoder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
   <%@ include file="../template/head.jsp" %>
+  <title>Connexion</title>
+
 </head>
 <style>
   :root {
@@ -163,12 +166,12 @@
           <p id="message_error" class="text-danger"><c:out value="${requestScope.message}" /></p>
           <form class="form-signin" action="login" method="post" id="loginForm">
             <div class="form-label-group">
-              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" value="<c:out value="${cookie.LOGIN.getValue()}"  />" required autofocus>
+              <input type="text" id="email" name="email" class="form-control" placeholder="Identifiant" value="<c:out value="${URLDecoder.decode(cookie.LOGIN.getValue(),'UTF-8')}"  />" required autofocus>
               <label for="email">Identifiant</label>
             </div>
 
             <div class="form-label-group">
-              <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" value="<c:out value="${cookie.MDP.getValue()}"  />" required>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" value="<c:out value="${URLDecoder.decode(cookie.MDP.getValue(),'UTF-8')}"  />" required>
               <label for="password">Mot de passe</label>
             </div>
 

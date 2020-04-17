@@ -6,6 +6,7 @@
 <html>
 <head>
     <%@ include file="../template/head.jsp" %>
+    <title>S'inscrire</title>
 </head>
 <body>
 <%@ include file="../template/header.jsp" %>
