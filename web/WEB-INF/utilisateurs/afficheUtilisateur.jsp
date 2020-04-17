@@ -4,18 +4,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<head>
-    <%@ include file="../template/head.jsp" %>
-    <title>Details Utilisateur</title>
+    <head>
+        <%@ include file="../template/head.jsp" %>
+        <title>Profil</title>
+    </head>
 
-</head>
-
-<body>
-<jsp:include page="../template/header.jsp"/>
-
+    <body>
+    <jsp:include page="../template/header.jsp"/>
 
 
-    <c:set var="user" value="${requestScope.userAffiche}" scope="page" />
+
+        <c:set var="user" value="${requestScope.userAffiche}" scope="page" />
 
 
 
