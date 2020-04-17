@@ -7,6 +7,7 @@
     <head>
         <jsp:include page="../template/head.jsp"/>
         <script src="<%= request.getContextPath()%>/script/editUser.js"></script>
+        <title>Modifier mon profil</title>
     </head>
 
     <body>
