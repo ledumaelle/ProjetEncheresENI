@@ -5,8 +5,10 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-<%@ include file="../template/head.jsp" %>
-        </head>
+    <%@ include file="../template/head.jsp" %>
+    <title>Details Utilisateur</title>
+
+</head>
 
 <body>
 <jsp:include page="../template/header.jsp"/>

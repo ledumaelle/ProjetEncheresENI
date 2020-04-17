@@ -21,7 +21,8 @@ public class AddServlet extends HttpServlet {
 
 
 
-        if (request.getSession().getAttribute("unUtilisateur")!=null &&  ((Utilisateur)request.getSession().getAttribute("unUtilisateur")).isAdministrateur()){
+
+        if (request.getSession().getAttribute("unUtilisateur")!=null &&  ((Utilisateur)request.getSession().getAttribute("unUtilisateur")).isAdministrateur() ){
 
 
 
@@ -32,9 +33,13 @@ public class AddServlet extends HttpServlet {
 
 
                 String nom = request.getParameter("nom");
-                Categorie categorie = new Categorie(0,nom);
+                if(!nom.isBlank()) {
+                    Categorie categorie = new Categorie(0, nom);
 
-                categorieManager.creer(categorie);
+                    categorieManager.creer(categorie);
+                }else {
+                    //TODO msg erreur champ vide
+                }
 
                 response.sendRedirect(request.getContextPath()+"/admin");
 

@@ -6,6 +6,7 @@
 <html>
 <head>
     <%@ include file="../template/head.jsp" %>
+    <title>Modifier utilisateur</title>
 
 </head>
 
